@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom class for header style */
+.custom-header {
+    font-weight: 800; /* font-semibold */
+    font-size: 1.25rem; /* text-xl */
+    color: rgb(255, 94, 0); /* text-gray-800 */
+    line-height: 1.25; /* leading-tight */
+}
+
+/* Custom class for text style in the main content */
+.custom-text {
+    color: #1a202c; /* text-gray-900 */
+    padding: 1.5rem; /* p-6 */
+    background-color: #ffffff; /* bg-white */
+    box-shadow: 0 1px 10px rgba(231, 67, 12, 0.1); /* shadow-sm */
+    border-radius: 1rem; /* sm:rounded-lg */
+}
+
+.custom-shadow {
+    box-shadow:  0 1px 4px rgba(247, 114, 5, 0.3); 
+}
+
+/* General button styles */
+.btn {
+    display: inline-block;
+    margin: 13px;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    background-color: #ff8c00;  /* Green */
+    color: white;
+    border: 2px solid #ff8c00;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+/* Button hover effect */
+.btn:hover {
+    background-color: #fd9f12;
+    border-color: #fd9f12;
+    transform: scale(1.05);
+}
+
+/* Button focus effect */
+.btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(191, 143, 72, 0.5);
+}
+
+/* Button active effect */
+.btn:active {
+    background-color: #8e8538;
+    border-color: #8e8538;
+    transform: scale(0.98);
+}
