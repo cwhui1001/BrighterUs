@@ -6,8 +6,8 @@
                 <h2 class="dashboard-header">
                     <div class="title">{{ __('BrighterUs') }}</div><br>
                 </h2>
-                <div class="title-content">"Every step you take today shapes the path to a brighter and more fulfilling tomorrow."</div>
-                <div class="title-content">"At BrighterUs, we believe that each small action builds the foundation for a future full of endless possibilities."</div><br>
+                <div class="title-content">Every step you take today shapes the path to a brighter and more fulfilling tomorrow.</div>
+                <div class="title-content">At BrighterUs, we believe that each small action builds the foundation for a future full of endless possibilities.</div><br>
             </div>
             <div class="circle-frame">
                 <img src="{{ asset('images/tertiaryeducation.jpg') }}" alt="Circular Image">
