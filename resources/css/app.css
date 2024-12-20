@@ -15,7 +15,7 @@
 .custom-header {
     font-weight: 800; /* font-semibold */
     font-size: 1.25rem; /* text-xl */
-    color: rgb(255, 255, 255); /* text-gray-800 */
+    color: rgb(0, 0, 0); /* text-gray-800 */
     line-height: 1.25; /* leading-tight */
 }
 
