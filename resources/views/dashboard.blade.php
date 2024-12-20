@@ -1,11 +1,19 @@
 <x-app-layout>
     <x-slot name="header" class="dash-header relative bg-orange-400">
-        <h2 class="dashboard-header">
-            <div class="title">{{ __('BrighterUs') }}</div><br>
-        </h2>
-        <div class="title-content">Every step you take today shapes the path to a brighter and more fulfilling tomorrow.</div>
-        <div class="title-content">"At BrighterUs, we believe that each small action builds the foundation for a future full of endless possibilities."</div>
-       
+        
+        <div class="container">
+            <div>
+                <h2 class="dashboard-header">
+                    <div class="title">{{ __('BrighterUs') }}</div><br>
+                </h2>
+                <div class="title-content">"Every step you take today shapes the path to a brighter and more fulfilling tomorrow."</div>
+                <div class="title-content">"At BrighterUs, we believe that each small action builds the foundation for a future full of endless possibilities."</div><br>
+            </div>
+            <div class="circle-frame">
+                <img src="{{ asset('images/tertiaryeducation.jpg') }}" alt="Circular Image">
+            </div>
+        </div>
+        
         <!-- Add the wavy bottom -->
         <div class="wavy-bottom">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 230">
