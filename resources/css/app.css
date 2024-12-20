@@ -2,11 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+.bg-image {
+    position: relative;
+    background-image: url('/public/images/brighterus1.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+
 /* Custom class for header style */
 .custom-header {
     font-weight: 800; /* font-semibold */
     font-size: 1.25rem; /* text-xl */
-    color: rgb(255, 94, 0); /* text-gray-800 */
+    color: rgb(255, 255, 255); /* text-gray-800 */
     line-height: 1.25; /* leading-tight */
 }
 
@@ -58,3 +67,57 @@
     border-color: #8e8538;
     transform: scale(0.98);
 }
+
+
+
+
+
+.custom-bg{
+    background: linear-gradient(to bottom, #ff6700, #ff8c00);
+}
+
+
+
+.dashboard-header{
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    padding: 100px;
+    padding-top: 50px;
+}
+.title{
+    font-size: 4rem; /* Super large font size */
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold; /* Make the text bold */
+    color: #ffffff; /* Beautiful color (adjust as needed) */
+    letter-spacing: 5px; /* Increase letter spacing for a stylish look */
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Add a subtle shadow for depth */
+    line-height: 1.2; /* Adjust line height for better spacing */
+    text-align: center; /* Center the text */
+    margin: 0;
+    padding: 20px;
+}
+
+.title-content{
+    display: flex;
+    justify-content: center;
+    margin: 10px;
+}
+
+.dash-header {
+    position: relative;
+    background-color: #f97316; /* Orange background */
+    color: white;
+    text-align: center;
+    padding: 2rem 1rem;
+    overflow: hidden;
+}
+
+.wavy-bottom svg {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+}
+

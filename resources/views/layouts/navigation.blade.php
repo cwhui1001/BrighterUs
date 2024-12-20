@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
+<nav x-data="{ open: false }">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -36,7 +36,7 @@
                     <!-- Logged-in User Dropdown -->
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
-                            <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:text-orange-700 focus:outline-none transition ease-in-out duration-150">
+                            <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-black-500 hover:text-white focus:text-white focus:outline-none transition ease-in-out duration-150">
                                 {{ Auth::user()->name }} <!-- Display User's Name -->
                                 <div class="ms-1">
                                     <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -65,10 +65,10 @@
                     </x-dropdown>
                 @else
                     <!-- Non-Logged-in User Links -->
-                    <a href="{{ route('login') }}" class="text-sm font-medium text-gray-700 hover:text-orange-900">
+                    <a href="{{ route('login') }}" class="text-sm font-medium text-gray-700 hover:text-white-900">
                         {{ __('Log In') }}
                     </a>
-                    <a href="{{ route('register') }}" class="ml-4 text-sm font-medium text-gray-700 hover:text-orange-900">
+                    <a href="{{ route('register') }}" class="ml-4 text-sm font-medium text-gray-700 hover:text-white-900">
                         {{ __('Register') }}
                     </a>
                 @endif
