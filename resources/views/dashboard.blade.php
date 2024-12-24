@@ -27,7 +27,7 @@
            
                 @if (Auth::check())
                 <div class="custom-text">
-                    <p>{{ __("You are logged in!") }}</p>
+                    <p>{{ __("You are logged inheheheh!") }}</p>
                     <!-- Display features available to logged-in users -->
                     
                 </div>
