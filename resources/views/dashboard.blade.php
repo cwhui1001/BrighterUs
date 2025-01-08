@@ -26,17 +26,48 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
            
                 @if (Auth::check())
+                
+                <!-- <div class="custom-text">
+                    <h2 class="sub-title">{{ __('About Us') }}</h2>
+                    <div class="about-us">
+                        @if ($homeInfo)
+                            {{ $homeInfo->aboutUs }}
+                        @else
+                            <p>No information available.</p>
+                        @endif
+                    </div>
+                </div> -->
                 <div class="custom-text">
-                    <p>{{ __("You are logged in!") }}</p>
-                    <!-- Display features available to logged-in users -->
-                    
+                    <h2 class="sub-title">{{ __('Finding the Right Options Too Slow and Painful?') }}</h2>
+                    <div class="sub-title">
+                        <img src="{{ asset('images/confuse.png') }}">
+                    </div>
+                    <div class="sub-title">
+                        <img src="{{ asset('images/confuseWords.png') }}">
+                    </div>
                 </div>
+                <div class="custom">
+                    <img src="{{ asset('images/free.png') }}">
+                </div>
+
                 @else
-                <div class="custom-text">
-                    <p>{{ __("You are not logged in.") }}</p>
+
+
+                <!-- <div class="custom-text"> -->
+                    <!-- <p>{{ __("You are not logged in.") }}</p> -->
                     <!-- Provide login options or guest-specific content -->
-                    <a href="{{ route('login') }}" class="btn btn-primary">Log In</a>
-                    <a href="{{ route('register') }}" class="btn btn-secondary">Register</a>
+                    <!-- <a href="{{ route('login') }}" class="btn btn-primary">Log In</a>
+                    <a href="{{ route('register') }}" class="btn btn-secondary">Register</a> -->
+                <!-- </div> -->
+                <div class="custom-text">
+                    <h2 class="sub-title">{{ __('About Us') }}</h2>
+                    <div class="about-us">
+                        @if ($homeInfo)
+                            {{ $homeInfo->aboutUs }}
+                        @else
+                            <p>No information available.</p>
+                        @endif
+                    </div>
                 </div>
                 @endif
         </div>
