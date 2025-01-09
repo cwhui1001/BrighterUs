@@ -77,7 +77,7 @@
             margin: 5px auto;
             cursor: pointer;
             font-size: 14px;
-            width: 80%;
+            width: 50%;
         }
         .button2 {
             display: block;
@@ -89,7 +89,7 @@
             margin: 5px auto;
             cursor: pointer;
             font-size: 14px;
-            width: 80%;
+            width: 70%;
         }
         .button1:hover {
             background-color:rgb(167, 85, 44);
@@ -100,8 +100,8 @@
         .column2 {
             display: flex;
             flex-direction: row;
-            align-items: center;
-            width: 80%;
+            align-items: flex-start;
+           
         }
         .column2a img {
             width: 250px;
@@ -117,9 +117,10 @@
         .time, .location {
             font-size: 16px;
             color: #666;
-            margin-bottom: 10px;
             display: flex;
-            align-items: center;
+            margin: 10px;
+           
+            align-items: flex-start;
         }
         .time img, .location img {
             margin-right: 10px;
@@ -203,7 +204,66 @@
             }
         }
 
+        /* Countdown Container Styling */
+  /* Countdown Container */
+  .countdown-container {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 12px; /* Make it smaller to fit */
+  }
+
+/* Event Title */
+.event-title {
+  font-size: 15px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+/* Countdown Box Styling */
+.countdown-box {
+    display: flex;
+    justify-content: space-between;
+    gap: 5px;
+    width: 90%;
+  }
+
+/* Individual Countdown Element */
+.countdown-element {
+    text-align: center;
+    padding: 3px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    min-width: 50px; /* Smaller width */
+    max-width: 100px;
+    background-color: #fff5e5;
+  }
+
+/* Countdown Value Styling */
+.countdown-value {
+  font-size: 16px;
+  font-weight: bold;
+  display: block;
+}
+
+/* Countdown Label Styling */
+.countdown-label {
+  font-size: 10px;
+  letter-spacing: 0.5px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .countdown-box {
+    flex-direction: column;
+  }
+
+  .countdown-element {
+    margin-bottom: 5px;
+  }
+}
+
     </style>
+    
             <table>
             <tr>
             <td class="column1">
@@ -219,6 +279,7 @@
                         Add to Calendar
                     </a>
                 </div>
+                
 
                 <div class="overlay" onclick="closeMap()"></div>
                 <div class="map-popup" id="map-popup-klcc">
@@ -240,8 +301,29 @@
                             <img src="{{ asset('images/location1.jpg') }}" alt="Location icon">
                             Kuala Lumpur KLCC Convention Centre (Hall 4)
                         </div>
+                        <div class="countdown-container">
+                        <h2 class="event-title">Event Countdown:</h2>
+                        <div class="countdown-box" id="countdown-event1">
+                            <div class="countdown-element">
+                                <span id="days-event1" class="countdown-value">0</span>
+                                <span class="countdown-label">Days</span>
+                            </div>
+                            <div class="countdown-element">
+                                <span id="hours-event1" class="countdown-value">0</span>
+                                <span class="countdown-label">Hours</span>
+                            </div>
+                            <div class="countdown-element">
+                                <span id="minutes-event1" class="countdown-value">0</span>
+                                <span class="countdown-label">Minutes</span>
+                            </div>
+                            <div class="countdown-element">
+                                <span id="seconds-event1" class="countdown-value">0</span>
+                                <span class="countdown-label">Seconds</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
+            </div>
             </td>
             <td class="column3">
                 <div class="description">
@@ -289,6 +371,27 @@
                             <img src="{{ asset('images/location1.jpg') }}" alt="Location icon">
                             Pavilion Exhibition Centre Bukit Jalil, Level 5, Pink Zone
                         </div>
+                        <div class="countdown-container">
+                        <h2 class="event-title">Event Countdown:</h2>
+                        <div class="countdown-box" id="countdown-event2">
+                            <div class="countdown-element">
+                                <span id="days-event2" class="countdown-value">0</span>
+                                <span class="countdown-label">Days</span>
+                            </div>
+                            <div class="countdown-element">
+                                <span id="hours-event2" class="countdown-value">0</span>
+                                <span class="countdown-label">Hours</span>
+                            </div>
+                            <div class="countdown-element">
+                                <span id="minutes-event2" class="countdown-value">0</span>
+                                <span class="countdown-label">Minutes</span>
+                            </div>
+                            <div class="countdown-element">
+                                <span id="seconds-event2" class="countdown-value">0</span>
+                                <span class="countdown-label">Seconds</span>
+                            </div>
+                        </div>
+                    </div>
                     </div>
                 </div>
             </td>
@@ -355,6 +458,42 @@
         document.querySelector('.overlay').style.display = 'none';
         document.querySelectorAll('.map-popup').forEach((popup) => (popup.style.display = 'none'));
     }
+
+
+    // Event Dates
+const eventDates = {
+    event1: new Date('2025-01-11T11:00:00').getTime(),
+    event2: new Date('2025-01-15T11:00:00').getTime(),
+};
+
+// Countdown Function
+function updateCountdown(eventId, eventDate) {
+    const now = new Date().getTime();
+    const distance = eventDate - now;
+
+    if (distance < 0) {
+        document.querySelector(`#countdown-${eventId}`).innerHTML = '<h2>Event has started!</h2>';
+        return;
+    }
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    document.getElementById(`days-${eventId}`).innerText = days;
+    document.getElementById(`hours-${eventId}`).innerText = hours;
+    document.getElementById(`minutes-${eventId}`).innerText = minutes;
+    document.getElementById(`seconds-${eventId}`).innerText = seconds;
+}
+
+// Initialize Countdown Timers
+function startCountdowns() {
+    setInterval(() => updateCountdown('event1', eventDates.event1), 1000);
+    setInterval(() => updateCountdown('event2', eventDates.event2), 1000);
+}
+
+startCountdowns();
 </script>
 <script async
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDOe_idazATrc44GZA3Gogc117S1tJuq5I&libraries=places&callback=initMap">
