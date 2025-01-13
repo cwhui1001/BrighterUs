@@ -6,12 +6,16 @@ use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
+    // public function index()
+    // {
+    //      // Fetch the 'aboutUs' data from the database
+    //      $homeInfo = home_info::first(); // Retrieves the first record, assuming there is only one row with the 'aboutUs' field
+        
+    //      // Pass the data to the view
+    //      return view('dashboard', compact('homeInfo')); // 'homeInfo' will be available in your Blade view
+    // }
     public function index()
     {
-         // Fetch the 'aboutUs' data from the database
-         $homeInfo = home_info::first(); // Retrieves the first record, assuming there is only one row with the 'aboutUs' field
-        
-         // Pass the data to the view
-         return view('dashboard', compact('homeInfo')); // 'homeInfo' will be available in your Blade view
+        return view('dashboard');  // Your career page view
     }
 }
