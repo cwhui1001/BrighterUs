@@ -8,6 +8,12 @@ use Illuminate\Support\Facades\Route;
 //     return view('home');
 // })-> name('home');
 
+
+use App\Http\Controllers\OpenAIController;
+
+Route::post('/openai/chat', [OpenAIController::class, 'getChatResponse']);
+
+
 Route::get('/universities', function () {
     return view('universities');
 })-> name('universities');

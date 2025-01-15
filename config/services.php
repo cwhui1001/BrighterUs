@@ -36,3 +36,38 @@ return [
     ],
 
 ];
+
+use GuzzleHttp\Client;
+
+class AzureChatbotService
+{
+    protected $client;
+    protected $endpoint;
+    protected $apiKey;
+
+    public function __construct()
+    {
+        $this->client = new Client();
+        $this->endpoint = env('AZURE_OPENAI_ENDPOINT'); // Add endpoint to .env
+        $this->apiKey = env('AZURE_OPENAI_API_KEY'); // Add API Key to .env
+    }
+
+    public function sendMessage($message)
+    {
+        $response = $this->client->post($this->endpoint, [
+            'headers' => [
+                'Authorization' => 'Bearer ' . $this->apiKey,
+                'Content-Type' => 'application/json',
+            ],
+            'json' => [
+                'messages' => [
+                    ['role' => 'user', 'content' => $message],
+                ],
+                'max_tokens' => 150,
+                'temperature' => 0.7,
+            ]
+        ]);
+
+        return json_decode($response->getBody()->getContents(), true);
+    }
+}
