@@ -22,7 +22,7 @@
     right: 20px;
     padding: 12px 20px;
     border-radius: 30px;
-    background-color: #007BFF;
+    background-color:rgb(255, 123, 0);
     color: white;
     font-size: 18px;
     border: none;
@@ -31,7 +31,7 @@
 }
 
 .chatbot-btn:hover {
-    background-color: #0056b3;
+    background-color:rgb(179, 101, 0);
 }
 
 /* Chatbot Popup */
@@ -52,7 +52,7 @@
 }
 
 .chatbot-header {
-    background-color: #007BFF;
+    background-color:rgb(255, 145, 0);
     color: white;
     padding: 15px;
     font-size: 16px;
@@ -78,26 +78,39 @@
 }
 
 .user-message {
-    width: calc(100% - 40px);
+    width: 93%;
     padding: 10px;
     margin: 10px;
     border-radius: 20px;
-    border: 1px solid #ddd;
+    border: 1px solid orange;
 }
-
+.user,.bot {
+    background-color: #f0f0f0; /* Soft light grey background */
+    border-radius: 8px; /* Rounded corners */
+    padding: 10px; /* Padding for spacing */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    color: #333; /* Dark text color for contrast */
+    font-family: 'Arial', sans-serif; /* Clean, modern font */
+    font-size: 16px; /* Easy-to-read font size */
+    max-width: 280px; /* Limit the width for a neat look */
+    margin: 20px auto; /* Centered horizontally with margin */
+}
+.user{
+    background-color: rgb(253, 195, 80);
+}
 .send-message {
-    background-color: #007BFF;
+    background-color:rgb(255, 140, 0);
     color: white;
     padding: 10px;
     border-radius: 20px;
     border: none;
     cursor: pointer;
     margin: 10px;
-    width: 100%;
+    width: 93%;
 }
 
 .send-message:hover {
-    background-color: #0056b3;
+    background-color:rgb(179, 98, 0);
 }
 
 /* Fade-in animation */
@@ -134,76 +147,90 @@
         </div>
 
          <!-- Chatbot -->
-         <!-- Chatbot Button -->
-        <button id="chatbot-btn" class="chatbot-btn">💬 Chat with us</button>
+<!-- Chatbot Button -->
+<button id="chatbot-btn" class="chatbot-btn">💬 Chat with us</button>
 
-        <!-- Chatbot Popup -->
-        <div id="chatbot-popup" class="chatbot-popup">
-            <div class="chatbot-header">
-                <span>Chatbot</span>
-                <button id="close-chat" class="close-chat">×</button>
-            </div>
-            <div id="chat-box" class="chat-box"></div>
-            <input type="text" id="user-message" class="user-message" placeholder="Type a message..." />
-            <button id="send-message" class="send-message">Send</button>
-        </div>
-        <script>
-            // Get elements
-const chatbotBtn = document.getElementById('chatbot-btn');
-const chatbotPopup = document.getElementById('chatbot-popup');
-const closeChat = document.getElementById('close-chat');
-const sendMessageBtn = document.getElementById('send-message');
-const chatBox = document.getElementById('chat-box');
-const userMessageInput = document.getElementById('user-message');
+<!-- Chatbot Popup -->
+<div id="chatbot-popup" class="chatbot-popup" style="display: none;">
+    <div class="chatbot-header">
+        <span>Chatbot</span>
+        <button id="close-chat" class="close-chat">×</button>
+    </div>
+    <div id="chat-box" class="chat-box"></div>
+    <input type="text" id="user-message" class="user-message" placeholder="Type a message..." />
+    <button id="send-message" class="send-message">Send</button>
+</div>
 
-// Open the chatbot popup
-chatbotBtn.addEventListener('click', function() {
-    chatbotPopup.style.display = 'flex';
-});
+<script>
+    // Get elements
+    const chatbotBtn = document.getElementById('chatbot-btn');
+    const chatbotPopup = document.getElementById('chatbot-popup');
+    const closeChat = document.getElementById('close-chat');
+    const sendMessageBtn = document.getElementById('send-message');
+    const chatBox = document.getElementById('chat-box');
+    const userMessageInput = document.getElementById('user-message');
 
-// Close the chatbot popup
-closeChat.addEventListener('click', function() {
-    chatbotPopup.style.display = 'none';
-});
+    // Open the chatbot popup
+    chatbotBtn.addEventListener('click', function () {
+        chatbotPopup.style.display = 'flex';
+    });
 
-// Function to add a message to the chatbox
-function addMessage(message, sender = 'user') {
-    const messageDiv = document.createElement('div');
-    messageDiv.classList.add(sender);
-    messageDiv.textContent = message;
-    chatBox.appendChild(messageDiv);
-    chatBox.scrollTop = chatBox.scrollHeight; // Scroll to the bottom
-}
+    // Close the chatbot popup
+    closeChat.addEventListener('click', function () {
+        chatbotPopup.style.display = 'none';
+    });
 
-// Send message to chatbot
-sendMessageBtn.addEventListener('click', function() {
-    const userMessage = userMessageInput.value;
-    if (userMessage.trim() !== '') {
-        addMessage(userMessage); // Add user message
-        userMessageInput.value = ''; // Clear input
-
-        // Call the backend to get the chatbot's response
-        axios.post('/chat', {
-            message: userMessage
-        })
-        .then(function(response) {
-            const chatbotResponse = response.data.response;
-            addMessage(chatbotResponse, 'chatbot'); // Add chatbot response
-        })
-        .catch(function(error) {
-            console.error('Error:', error);
-        });
+    // Function to add a message to the chatbox
+    function addMessage(message, sender = 'user') {
+        const messageDiv = document.createElement('div');
+        messageDiv.classList.add(sender); // Add 'user' or 'bot' class
+        messageDiv.textContent = message;
+        chatBox.appendChild(messageDiv);
+        chatBox.scrollTop = chatBox.scrollHeight; // Scroll to the bottom
     }
-});
 
-// Allow sending messages by pressing 'Enter'
-userMessageInput.addEventListener('keypress', function(e) {
-    if (e.key === 'Enter') {
-        sendMessageBtn.click();
+    // Send message to chatbot
+    async function sendMessage() {
+        const message = userMessageInput.value.trim(); // Get and trim user input
+        if (!message) return;
+
+        // Add user's message to chatbox
+        addMessage(message, 'user');
+        userMessageInput.value = ''; // Clear input field
+
+        try {
+            // Send user message to Laravel API
+            const response = await fetch('http://localhost/BrighterUs/public/chatbot-query', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                },
+                body: JSON.stringify({ query: message }),
+            });
+            // Log the raw response before parsing it
+            console.log(await response.text());
+
+            // Parse response from server
+            const data = await response.json();
+            const botResponse = data.response || 'Sorry, I did not understand that.';
+            addMessage(botResponse, 'bot');
+        } catch (error) {
+            addMessage('Error connecting to the server.', 'bot');
+        }
     }
-});
 
-        </script>
+    // Allow sending messages by pressing 'Enter'
+    userMessageInput.addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            sendMessage();
+        }
+    });
+
+    // Send message on button click
+    sendMessageBtn.addEventListener('click', sendMessage);
+</script>
+
 
 
     </body>

@@ -16,6 +16,6 @@ class DashboardController extends Controller
     // }
     public function index()
     {
-        return view('dashboard');  // Your career page view
+        return view('dashboard');  
     }
 }

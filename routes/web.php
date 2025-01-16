@@ -9,9 +9,10 @@ use Illuminate\Support\Facades\Route;
 // })-> name('home');
 
 
-use App\Http\Controllers\OpenAIController;
+use App\Http\Controllers\ChatbotController;
+Route::post('/chatbot-query', [ChatbotController::class, 'handleQuery']);
+// Route::post('/openai/chat', [OpenAIController::class, 'getChatResponse']);
 
-Route::post('/openai/chat', [OpenAIController::class, 'getChatResponse']);
 
 
 Route::get('/universities', function () {
@@ -34,7 +35,7 @@ Route::get('/', function () {
     return view('dashboard');
 })-> name('dashboard');
 
-Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+// Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
 
 Route::middleware('auth')->group(function () {
