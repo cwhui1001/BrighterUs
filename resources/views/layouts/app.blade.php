@@ -200,7 +200,7 @@
 
         try {
             // Send user message to Laravel API
-            const response = await fetch('http://localhost/BrighterUs/public/chatbot-query', {
+            const response = await fetch('/chatbot-query', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
