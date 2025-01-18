@@ -1,6 +1,5 @@
 <x-app-layout>
     <x-slot name="header" class="dash-header relative bg-orange-400">
-        
         <div class="container">
             <div class="starry-background">
                 <h2 class="dashboard-header">
@@ -24,75 +23,70 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-           
-                <div class="custom-text">
-                    <h2 class="sub-title">{{ __('Finding the Right Options Too Slow and Painful?') }}</h2>
-                    <div class="sub-title">
-                        <img src="{{ asset('images/confuse.png') }}">
-                    </div>
-                    <div class="sub-title">
-                        <img src="{{ asset('images/confuseWords.png') }}">
-                    </div>
+            <div class="custom-text">
+                <h2 class="sub-title">{{ __('Finding the Right Options Too Slow and Painful?') }}</h2>
+                <div class="sub-title">
+                    <img src="{{ asset('images/confuse.png') }}">
                 </div>
-                <div class="custom">
-                    <img src="{{ asset('images/free.png') }}">
+                <div class="sub-title">
+                    <img src="{{ asset('images/confuseWords.png') }}">
                 </div>
-
-                
+            </div>
+            <div class="custom">
+                <img src="{{ asset('images/free.png') }}">
+            </div>
         </div>
     </div>
-<script>
-   
-    // Wavy bottom
-    const wavePath = document.getElementById('wave');
-    let wavePhase = 0;
+    <script>
+        // Wavy bottom
+        const wavePath = document.getElementById('wave');
+        let wavePhase = 0;
 
-    function animateWave() {
-        wavePhase += 0.04; // Controls wave speed
-        const waveAmplitude = 26; // Height of the wave
-        const waveFrequency = 0.071; // Controls the wave spacing
-        let waveD = 'M0,224';
+        function animateWave() {
+            wavePhase += 0.04; // Controls wave speed
+            const waveAmplitude = 26; // Height of the wave
+            const waveFrequency = 0.071; // Controls the wave spacing
+            let waveD = 'M0,224';
 
-        for (let x = 0; x <= 1440; x += 80) {
-            const y = 200 + Math.sin((x * waveFrequency) + wavePhase) * waveAmplitude;
-            waveD += `L${x},${y}`;
+            for (let x = 0; x <= 1440; x += 80) {
+                const y = 200 + Math.sin((x * waveFrequency) + wavePhase) * waveAmplitude;
+                waveD += `L${x},${y}`;
+            }
+
+            waveD += 'L1440,320L0,320Z';
+            wavePath.setAttribute('d', waveD);
+
+            requestAnimationFrame(animateWave);
         }
 
-        waveD += 'L1440,320L0,320Z';
-        wavePath.setAttribute('d', waveD);
+        // Start the animation
+        animateWave();
 
-        requestAnimationFrame(animateWave);
-    }
+        //stars
+        const starryBackground = document.querySelector('.starry-background');
 
-    // Start the animation
-    animateWave();
+        // Number of stars to generate
+        const numberOfStars = 10;
 
-    //stars
-    const starryBackground = document.querySelector('.starry-background');
+        for (let i = 0; i < numberOfStars; i++) {
+            const star = document.createElement('div');
+            star.classList.add('star');
 
-// Number of stars to generate
-const numberOfStars = 10;
+            // Random position
+            star.style.top = `${Math.random() * 100}vh`;
+            star.style.left = `${Math.random() * 100}vw`;
 
-for (let i = 0; i < numberOfStars; i++) {
-    const star = document.createElement('div');
-    star.classList.add('star');
+            // Random sizes between 3px and 6px
+            const size = Math.random() * 10 + 8; // Size between 3px and 6px
+            star.style.width = `${size}px`;
+            star.style.height = `${size}px`;
 
-    // Random position
-    star.style.top = `${Math.random() * 100}vh`;
-    star.style.left = `${Math.random() * 100}vw`;
+            // Random animation speed for each star
+            const sparkleDuration = Math.random() * 2 + 0.5; // Speed between 1s and 3s
+            star.style.animationDuration = `${sparkleDuration}s`;
 
-    // Random sizes between 3px and 6px
-    const size = Math.random() * 10 + 8; // Size between 3px and 6px
-    star.style.width = `${size}px`;
-    star.style.height = `${size}px`;
+            starryBackground.appendChild(star);
+        }
 
-    // Random animation speed for each star
-    const sparkleDuration = Math.random() * 2 + 0.5; // Speed between 1s and 3s
-    star.style.animationDuration = `${sparkleDuration}s`;
-
-    starryBackground.appendChild(star);
-}
-
-
-</script>
+    </script>
 </x-app-layout>

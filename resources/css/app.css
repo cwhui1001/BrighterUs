@@ -10,7 +10,6 @@
     background-repeat: no-repeat;
 }
 
-
 /* Custom class for header style */
 .custom-header {
     font-weight: 800; /* font-semibold */
@@ -238,5 +237,113 @@ nav {
     100% {
         opacity: 1;
         transform: scale(1.2) rotate(360deg);
+    }
+}
+/*/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+/* chatbot */
+.chatbot-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 12px 20px;
+    border-radius: 30px;
+    background-color:rgb(255, 123, 0);
+    color: white;
+    font-size: 18px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.chatbot-btn:hover {
+    background-color:rgb(179, 101, 0);
+}
+
+/* Chatbot Popup */
+.chatbot-popup {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    width: 300px;
+    height: 400px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    z-index: 999;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.chatbot-header {
+    background-color:rgb(255, 145, 0);
+    color: white;
+    padding: 15px;
+    font-size: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 10px 10px 0 0;
+}
+
+.close-chat {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.chat-box {
+    padding: 10px;
+    overflow-y: auto;
+    flex-grow: 1;
+    max-height: 280px;
+}
+
+.user-message {
+    width: 93%;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 20px;
+    border: 1px solid orange;
+}
+.user,.bot {
+    background-color: #f0f0f0; /* Soft light grey background */
+    border-radius: 8px; /* Rounded corners */
+    padding: 10px; /* Padding for spacing */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    color: #333; /* Dark text color for contrast */
+    font-family: 'Arial', sans-serif; /* Clean, modern font */
+    font-size: 16px; /* Easy-to-read font size */
+    max-width: 280px; /* Limit the width for a neat look */
+    margin: 20px auto; /* Centered horizontally with margin */
+}
+.user{
+    background-color: rgb(253, 195, 80);
+}
+.send-message {
+    background-color:rgb(255, 140, 0);
+    color: white;
+    padding: 10px;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    margin: 10px;
+    width: 93%;
+}
+
+.send-message:hover {
+    background-color:rgb(179, 98, 0);
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
     }
 }
