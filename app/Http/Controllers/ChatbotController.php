@@ -10,34 +10,46 @@ class ChatbotController extends Controller
     public function handleQuery(Request $request)
     {
         // Define the URL
-        $url = 'https://ai-23096183aibrighterus800207146867.openai.azure.com/openai/deployments/text-davinci-003/completions?api-version=2023-03-15-preview';
+        $url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent';
 
         // Define your API key
-        $apiKey = 'C3Uf9eG71t3YJ6RuUBMRMDewPAsV2HakZFTLVvg6xpeMJs7TxYnmJQQJ99BAACYeBjFXJ3w3AAAAACOGJ9Ec'; // Replace with your actual API key
+        $apiKey = 'AIzaSyDMnePLV-ZPAGPrmBDUpuQ_c3PvfgpQ7zY'; // Replace with your actual API key
 
-        // Check if the URL or API key is null or invalid
-        if ($url === null || $apiKey === null) {
-            // Handle the error (e.g., return a response or throw an exception)
-            return response()->json(['error' => 'URL or API key not set'], 500);
+        // Get the user query from the request
+        $userQuery = $request->input('query');
+        // Check if the query is not empty
+        if (empty($userQuery)) {
+            return response()->json(['error' => 'Query is empty'], 400);
         }
-
-        // Proceed with the API request if the URL and API key are valid
         try {
+            // Make the API request
             $response = Http::withHeaders([
-                'Authorization' => 'Bearer ' . $apiKey,
                 'Content-Type' => 'application/json',
-            ])->post($url, [
-                'prompt' => 'What is the capital of France?',
-                'max_tokens' => 50,
-                'temperature' => 0.7,
+            ])->post($url . '?key=' . $apiKey, [
+                'contents' => [
+                    [
+                        'parts' => [
+                            ['text' => $userQuery],
+                        ]
+                    ]
+                ]
             ]);
 
-            // Handle the response
-            return response()->json($response->json());
+            // Check if the API response is successful
+            if ($response->successful()) {
+                // Get the chatbot's response
+                $data = $response->json();
+                $botResponse = $data['candidates'][0]['content']['parts'][0]['text'] ?? 'Sorry, I didn\'t get that.';
+
+                return response()->json(['response' => $botResponse]);
+            } else {
+                return response()->json(['error' => 'Error from API', 'message' => $response->body()], 500);
+            }
         } catch (\Exception $e) {
-            // Handle any exceptions
+            // Handle exceptions (e.g., network issues, API errors)
             return response()->json(['error' => 'Request failed', 'message' => $e->getMessage()], 500);
         }
     }
     
 }
+
