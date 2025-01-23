@@ -13,7 +13,7 @@ class ChatbotController extends Controller
         $url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent';
 
         // Define your API key
-        $apiKey = 'AIzaSyDMnePLV-ZPAGPrmBDUpuQ_c3PvfgpQ7zY'; // Replace with your actual API key
+        $apiKey = 'AIzaSyDMnePLV-ZPAGPrmBDUpuQ_c3PvfgpQ7zY'; 
 
         // Get the user query from the request
         $userQuery = $request->input('query');
