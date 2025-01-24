@@ -1,3 +1,6 @@
+@vite(['resources/css/dashboard.css', 'resources/js/dashboard.js'])
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+   
 <x-app-layout>
     <x-slot name="header" class="dash-header relative bg-orange-400">
         <div class="container">
@@ -8,7 +11,7 @@
                 <div class="title-content animate-title" id="line1">Every step you take today shapes the path to a brighter and more fulfilling tomorrow.</div>
                 <div class="title-content animate-title" id="line2">At BrighterUs, we believe that each small action builds the foundation for a future full of endless possibilities.</div><br>
             </div>
-            <div class="circle-frame animate-title">
+            <div class="circle-frame bounce-animation">
                 <img src="{{ asset('images/tertiaryeducation.jpg') }}" alt="Circular Image">
             </div>
         </div>
@@ -20,10 +23,10 @@
             </svg>
         </div>
     </x-slot>
-
+<br>
     <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="custom-text">
+        <div class="max-w-[90rem] mx-auto sm:px-10 lg:px-16">
+            <div class="custom-text flow-up">
                 <h2 class="sub-title">{{ __('Finding the Right Options Too Slow and Painful?') }}</h2>
                 <div class="sub-title">
                     <img src="{{ asset('images/confuse.png') }}">
@@ -32,61 +35,61 @@
                     <img src="{{ asset('images/confuseWords.png') }}">
                 </div>
             </div>
-            <div class="custom">
+
+            <div class="custom flow-up">
                 <img src="{{ asset('images/free.png') }}">
             </div>
+        
+            <h1 class="section-title">Why Choose Us?</h1><br>
+                <div class="custom-vertical flow-up">
+                    <div class="why-choose-us-section" >
+                        <h2 class="sub-title3">Explore Top Universities All Over Malaysia!</h2><br>
+                        <div class="university-logos">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Sunway_logo.jpg/1200px-Sunway_logo.jpg" alt="University Logo 1">
+                            <img src="https://jmeducationgroup.com/wp-content/uploads/2021/03/Taylors-University-Logo.jpeg" alt="University Logo 2">
+                            <img src="https://d30mzt1bxg5llt.cloudfront.net/public/uploads/images/_signatoryLogo/2016-MonashUniversityMALAYSIA_2-MonoCMYKoutlines.jpg" alt="University Logo 3">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQR8y9ZDsvA9NHsWgJQbo7g9C97_XgzkS8bww&s" alt="University Logo 4">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/2/29/Multimedia_University_secondary_logo_2020.png" alt="University Logo 4">
+                            <img src="https://erasmusplusfriends.eu/wp-content/uploads/2019/05/APU-Logo_Final_Vertical_V1_HR1-copy-1024x966.png" alt="University Logo 4">
+                        </div><br>
+                        <h3>Compare Universities by price, ranking, location just by your finger tips!</h3>
+                        <a class="cta-button mt-4" href="{{ url('/universities') }}">See All Universities</a>
+
+                    </div>
+                    <div class="why-choose-us-section" >
+                        <h3 class="sub-title3">Grab Chances of Getting Full Scholarships!</h3><br>
+                        <div class="university-logos">
+                            <img src="https://sunway.edu.my/sites/default/files/inline-images/jcf-logo%402x.png" alt="University Logo 1">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNOwxmmuX1D6LAWoX7ZU_AgDXtVHG5kn4Yhy-cUhQ-tlCrxAwWGS4LBKGeociHGgtdaBE&usqp=CAU" alt="University Logo 2">
+                            <img src="https://logolook.net/wp-content/uploads/2022/07/Petronas-Logo-2013.png" alt="University Logo 3">
+                            <img src="https://www.khazanah.com.my/media/uploads/2020/06/Yayasan-Hasanah-Logo-1.png" alt="University Logo 4">
+                            <img src="https://mdec.my/static/images/mdcap/resource-bnm-logo.png" alt="University Logo 4">
+                            <img src="https://ik.imagekit.io/impian/kouk-foundation.jpg?updatedAt=1689601512471" alt="University Logo 4">
+                        </div><br>
+                        <h3>Get scholarships and sponsorships on tuition fees, hostels, flights, and many more grants!</h3>
+                        <a class="cta-button mt-4" href="{{ url('/financial') }}">See All Scholarships</a>
+                    </div>
+
+                    <div class="why-choose-us-section" >
+                        <h3 class="sub-title3">Get Updated with Upcoming Education Fair!</h3><br>
+                        <img src="{{ asset('images/event1.jpg') }}">
+                        <br>
+                        <h3>Get notified with all the upcoming education fairs in Malaysia!</h3>
+                        <a class="cta-button mt-4" href="{{ url('/events') }}">Explore All Events</a>
+                    </div>
+
+                    <div class="why-choose-us-section" >
+                        <h3 class="sub-title3">Get Personalized Career Advice!</h3><br>
+                        <img src="https://lh3.googleusercontent.com/jk7NGicti_riQFDLxxZGAEEn3j5XbJ2ZfOLiksdS7AxXJQUiSQwrYTdqUSkdoaJ6isDNOlxHvOBTcJGNWW7PL6BhCaIJwWtTj7dWOfbPqSRC5QeTNs08DfsLoI_bgyRmW0ces5Pv">
+                        <br>
+                        <h3>Get personalized pathway advice by going through a quick career assessment!</h3>
+                        <a class="cta-button mt-4" href="{{ url('/career') }}">Take a career test</a>
+                    </div>
+                    
+                </div>
+            </div>
+
         </div>
     </div>
-    <script>
-        // Wavy bottom
-        const wavePath = document.getElementById('wave');
-        let wavePhase = 0;
-
-        function animateWave() {
-            wavePhase += 0.04; // Controls wave speed
-            const waveAmplitude = 26; // Height of the wave
-            const waveFrequency = 0.071; // Controls the wave spacing
-            let waveD = 'M0,224';
-
-            for (let x = 0; x <= 1440; x += 80) {
-                const y = 200 + Math.sin((x * waveFrequency) + wavePhase) * waveAmplitude;
-                waveD += `L${x},${y}`;
-            }
-
-            waveD += 'L1440,320L0,320Z';
-            wavePath.setAttribute('d', waveD);
-
-            requestAnimationFrame(animateWave);
-        }
-
-        // Start the animation
-        animateWave();
-
-        //stars
-        const starryBackground = document.querySelector('.starry-background');
-
-        // Number of stars to generate
-        const numberOfStars = 10;
-
-        for (let i = 0; i < numberOfStars; i++) {
-            const star = document.createElement('div');
-            star.classList.add('star');
-
-            // Random position
-            star.style.top = `${Math.random() * 100}vh`;
-            star.style.left = `${Math.random() * 100}vw`;
-
-            // Random sizes between 3px and 6px
-            const size = Math.random() * 10 + 8; // Size between 3px and 6px
-            star.style.width = `${size}px`;
-            star.style.height = `${size}px`;
-
-            // Random animation speed for each star
-            const sparkleDuration = Math.random() * 2 + 0.5; // Speed between 1s and 3s
-            star.style.animationDuration = `${sparkleDuration}s`;
-
-            starryBackground.appendChild(star);
-        }
-
-    </script>
+    
 </x-app-layout>
