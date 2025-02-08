@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\ChatbotController;
+use App\Models\Faq;
 
 Route::post('/BrighterUs/public/chatbot-query', [ChatbotController::class, 'handleQuery']);
 
@@ -16,16 +17,17 @@ Route::get('/events', function () {
     return view('events');
 })-> name('events');
 
-Route::get('/financial', function () {
-    return view('financial');
-})-> name('financial');
+use App\Http\Controllers\FinancialController;
+
+Route::get('/financial', [FinancialController::class, 'scrapeWebsite'])->name('financial');
 
 Route::get('/career', function () {
     return view('career');
 })-> name('career');
 
 Route::get('/', function () {
-    return view('dashboard');
+    $faqs = Faq::all();
+    return view('dashboard', compact('faqs'));
 })-> name('dashboard');
 
 // Route::get('/', [DashboardController::class, 'index'])->name('dashboard');

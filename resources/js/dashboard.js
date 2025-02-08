@@ -86,3 +86,19 @@ document.addEventListener("DOMContentLoaded", function() {
     // Initial check
     revealOnScroll();
   });
+
+  function toggleFaq(button) {
+    const content = button.nextElementSibling;
+    const isOpen = !content.classList.contains('hidden');
+
+    document.querySelectorAll('.faq-content').forEach((faq) => faq.classList.add('hidden'));
+    document.querySelectorAll('.faq-toggle span').forEach((icon) => (icon.textContent = '+'));
+
+    if (!isOpen) {
+        content.classList.remove('hidden');
+        button.querySelector('span').textContent = '×';
+    } else {
+        content.classList.add('hidden');
+        button.querySelector('span').textContent = '+';
+    }
+}

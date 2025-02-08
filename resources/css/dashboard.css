@@ -124,3 +124,28 @@
     padding: 20px;
     text-align: center;
 }
+
+
+
+.faq-container {
+    padding-top: 100px;
+    margin: 0 auto;
+    border-radius: 2rem;
+    align-items: center;
+}
+.faq-con{
+    border-radius: 20px;
+    width: 1000px;
+}
+.faq-item {
+    margin-bottom: 20px;
+}
+.faq-question {
+    font-weight: bold;
+    cursor: pointer;
+    color: #ff4d00;
+}
+.faq-answer {
+    margin-top: 10px;
+    display: none;
+}

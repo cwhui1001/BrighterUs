@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\home_info;
 use Illuminate\Http\Request;
+use App\Models\Faq;
 
 class DashboardController extends Controller
 {
@@ -16,6 +17,7 @@ class DashboardController extends Controller
     // }
     public function index()
     {
-        return view('dashboard');  
+        $faqs = Faq::all();
+        return view('dashboard', compact('faqs'));  
     }
 }
