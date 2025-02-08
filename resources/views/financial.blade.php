@@ -1,3 +1,4 @@
+@vite(['resources/css/financial.css', 'resources/js/financial.js'])
 
 <x-app-layout>
     <x-slot name="header">
