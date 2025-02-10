@@ -94,6 +94,7 @@ body {
     overflow: hidden;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     font-size: 16px;
+    margin-bottom: 20px;
   }
   .left-section {
     width: 100%;
@@ -173,4 +174,101 @@ ol {
     display: flex;
     text-align: center;
     align-items: center;
+}
+
+
+
+
+
+
+
+
+.why-choose-us-section {
+    padding: 40px;
+    background: linear-gradient(180deg, #ffffff, #fff6eb);
+    border-radius: 2rem;
+    box-shadow: 0 3px 40px 15px rgba(0, 0, 0, 0.1);
+    margin: 35px;
+    text-align: center;
+}
+
+.section-title {
+    color: #ff5722;
+    font-size: 30px;
+    text-transform: uppercase;
+    margin: 20px;
+    font-family: 'Montserrat', sans-serif;
+    letter-spacing: 2px;
+    text-align: center;
+}
+
+.university-logos {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    justify-items: center;
+}
+
+.university-logos img {
+    max-height: 90px;
+    /* transition: transform 0.3s, filter 0.3s;
+    filter: grayscale(100%); */
+    
+}
+
+.university-logos img:hover {
+    filter: none;
+    transform: scale(1.1);
+}
+
+.vertical-con{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.custom-vertical{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 100px;
+    padding-top: 0px;
+}
+
+
+/* .flow-up {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.5s ease-in-out;
+}
+
+.flow-up.show {
+    opacity: 1;
+    transform: translateY(0);
+} */
+
+.sub-title3{
+    display: flex;
+    justify-content: center;
+    font-size: 27px;
+    font-weight: 800;
+    padding: 20px;
+    text-align: center;
+}
+
+.cta-button {
+    display: inline-block;
+    background-color: #ff5722;
+    color: #fff;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 30px;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: background-color 0.3s, transform 0.2s;
+    align-items: center;
+}
+
+.cta-button:hover {
+    background-color: #e64a19;
+    transform: translateY(-3px);
 }
