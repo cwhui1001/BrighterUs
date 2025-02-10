@@ -97,7 +97,7 @@
                 @endforeach
             </div>
         </div><br>
-        <h1 class="section-title">Explore More Financial Opportunities!</h1><br>
+        <h1 class="section-title">More Scholarships</h1><br>
                 <div class="custom-vertical flow-up">
                     
                     <div class="why-choose-us-section" >

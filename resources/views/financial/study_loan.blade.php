@@ -97,7 +97,7 @@
                 @endforeach
             </div>
         </div><br>
-        <h1 class="section-title">Explore More Financial Opportunities!</h1><br>
+        <h1 class="section-title">More Scholarships</h1><br>
                 <div class="custom-vertical flow-up">
                 <div class="why-choose-us-section" >
                         <h3 class="sub-title3">Need-Based Scholarships</h3><br>
@@ -111,7 +111,7 @@
                         <h3>Financial constraints shouldn’t stop you from achieving your dreams! Need-based scholarships provide essential funding for students facing financial hardships, covering tuition fees, living expenses, and more. Apply today and focus on your education without the burden of financial stress.</h3>
                         <a class="cta-button mt-4" href="{{ url('/financial/need-based') }}">explore more</a>
                     </div>
-                    
+
                     <div class="why-choose-us-section" >
                         <h3 class="sub-title3">External Sponsorships</h3><br>
                         <div class="university-logos">
