@@ -23,11 +23,9 @@
     color: #1a202c; /* text-gray-900 */
     padding: 1.5rem; /* p-6 */
     background-color: #ffffff; /* bg-white */
-    box-shadow: 0 3px 40px 15px rgba(231, 154, 12, 0.151); /* shadow-sm */
+    box-shadow: 0 3px 30px 10px rgba(231, 154, 12, 0.151); /* shadow-sm */
     border-radius: 2rem; /* sm:rounded-lg */
-    margin-bottom: 100px;
-    display: grid;
-    grid-template-rows: 1fr 2fr;
+    margin-bottom: 80px;
 }
 
 .custom {

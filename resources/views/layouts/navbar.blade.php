@@ -1,3 +1,5 @@
+@vite(['resources/css/nav.css', 'resources/js/nav.js'])
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
         <a class="navbar-brand" href="{{ url('/') }}">BrighterUs</a>
@@ -22,8 +24,15 @@
                 </li>
 
                 <!-- Financial Page -->
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url('/financial') }}">Financial</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="financialAidDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Financial Aid
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="financialAidDropdown">
+                        <li><a class="dropdown-item" href="{{ route('financial.need-based') }}">Need-Based Scholarship</a></li>
+                        <li><a class="dropdown-item" href="{{ route('financial.external') }}">External Sponsorship</a></li>
+                        <li><a class="dropdown-item" href="{{ route('financial.loan') }}">Study Loan</a></li>
+                    </ul>
                 </li>
 
                 <!-- Career Page -->

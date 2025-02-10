@@ -1,0 +1,176 @@
+/* General Body Style */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+    color: #333;
+    font-size: 16px;
+}
+
+/* Container */
+
+
+/* Title */
+.title {
+    color: #007bff;
+    font-size: 28px;
+    margin-bottom: 30px;
+}
+
+/* Buttons at the Top */
+.button-row {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.top-btn {
+    background-color: #f0f8ff;
+    color: #007bff;
+    border: 1px solid #007bff;
+    padding: 10px 20px;
+    font-size: 14px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.top-btn.primary-btn {
+    background-color: #007bff;
+    color: white;
+}
+
+.top-btn:hover {
+    background-color: #0056b3;
+    color: white;
+}
+
+/* Dropdown Container */
+.dropdown-container {
+    margin-top: 20px;
+    text-align: left;
+}
+
+.dropdown {
+    margin-bottom: 15px;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+
+
+.dropdown-btn:hover:active {
+    background-color: #e6f4ff;
+}
+
+.dropdown-content {
+    display: none;
+    padding: 15px 20px;
+    background-color: #f9f9f9;
+    font-size: 14px;
+    border-radius: 5px;
+}
+
+/* Dropdown Open State */
+.dropdown.open {
+    box-shadow: 2px 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown.open .dropdown-content{
+    display: block;
+}
+
+
+  .scholar_container {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    width: 100%;
+    max-width: 1200px;
+    background: #fff;
+    margin: 20px;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-size: 16px;
+  }
+  .left-section {
+    width: 100%;
+    padding: 20px;
+    vertical-align: middle;
+  }
+
+  .left-section button {
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 20px;
+    border-radius: 15px;
+    cursor: pointer;
+    background-color: #fff6e9;
+    color: #000000;
+    transition: background-color 0.3s ease;
+  }
+
+  .left-section button:hover {
+    background-color: #fff2d4;
+  }
+
+  .left-section button.focused {
+    background-color: #fff2d4;
+    color: #ff6f00;
+    font-weight: 700;
+    font-size: 18px;
+    border: 1px solid rgb(255, 186, 136);
+}
+
+  .right-section {
+    width: 100%;
+    padding: 20px;
+  }
+  
+  
+  .right-section button {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 25px;
+    background-color: #f3f7fb;
+    border-radius: 15px;
+    color: #ff8000;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-bottom: 15px;
+    font-weight: 500;
+    font-size: 16px;
+  }
+  .right-section button:hover {
+    background-color: #eeeeee;
+  }
+  .right-section button:focus {
+    background-color: #fff1cd;
+  }
+
+  .details {
+    display: none;
+}
+#scholarship1 {
+    display: block;
+}
+
+ol {
+    list-style-type: decimal; /* This ensures numbering */
+}
+
+.custom-text-financial{
+    color: #1a202c; /* text-gray-900 */
+    padding: 1.5rem; /* p-6 */
+    background-color: #ffffff; /* bg-white */
+    box-shadow: 0 3px 30px 10px rgba(231, 154, 12, 0.151); /* shadow-sm */
+    border-radius: 2rem; /* sm:rounded-lg */
+    margin-bottom: 50px;
+    display: flex;
+    text-align: center;
+    align-items: center;
+}

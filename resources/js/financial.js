@@ -1,40 +1,53 @@
-// Install with npm install @mendable/firecrawl-js
-import FireCrawlApp from '@mendable/firecrawl-js';
+document.addEventListener("DOMContentLoaded", function () {
+    const buttons = document.querySelectorAll(".left-section button");
+    const detailsSections = document.querySelectorAll(".details");
 
-const app = new FireCrawlApp({apiKey: "fc-492b53f642f240d08ccbdd621746144f"});
+    // Activate the first scholarship by default
+    if (buttons.length > 0) {
+        buttons[0].classList.add("focused");
+        const firstScholarshipId = buttons[0].getAttribute("onclick").match(/'([^']+)'/)[1];
+        document.getElementById(firstScholarshipId).style.display = "block";
+    }
 
-const scrapeResult = await app.scrapeUrl("https://scholarship.sunway.edu.my/scholarships/need-based-scholarships", {
-	formats: [ "markdown" ],
+    buttons.forEach((button) => {
+        button.addEventListener("click", function () {
+            // Remove focus style from all buttons
+            buttons.forEach((btn) => {
+                btn.classList.remove("focused");
+            });
+
+            // Add focus style to the clicked button
+            this.classList.add("focused");
+
+            // Hide all details
+            detailsSections.forEach((details) => {
+                details.style.display = "none";
+            });
+
+            // Show the relevant details section
+            const targetId = this.getAttribute("onclick").match(/'([^']+)'/)[1];
+            const targetDetails = document.getElementById(targetId);
+            if (targetDetails) {
+                targetDetails.style.display = "block";
+            }
+        });
+    });
 });
 
 
-
-
-async function scrapeContent() {
-    const app = new FireCrawlApp({ apiKey: "fc-492b53f642f240d08ccbdd621746144f" });
-    
-    try {
-        const scrapeResult = await app.scrapeUrl("https://scholarship.sunway.edu.my/scholarships/need-based-scholarships", { formats: ["markdown"] });
-        
-        // Send the scraped content to the backend via AJAX
-        const response = await fetch('financial', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': '{{ csrf_token() }}'
-            },
-            body: JSON.stringify({ content: scrapeResult.content })
+// JavaScript to toggle dropdown content within a specific scholarship's details
+document.querySelectorAll('.dropdown-btn').forEach(button => {
+    button.addEventListener('click', () => {
+        // Close all other dropdowns in the same container
+        const dropdownContainer = button.closest('.dropdown-container');
+        dropdownContainer.querySelectorAll('.dropdown').forEach(dropdown => {
+            if (dropdown !== button.parentElement) {
+                dropdown.classList.remove('open');
+            }
         });
 
-        const data = await response.json();
-
-        // Display the scraped content in the content div
-        document.getElementById('content').innerHTML = data.content;
-    } catch (error) {
-        console.error('Error scraping content:', error);
-    }
-}
-
-scrapeContent();
-
-
+        // Toggle the clicked dropdown
+        const dropdown = button.parentElement;
+        dropdown.classList.toggle('open');
+    });
+});

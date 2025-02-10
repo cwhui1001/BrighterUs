@@ -1,3 +1,4 @@
+@vite(['resources/css/nav.css', 'resources/js/nav.js'])
 <nav x-data="{ open: false }">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -11,7 +12,7 @@
                 </div>
 
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex items-center">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Home') }}
                     </x-nav-link>
@@ -21,9 +22,43 @@
                     <x-nav-link :href="route('events')" :active="request()->routeIs('events')">
                         {{ __('Events') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('financial')" :active="request()->routeIs('financial')">
-                        {{ __('Financial Aid') }}
-                    </x-nav-link>
+                    <div class="relative inline-block">
+                        <!-- Dropdown Button -->
+                        <x-nav-link href="#" id="financialAidDropdownButton" class="dropdown-toggle" :active="request()->routeIs('financial.*')">
+                            {{ __('Financial Aid') }}
+                        </x-nav-link>
+                        
+                        <!-- Dropdown Menu -->
+                        <div
+                            id="financialAidDropdownMenu"
+                            class="absolute hidden bg-white shadow-lg rounded-md mt-1 p-2 z-50 left-0 top-full w-48"
+                        >
+                            <x-nav-link :href="route('financial.need-based')" :active="request()->routeIs('financial.need-based')">
+                                Need-Based Scholarship
+                            </x-nav-link>
+                            <x-nav-link :href="route('financial.external')" :active="request()->routeIs('financial.external')">
+                                External Sponsorship
+                            </x-nav-link>
+                            <x-nav-link :href="route('financial.loan')" :active="request()->routeIs('financial.loan')">
+                                Study Loan
+                            </x-nav-link>
+                        </div>
+                    </div>
+
+                    <!-- <script>
+                        document.addEventListener('click', function (event) {
+                            const dropdownButton = document.getElementById('financialAidDropdownButton');
+                            const dropdownMenu = document.getElementById('financialAidDropdownMenu');
+
+                            if (dropdownButton.contains(event.target)) {
+                                dropdownMenu.classList.toggle('hidden');
+                            } else if (!dropdownMenu.contains(event.target)) {
+                                dropdownMenu.classList.add('hidden');
+                            }
+                        });
+                    </script> -->
+
+
                     <x-nav-link :href="route('career')" :active="request()->routeIs('career')">
                         {{ __('Career Match') }}
                     </x-nav-link>

@@ -3,7 +3,7 @@ use App\Http\Controllers\DashboardController;
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\FinancialController;
 use App\Http\Controllers\ChatbotController;
 use App\Models\Faq;
 
@@ -17,9 +17,12 @@ Route::get('/events', function () {
     return view('events');
 })-> name('events');
 
-use App\Http\Controllers\FinancialController;
-
-Route::get('/financial', [FinancialController::class, 'scrapeWebsite'])->name('financial');
+Route::prefix('financial')->name('financial.')->group(function () {
+    Route::get('/need-based', [FinancialController::class, 'needBased'])->name('need-based');
+    Route::get('/external-sponsorship', [FinancialController::class, 'external'])->name('external');
+    Route::get('/study-loan', [FinancialController::class, 'loan'])->name('loan');
+    Route::get('/scholarship/{scholarship}', [FinancialController::class, 'show'])->name('scholarship.show');
+});
 
 Route::get('/career', function () {
     return view('career');
@@ -29,8 +32,6 @@ Route::get('/', function () {
     $faqs = Faq::all();
     return view('dashboard', compact('faqs'));
 })-> name('dashboard');
-
-// Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

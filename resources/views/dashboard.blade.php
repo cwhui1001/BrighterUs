@@ -79,10 +79,9 @@
                         <a class="cta-button mt-4" href="{{ url('/events') }}">Explore All Events</a>
                     </div>
 
-                    <div class="why-choose-us-section" >
+                    <div class="why-choose-us-section">
                         <h3 class="sub-title3">Get Personalized Career Advice!</h3><br>
-                        <img src="https://lh3.googleusercontent.com/jk7NGicti_riQFDLxxZGAEEn3j5XbJ2ZfOLiksdS7AxXJQUiSQwrYTdqUSkdoaJ6isDNOlxHvOBTcJGNWW7PL6BhCaIJwWtTj7dWOfbPqSRC5QeTNs08DfsLoI_bgyRmW0ces5Pv">
-                        <br>
+                        <img src="{{ asset('images/mbti.png') }}">                        <br>
                         <h3>Get personalized pathway advice by going through a quick career assessment!</h3>
                         <a class="cta-button mt-4" href="{{ url('/career') }}">Take a career test</a>
                     </div>
