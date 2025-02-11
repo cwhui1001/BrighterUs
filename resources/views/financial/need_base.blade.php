@@ -107,7 +107,7 @@
                     <div class="why-choose-us-section" >
                         <h3 class="sub-title3">External Sponsorships</h3><br>
                         <div class="university-logos">
-                            <img src="https://logolook.net/wp-content/uploads/2022/07/Petronas-Logo-2013.png" alt="University Logo 3">
+                            <img src="https://www.mrf-asia.org/wp-content/uploads/2019/04/Sime-Darby-Logo.jpg" alt="University Logo 3">
                             <img src="https://www.khazanah.com.my/media/uploads/2020/06/Yayasan-Hasanah-Logo-1.png" alt="University Logo 4">
                             <img src="https://mdec.my/static/images/mdcap/resource-bnm-logo.png" alt="University Logo 4">
                             <img src="https://ik.imagekit.io/impian/kouk-foundation.jpg?updatedAt=1689601512471" alt="University Logo 4">

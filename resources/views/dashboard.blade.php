@@ -7,7 +7,11 @@
         <div class="container">
             <div class="starry-background">
                 <h2 class="dashboard-header">
-                    <div class="title animate-title">{{ __('BrighterUs') }}</div><br>
+                    <svg width="90%" height="30%">
+                        <text x="50%" y="60%"  text-anchor="middle"  >
+                            BrighterUs
+                        </text>
+                    </svg>
                 </h2>
                 <div class="title-content animate-title" id="line1">Every step you take today shapes the path to a brighter and more fulfilling tomorrow.</div>
                 <div class="title-content animate-title" id="line2">At BrighterUs, we believe that each small action builds the foundation for a future full of endless possibilities.</div><br>

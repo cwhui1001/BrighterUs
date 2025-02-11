@@ -234,7 +234,7 @@ ol {
 }
 
 
-/* .flow-up {
+.flow-up {
     opacity: 0;
     transform: translateY(50px);
     transition: all 0.5s ease-in-out;
@@ -243,7 +243,7 @@ ol {
 .flow-up.show {
     opacity: 1;
     transform: translateY(0);
-} */
+}
 
 .sub-title3{
     display: flex;
