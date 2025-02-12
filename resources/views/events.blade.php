@@ -495,6 +495,7 @@ function startCountdowns() {
 
 startCountdowns();
 </script>
+
 <script async
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDOe_idazATrc44GZA3Gogc117S1tJuq5I&libraries=places&callback=initMap">
 </script>

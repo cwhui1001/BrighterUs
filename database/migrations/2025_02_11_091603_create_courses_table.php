@@ -18,7 +18,7 @@ return new class extends Migration
                 $table->foreignId('category_id')->constrained('course_categories')->onDelete('cascade');
                 $table->foreignId('field_id')->constrained('fields')->onDelete('cascade');
                 $table->foreignId('university_id')->constrained('universities')->onDelete('cascade');
-                $table->foreignId('location')->constrained('locations')->onDelete('cascade');
+                $table->foreignId('location_id')->constrained('locations')->onDelete('cascade');
                 $table->foreignId('budget')->constrained('budgets')->onDelete('cascade');
                 $table->foreignId('ranking')->constrained('rankings')->onDelete('cascade');
                 $table->timestamps();

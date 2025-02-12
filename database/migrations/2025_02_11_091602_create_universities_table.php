@@ -15,7 +15,7 @@ return new class extends Migration
             Schema::create('universities', function (Blueprint $table) {
                 $table->id();
                 $table->string('name')->unique();
-                $table->string('location');
+                $table->foreignId('location_id');
                 $table->integer('ranking');
                 $table->timestamps();
             });

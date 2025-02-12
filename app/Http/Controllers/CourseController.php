@@ -42,7 +42,7 @@ class CourseController extends Controller
 
     public function filter(Request $request)
 {
-    $query = Course::query();
+    $query = Course::with(['category', 'field', 'university', 'location']);
 
     if ($request->has('category')) {
         $query->whereIn('category_id', $request->category);

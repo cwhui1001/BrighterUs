@@ -10,7 +10,7 @@ class Course extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'category_id', 'field_id', 'university_id', 'location', 'budget', 'ranking'];
+    protected $fillable = ['name', 'category_id', 'field_id', 'university_id', 'location_id', 'budget', 'ranking'];
 
     public function university()
     {
@@ -23,7 +23,7 @@ class Course extends Model
     }
 
     public function location() {
-        return $this->belongsTo(Location::class);
+        return $this->belongsTo(Location::class, 'location_id');
     }
 
     public function budget()
