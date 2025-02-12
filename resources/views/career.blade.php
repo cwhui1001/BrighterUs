@@ -116,6 +116,22 @@
         .btn-restart:hover {
             background-color: #9ca3af; /* Lighter Gray */
         }
+        .btn-download {
+            background-color:rgb(255, 255, 255); /* Gray */
+            color: grey;
+            padding: 10px 20px;
+            border: solid 2px rgb(76, 76, 76);
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            align: right;
+        }
+
+        .btn-download:hover {
+            background-color:rgb(216, 216, 216); /* Lighter Gray */
+            color: white;
+        }
         #progress-bar-container {
             width: 100%;
             background-color: #e0e0e0; /* Light gray background */
@@ -147,7 +163,7 @@
 
         #result ul {
             list-style-type: disc;
-            margin-left: 1.5rem;
+            margin-left: 50px;
             margin-bottom: 1rem;
             color: #2c3e50;
         }
@@ -383,6 +399,7 @@
                         </div>
 
                         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
                         <!-- Navigation Buttons -->
                         <div class="mt-4">
@@ -405,16 +422,57 @@
                     <p id="personality-description" class="mt-2"></p>
                     <h2 class="font-semibold mt-4">Recommended Career Paths:</h2>
                     <ul id="career-list" class="list-disc ml-4"></ul>
-                    <h3 class="font-semibold mt-6">Trait Distribution</h3>
+                    
                     <canvas id="mbti-chart" width="30" height="10"></canvas>
                     <p>&nbsp;</p>
+                    <button onclick="downloadPDF()" class="btn-download">Download PDF</button>
                     <button onclick="restartQuiz()" class="btn-restart">Restart Quiz</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+        <?php
+            $servername = "localhost";
+            $username = "root"; // XAMPP 默认用户名
+            $password = ""; // XAMPP 默认没有密码
+            $dbname = "brighterus";
+
+            // 创建连接
+            $conn = new mysqli($servername, $username, $password, $dbname);
+
+            // 检查连接
+            if ($conn->connect_error) {
+                die("Connection failed: " . $conn->connect_error);
+            }
+
+            // 获取 ENFJ 数据
+            $sql = "SELECT * FROM mbti_profiles WHERE type='ENFJ'";
+            $result = $conn->query($sql);
+
+            if ($result->num_rows > 0) {
+                $row = $result->fetch_assoc();
+                echo json_encode($row);
+            } else {
+                echo json_encode(["error" => "No data found"]);
+            }
+
+            $conn->close();
+        ?>
+
 <script>
+        fetch('fetch_mbti.php')
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                console.log(data.error);
+            } else {
+                console.log("ENFJ Profile:", data);
+            }
+        })
+        .catch(error => console.error("Error fetching data:", error));
+
         function startQuiz() {
         document.getElementById('instructions').classList.add('hidden');
         document.getElementById('start-btn').classList.add('hidden');
@@ -702,34 +760,24 @@
                 },
                 "ESTJ": {
                     overview: [
-                        "ESTJs are organized, efficient, and practical individuals who value tradition, order, and security. They naturally take on leadership roles, are decisive, and focus on achieving tangible results. They are direct, logical, and tend to have high standards for themselves and others."
+                        "ESTJs are organized, decisive, and practical leaders who value tradition, order, and tangible results. They are logical, efficient, and set high standards for themselves and others."
                     ],
                     generalCharacteristics: [
-                        "Natural leaders, enjoy being in charge.",
-                        "Value security, tradition, and loyalty.",
+                        "Natural leaders who value security and tradition.",
                         "Hard-working, dependable, and organized.",
-                        "Clear set of standards and beliefs.",
-                        "Thorough, detail-oriented, and efficient.",
-                        "Straightforward and honest in communication."
+                        "Straightforward and honest communicators.",
+                        "Detail-oriented with clear standards and beliefs."
                     ],
                     strengths: [
-                        "Enthusiastic, upbeat, and friendly.",
-                        "Stable and dependable, promoting security in relationships.",
-                        "Dedicated to fulfilling responsibilities and obligations.",
-                        "Good at handling day-to-day practical concerns.",
-                        "Conservative but reliable with finances.",
-                        "Unthreatened by conflict and interested in resolution.",
-                        "Take commitments seriously, seeking lifelong relationships.",
-                        "Able to move on after breakups and administer discipline."
+                        "Enthusiastic, friendly, and dependable.",
+                        "Efficient in handling responsibilities and practical concerns.",
+                        "Resilient during conflicts, focused on resolution.",
+                        "Take commitments seriously, promoting security in relationships."
                     ],
                     weaknesses: [
-                        "Tend to believe they are always right.",
-                        "Need to be in control and may resist compromise.",
-                        "Impatient with inefficiency and mistakes.",
-                        "Struggle to express or understand emotions.",
-                        "May unintentionally hurt others with insensitivity.",
-                        "Materialistic and focused on status.",
-                        "Uncomfortable with change and new experiences."
+                        "May resist compromise and need control.",
+                        "Impatient with inefficiency or mistakes.",
+                        "Struggle with expressing emotions and handling change."
                     ],
                     careerSuggestions: [
                         "Insurance Sales Agent", "Pharmacist", "Lawyer", "Project Manager", "Judge"
@@ -737,30 +785,23 @@
                 },
                 "ESTP": {
                     overview: [
-                        "ESTPs are energetic, action-oriented individuals who thrive in the present moment. They prefer to take direct action, focusing on facts and practical solutions rather than abstract theories. Quick decision-makers and enthusiastic, they enjoy taking risks and living life to the fullest."                    ],
+                        "ESTPs are energetic, action-oriented individuals who thrive in the moment. They prefer practical solutions, quick decisions, and enjoy taking risks and exploring new experiences."
+                    ],
                     generalCharacteristics: [
-                        "Action-oriented and live in the moment.",
+                        "Fast-paced, adaptable, and resourceful.",
                         "Prefer practical solutions over theory.",
-                        "Fast-paced, energetic, and adaptable.",
-                        "Resourceful, observant, and have excellent people skills.",
-                        "Highly observant with a great memory for details.",
-                        "Prefer to make things up as they go rather than following a plan.",
-                        "Attracted to adventure and risk."
+                        "Highly observant and skilled in social interactions.",
+                        "Attracted to adventure and living in the present."
                     ],
                     strengths: [
-                        "Charming, witty, and popular.",
-                        "Excellent at handling emergencies with a clear head.",
-                        "Fun-loving and enthusiastic, making things enjoyable.",
-                        "Eager to spend time with kids and engage in playful activities.",
-                        "May lavish their loved ones with gifts."
+                        "Charming, witty, and fun-loving.",
+                        "Handle emergencies with a clear head.",
+                        "Bring enthusiasm and enjoyment to activities."
                     ],
                     weaknesses: [
-                        "Not in tune with others' feelings or good at expressing emotions.",
-                        "Can be insensitive with language and actions.",
-                        "Risky with money, may overindulge.",
-                        "Live in the present and struggle with long-term planning.",
-                        "Tend to ignore conflict rather than resolving it.",
-                        "Don't naturally make lifelong commitments and may leave relationships quickly when bored."
+                        "Insensitive to emotions and feelings.",
+                        "Risky with finances and struggle with long-term planning.",
+                        "May avoid conflict and lack commitment in relationships."
                     ],
                     careerSuggestions: [
                         "Dentist", "Elementary School Teacher", "Librarian", "Franchise Owner", "Customer Service Representative"
@@ -768,271 +809,198 @@
                 },
                 "INFJ": {
                     overview: [
-                        "INFJs are gentle, caring, and deeply intuitive individuals with a strong desire for meaningful relationships and personal growth. They are idealistic and strive for harmony, often focusing on the bigger picture. They are rare, complex, and have a profound ability to understand people and situations intuitively."
+                        "INFJs are intuitive, caring, and idealistic individuals driven by meaningful connections and personal growth. They value harmony, authenticity, and have a unique ability to understand people deeply."
                     ],
                     generalCharacteristics: [
-                        "Highly intuitive and idealistic.",
-                        "Deeply principled and values authenticity.",
-                        "Natural leaders with a strong vision.",
-                        "Compassionate, sensitive to others' feelings.",
-                        "Reserved and private about their true selves.",
-                        "Creative, visionary, and future-oriented.",
-                        "Focus on meaning and purpose in all aspects of life.",
-                        "Tend to avoid or get overwhelmed by minutiae.",
-                        "Perfectionists, with high expectations of themselves and others."
+                        "Highly intuitive, principled, and future-focused.",
+                        "Compassionate, sensitive, and private.",
+                        "Creative visionaries seeking purpose and meaning.",
+                        "Perfectionists with high expectations of themselves and others."
                     ],
                     strengths: [
-                        "Warm and affirming, dedicated to meaningful relationships.",
-                        "Sensitive and concerned for others' feelings.",
-                        "Good communication skills, especially in writing.",
-                        "Take commitments seriously, seeking lifelong relationships.",
-                        "Excellent listeners and empathetic.",
-                        "Able to move on from a relationship once sure it's over."
+                        "Empathetic, warm, and committed to deep relationships.",
+                        "Excellent communicators, especially in writing.",
+                        "Dedicated to personal and relational growth."
                     ],
                     weaknesses: [
-                        "Tendency to hold back part of themselves.",
-                        "Struggles with practical day-to-day tasks and finances.",
-                        "Extreme dislike of conflict and criticism.",
-                        "High expectations can be both a strength and a weakness.",
-                        "Difficulty leaving a bad relationship."
+                        "Dislike conflict and criticism.",
+                        "Struggle with practical tasks and finances.",
+                        "May have difficulty leaving unhealthy relationships."
                     ],
                     careerSuggestions: [
-                        "Therapist/Mental Health Counselor", "Social Worker", "HR Diversity Manager", "Organizational Development Consultant", "Customer Relations Manager"
+                        "Therapist", "Social Worker", "HR Diversity Manager", "Organizational Development Consultant", "Customer Relations Manager"
                     ]
                 },
                 "INFP": {
                     overview: [
-                        "INFPs are idealistic, perfectionistic individuals who seek meaning and purpose in life, aiming to make the world a better place. They are deeply intuitive about people, driven by their values, and dedicated to helping others. They are creative, compassionate, and value deep relationships."                    
+                        "INFPs are idealistic and compassionate individuals seeking meaning and purpose in life. They are driven by personal values, creativity, and the desire to help others."
                     ],
                     generalCharacteristics: [
-                        "Strong value systems and a drive to make the world better.",
-                        "Sensitive, deeply caring, and empathetic.",
-                        "Flexible and laid-back until their values are violated.",
-                        "Creative, inspirational, and future-oriented.",
-                        "Prefer to work alone and dislike routine work.",
-                        "Seek personal growth and value meaningful experiences.",
-                        "Excellent at expressing themselves in writing.",
-                        "Avoid conflict and prefer win-win situations."
+                        "Strong value systems with a desire to make the world better.",
+                        "Sensitive, empathetic, and flexible.",
+                        "Creative, inspirational, and focused on personal growth.",
+                        "Avoid conflict and prefer harmonious solutions."
                     ],
                     strengths: [
-                        "Warm, loyal, and committed to lifelong relationships.",
-                        "Deep capacity for love and care.",
-                        "Sensitive and perceptive about others' feelings.",
-                        "Nurturing, supportive, and encouraging.",
-                        "Able to express themselves well and understand others.",
-                        "Flexible and able to adapt to diverse situations."
+                        "Loyal, caring, and nurturing in relationships.",
+                        "Highly perceptive of others' feelings.",
+                        "Adaptable and excellent at self-expression."
                     ],
                     weaknesses: [
-                        "May be shy, reserved, and dislike having their space invaded.",
-                        "Extreme dislike of conflict and criticism.",
-                        "Strong need for praise and positive affirmation.",
-                        "May react emotionally in stressful situations.",
-                        "Have difficulty leaving a bad relationship or punishing others.",
-                        "Tend to hold everything on their shoulders and blame themselves."
+                        "Dislike conflict and criticism.",
+                        "May struggle with self-doubt and emotional stress.",
+                        "Find it hard to leave unhealthy relationships."
                     ],
                     careerSuggestions: [
-                        "Graphic Designer", "Psychologist/Therapist", "Writer/Editor", "Physical Therapist", "HR Development Trainer"
+                        "Graphic Designer", "Psychologist", "Writer", "Physical Therapist", "HR Development Trainer"
                     ]
                 },
+
                 "INTJ": {
-                    overview: [
-                        "INTJs are strategic, logical, and future-oriented thinkers who excel at generating ideas, solving complex problems, and organizing systems. They are highly independent and value intelligence, knowledge, and efficiency. They are natural leaders with a drive to create lasting and meaningful structures."                    ],
-                    generalCharacteristics: [
-                        "Driven to create order from complexity and abstractions.",
-                        "Strategic thinkers with a focus on the big picture.",
-                        "Self-reliant and prefer to work alone.",
-                        "Value knowledge, logic, and efficiency.",
-                        "Calm, collected, and analytical.",
-                        "Highly intelligent with strong insights and intuitions.",
-                        "Bored by routine and inefficiency.",
-                        "Highly ambitious, self-confident, and capable of achieving their goals.",
-                        "Creative, ingenious, and innovative."
-                    ],
-                    strengths: [
-                        "Self-confident and capable.",
-                        "Take relationships seriously and are good listeners.",
-                        "Able to handle conflict without being threatened.",
-                        "Efficient and strive for optimization in relationships.",
-                        "Extremely intelligent and generally competent."
-                    ],
-                    weaknesses: [
-                        "May be insensitive to others' feelings and emotions.",
-                        "Tend to respond to conflict with logic, rather than emotional support.",
-                        "Struggle to express affections and feelings.",
-                        "Believes they are always right and may be unwilling to accept blame.",
-                        "Constantly seeking to improve, which can be taxing on relationships.",
-                        "Tend to hold back parts of themselves."
-                    ],
-                    careerSuggestions: [
-                        "Investment Banker", "Personal Financial Adviser", "Software Developer", "Economist", "Executive"
-                    ]
-                },
-                "INTP": {
-                    overview: [
-                        "INTPs are deep thinkers focused on abstract ideas, theories, and concepts. They value knowledge and logic, constantly seeking to understand and solve complex problems. Independent and original, they excel at analyzing and forming new ideas but can be distant and uninterested in practical tasks or emotional considerations."                    
-                    ],
-                    generalCharacteristics: [
-                        "Driven by abstract ideas and theories.",
-                        "Highly value knowledge, competence, and independent thinking.",
-                        "Work best alone and value autonomy.",
-                        "Dislike mundane details and practical applications.",
-                        "Creative, insightful, and capable of generating innovative solutions.",
-                        "Tend to live inside their own minds, appearing detached from others.",
-                        "Not interested in traditional goals such as popularity or security.",
-                        "Tend to focus on the big picture and future-oriented thinking."
-                    ],
-                    strengths: [
-                        "Highly imaginative, creative, and enthusiastic about ideas.",
-                        "Not personally threatened by conflict or criticism.",
-                        "Laid-back and easy-going in relationships.",
-                        "Pure and childlike affection for loved ones.",
-                        "Tend to approach problems and interests with enthusiasm."
-                    ],
-                    weaknesses: [
-                        "Slow to respond to emotional needs and struggles with emotional expression.",
-                        "Not good at handling practical matters like money management.",
-                        "Tend to distrust others and have difficulty leaving bad relationships.",
-                        "Avoid conflict or blow up in anger when confronted.",
-                        "Not naturally in tune with others' feelings or needs."
-                    ],
-                    careerSuggestions: [
-                        "Computer Programmer/Software Designer", "Financial Analyst", "Architect", "College Professor", "Economist"
-                    ]
-                },
-                "ISFJ": {
-                    overview: [
-                        "ISFJs are warm, dependable, and service-oriented individuals who focus on practical, concrete details. They are deeply attuned to the needs and emotions of others and have a strong sense of responsibility. They value tradition, security, and harmony, and tend to avoid conflict while striving to fulfill their obligations."                    ],
-                    generalCharacteristics: [
-                        "Strong memory for important details and people.",
-                        "Highly observant and sensitive to others' feelings.",
-                        "Value security, stability, and tradition.",
-                        "Work best with hands-on learning and practical tasks.",
-                        "Prefer structured environments and dislike abstract thinking.",
-                        "Service-oriented, focused on helping others and meeting their needs.",
-                        "Have an exceptional ability to create order and maintain stability."
-                    ],
-                    strengths: [
-                        "Warm, friendly, and generous.",
-                        "Excellent at fulfilling obligations and responsibilities.",
-                        "Good listeners and attentive to others' needs.",
-                        "Strong organizational skills and practical capabilities.",
-                        "Excellent at taking care of daily needs and handling money.",
-                        "Take their commitments seriously, seeking lifelong relationships."
-                    ],
-                    weaknesses: [
-                        "Tend to neglect their own needs in favor of others.",
-                        "Dislike conflict and criticism, leading to avoidance.",
-                        "May have difficulty expressing their own emotions and frustrations.",
-                        "Struggle to leave bad relationships or move on from them.",
-                        "Find it difficult to branch out into new or unfamiliar territories."
-                    ],
-                    careerSuggestions: [
-                        "Dentist", "Elementary School Teacher", "Librarian", "Franchise Owner", "Customer Service Representative"
-                    ]
-                },
-                "ISFP": {
-                    overview: [
-                        "ISFPs are quiet, sensitive, and creative individuals who prioritize living according to their personal values. They are attuned to their senses and enjoy beauty and aesthetics. They are independent, action-oriented, and often have a strong desire to contribute to the well-being of others. While they value personal freedom, they are also deeply caring and service-oriented."
-                    ],
-                    generalCharacteristics: [
-                        "Highly aware of their surroundings, focusing on sensory experiences.",
-                        "Value aesthetics, beauty, and art, often with strong artistic talents.",
-                        "Live in the present moment, with a strong desire to savor life.",
-                        "Prefer hands-on learning and dislike abstract theory without practical application.",
-                        "Strong value systems and a need to live according to personal beliefs.",
-                        "Quiet and reserved, yet deeply caring and service-oriented.",
-                        "Independently minded, with a dislike for control or leadership roles."
-                    ],
-                    strengths: [
-                        "Warm, kind, and empathetic.",
-                        "Service-oriented, motivated by helping others.",
-                        "Good at handling practical, everyday concerns.",
-                        "Enjoy expressing affection through actions rather than words.",
-                        "Appreciate beauty and create aesthetically pleasing environments.",
-                        "Committed to relationships and value lifelong connections."
-                    ],
-                    weaknesses: [
-                        "Dislike long-term planning or structured routines.",
-                        "Sensitive to conflict and criticism, may avoid it.",
-                        "May appear lazy or slow-moving at times, focused on the present.",
-                        "Need personal space, and may feel uncomfortable when it’s invaded.",
-                        "Reluctant to express feelings and thoughts unless prompted.",
-                        "Tend to be overly practical and may become cynical at times."
-                    ],
-                    careerSuggestions: [
-                        "Photographer", "Jewelry Designer", "Animal Care Specialist", "Fashion Designer", "Massage Therapist"
-                    ]
-                },
-                "ISTJ": {
-                    overview: [
-                        "ISTJs are quiet, organized, and dependable individuals who value tradition, security, and fulfilling their duties. They are methodical and efficient, often working long hours to ensure that tasks are completed. They have a strong sense of responsibility and a deep respect for facts and concrete information. While serious and reserved, they are loyal, family-minded, and committed to their goals."                    ],
-                    generalCharacteristics: [
-                        "Highly organized and methodical, with a strong sense of duty.",
-                        "Loyal, faithful, and dependable, with a deep respect for tradition.",
-                        "Prefer concrete information and practical applications over abstract theory.",
-                        "Natural leaders, but prefer to work alone or in structured teams.",
-                        "Value stability and security in their lives and surroundings.",
-                        "Dislike change unless the benefits are clear and concrete.",
-                        "High standards for themselves and others, with a focus on fulfilling commitments."
-                    ],
-                    strengths: [
-                        "Honors commitments and responsibilities.",
-                        "Good at managing money and practical concerns.",
-                        "Can communicate clearly and precisely.",
-                        "Strong at listening and taking constructive criticism.",
-                        "Tolerant of conflict situations without emotional disruption.",
-                        "Effective in leadership roles and delivering necessary criticism."
-                    ],
-                    weaknesses: [
-                        "Tendency to believe they are always right.",
-                        "May get involved in 'win-lose' conversations.",
-                        "Not naturally attuned to others' emotions.",
-                        "Value for structure may seem rigid to others.",
-                        "May not give enough praise or affirmation to loved ones."
-                    ],
-                    careerSuggestions: [
-                        "Auditor", "Accountant", "Chief Financial Officer", "Web Development Engineer", "Government Employee"
-                    ]
-                },
-                "ISTP": {
-                    overview: [
-                        "ISTPs are action-oriented, independent, and logical individuals with a deep interest in how things work. They excel at hands-on tasks and are highly practical, often thriving in crisis situations. They prefer immediate results and have a strong drive for new experiences and variety. While they value independence and freedom, they are loyal and fair-minded, with a natural ability to solve practical problems."
-                    ],
-                    generalCharacteristics: [
-                        "Focused on understanding how things work through logical analysis.",
-                        "Action-oriented and thrive on hands-on experiences.",
-                        "Highly independent and dislike structured or regimented environments.",
-                        "Practical, realistic, and results-driven with a preference for solving problems immediately.",
-                        "Dislike abstract theory unless it has a clear practical application.",
-                        "Natural troubleshooters with excellent technical skills."
-                    ],
-                    strengths: [
-                        "Good listeners and generally optimistic.",
-                        "Practical and handle daily concerns effectively.",
-                        "Not intimidated by conflict or criticism.",
-                        "Respect others' need for space and privacy.",
-                        "Able to handle and resolve crises efficiently."
-                    ],
-                    weaknesses: [
-                        "Difficulty with long-term commitments, living in the present.",
-                        "Not naturally attuned to expressing or understanding emotions.",
-                        "Tendency to be overly private and keep part of themselves hidden.",
-                        "Need a lot of personal space and dislike being confined.",
-                        "May stir up excitement or conflict due to a craving for action."
-                    ],
-                    careerSuggestions: [
-                        "Civil Engineer", "Economist", "Pilot", "Data Communications Analyst", "Emergency Room Physician"
-                    ]
+                overview: [
+                    "INTJs are strategic, logical, and future-oriented thinkers who excel at solving complex problems and organizing systems. They are independent leaders with a drive to create meaningful structures."
+                ],
+                generalCharacteristics: [
+                    "Strategic thinkers focused on the big picture.",
+                    "Self-reliant and value knowledge, logic, and efficiency.",
+                    "Calm, collected, and analytical.",
+                    "Highly ambitious, creative, and innovative."
+                ],
+                strengths: [
+                    "Self-confident and capable.",
+                    "Take relationships seriously and are good listeners.",
+                    "Efficient and handle conflict logically.",
+                    "Highly intelligent and competent."
+                ],
+                weaknesses: [
+                    "Insensitive to emotions and struggle with affection.",
+                    "Believe they are always right, reluctant to accept blame.",
+                    "Constantly seeking improvement can strain relationships."
+                ],
+                careerSuggestions: [
+                    "Investment Banker", "Software Developer", "Economist", "Executive"
+                ]
+            },
+            "INTP": {
+                overview: [
+                    "INTPs are deep thinkers focused on abstract ideas, constantly seeking to solve complex problems. Independent and original, they excel at forming new ideas but may struggle with practical tasks or emotions."
+                ],
+                generalCharacteristics: [
+                    "Driven by abstract theories and ideas.",
+                    "Value knowledge, independence, and innovation.",
+                    "Detached from practical details, focusing on the big picture.",
+                    "Creative and insightful, generating unique solutions."
+                ],
+                strengths: [
+                    "Highly imaginative and enthusiastic about ideas.",
+                    "Laid-back and handle criticism well.",
+                    "Affectionate in a pure, childlike way with loved ones."
+                ],
+                weaknesses: [
+                    "Struggle with emotional expression and practical matters.",
+                    "Avoid conflict or overreact in anger.",
+                    "Distrust others and find it hard to leave bad relationships."
+                ],
+                careerSuggestions: [
+                    "Software Designer", "Economist", "College Professor", "Architect"
+                ]
+            },
+            "ISFJ": {
+                overview: [
+                    "ISFJs are warm, dependable individuals who focus on practical details and the needs of others. They value tradition, security, and harmony, striving to fulfill their obligations."
+                ],
+                generalCharacteristics: [
+                    "Sensitive to others' feelings and highly observant.",
+                    "Value stability, tradition, and structured environments.",
+                    "Service-oriented, creating order and maintaining harmony."
+                ],
+                strengths: [
+                    "Warm, generous, and excellent at fulfilling responsibilities.",
+                    "Strong organizational and practical skills.",
+                    "Attentive listeners who value lifelong relationships."
+                ],
+                weaknesses: [
+                    "Neglect their own needs for others.",
+                    "Avoid conflict and criticism.",
+                    "Struggle to leave bad relationships or embrace change."
+                ],
+                careerSuggestions: [
+                    "Dentist", "Teacher", "Librarian", "Customer Service Representative"
+                ]
+            },
+            "ISFP": {
+                overview: [
+                    "ISFPs are quiet, sensitive, and creative individuals who prioritize living by their values. They enjoy aesthetics and contributing to others' well-being, valuing personal freedom and caring deeply for others."
+                ],
+                generalCharacteristics: [
+                    "Highly aware of sensory experiences and aesthetics.",
+                    "Live in the moment with strong personal values.",
+                    "Independent and reserved, yet deeply caring."
+                ],
+                strengths: [
+                    "Warm, empathetic, and service-oriented.",
+                    "Good at handling practical concerns and expressing affection through actions.",
+                    "Appreciate beauty and create pleasing environments."
+                ],
+                weaknesses: [
+                    "Avoid long-term planning and structured routines.",
+                    "Sensitive to conflict and need personal space.",
+                    "Reluctant to express thoughts and feelings."
+                ],
+                careerSuggestions: [
+                    "Photographer", "Animal Care Specialist", "Fashion Designer"
+                ]
+            },
+            "ISTJ": {
+                overview: [
+                    "ISTJs are organized, dependable individuals who value tradition and fulfilling their duties. They are methodical and efficient, with a strong sense of responsibility and respect for facts."
+                ],
+                generalCharacteristics: [
+                    "Highly organized, methodical, and loyal.",
+                    "Prefer practical applications and stability.",
+                    "Natural leaders with high standards for commitments."
+                ],
+                strengths: [
+                    "Dependable, responsible, and good at managing practical concerns.",
+                    "Communicate clearly and handle conflict without emotional disruption.",
+                    "Effective leaders who honor commitments."
+                ],
+                weaknesses: [
+                    "Rigid in structure and resistant to change.",
+                    "Struggle with emotional attunement and offering praise."
+                ],
+                careerSuggestions: [
+                    "Accountant", "Web Development Engineer", "Government Employee"
+                ]
+            },
+            "ISTP": {
+                overview: [
+                    "ISTPs are action-oriented, independent, and logical individuals with a deep interest in how things work. They thrive in hands-on tasks and excel in crisis situations, valuing variety and practical problem-solving."
+                ],
+                generalCharacteristics: [
+                    "Logical analysts focused on understanding systems.",
+                    "Independent, action-oriented, and practical.",
+                    "Thrive in hands-on, results-driven environments."
+                ],
+                strengths: [
+                    "Good listeners, optimistic, and handle crises well.",
+                    "Respect others' space and solve problems efficiently."
+                ],
+                weaknesses: [
+                    "Struggle with long-term commitments and emotions.",
+                    "Overly private and may stir excitement or conflict for action."
+                ],
+                careerSuggestions: [
+                    "Civil Engineer", "Pilot", "Emergency Room Physician"
+                ]
                 },
         };
     
-
             const details = mbtiDetails[mbtiType];
             if (!details) {
                 alert("MBTI type not found."); // Add graceful error handling
                 return;
             }
-
 
             document.getElementById('personality-type').textContent = mbtiType;
             // Add sections dynamically
@@ -1062,7 +1030,7 @@
                 data: {
                     labels: ['E', 'I', 'S', 'N', 'T', 'F', 'J', 'P'],
                     datasets: [{
-                        label: 'Trait Scores',
+                        label: 'MBTI Scores',
                         data: [
                             mbtiCounts.E, mbtiCounts.I,
                             mbtiCounts.S, mbtiCounts.N,
@@ -1091,9 +1059,76 @@
             });
         
         }
-    
-            
+        async function downloadPDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
 
+    // Extract content
+    const personalityType = document.getElementById("personality-type").textContent;
+    const description = Array.from(document.getElementById("personality-description").children).map(item => item.textContent).join("\n");
+    const careerList = Array.from(document.getElementById("career-list").children).map(item => item.textContent);
+
+    let y = 20; // Initial Y position
+
+    // Title
+    doc.setFont("Helvetica", "bold");
+    doc.setFontSize(18);
+    doc.text("MBTI Personality Report", 70, y);
+    y += 12;
+
+    // Personality Type
+    doc.setFontSize(14);
+    doc.text("Your Personality Type:", 10, y);
+    doc.setFont("Helvetica", "normal");
+    doc.text(personalityType, 70, y,);
+    y += 10;
+
+    // Description
+    doc.setFont("Helvetica", "bold");
+    doc.text("Description:", 10, y);
+    y += 7;
+    doc.setFont("Helvetica", "normal");
+
+    const descLines = doc.splitTextToSize(description, 180);
+    descLines.forEach(line => {
+        doc.text(line, 10, y);
+        y += 7;
+        if (y > 270) { doc.addPage(); y = 20; }
+    });
+
+    // Add spacing before career path
+    y += 10;
+
+    // Career Paths
+    doc.setFont("Helvetica", "bold");
+    doc.text("Recommended Career Paths:", 10, y);
+    y += 7;
+    doc.setFont("Helvetica", "normal");
+
+    careerList.forEach((career, index) => {
+        doc.text(`${index + 1}. ${career}`, 10, y);
+        y += 7;
+        if (y > 270) { doc.addPage(); y = 20; }
+    });
+
+    // Add spacing before chart
+    y += 10;
+
+    // Chart (if exists)
+    const chartCanvas = document.getElementById("mbti-chart");
+    if (chartCanvas) {
+        const chartImage = chartCanvas.toDataURL("image/png");
+
+        doc.setFont("Helvetica", "bold");
+        doc.text("Trait Scores:", 10, y);
+        y += 10;
+
+        doc.addImage(chartImage, "PNG", 10, y, 120, 60);
+    }
+
+    // Save the PDF
+    doc.save("MBTI_Report.pdf");
+}
         function restartQuiz() {
     // Reset the form
     document.getElementById('quiz-form').reset();
