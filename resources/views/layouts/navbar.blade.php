@@ -20,7 +20,7 @@
 
                 <!-- Universities Page -->
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url('/universities') }}">Universities</a>
+                    <a class="nav-link" href="{{ url('/courses') }}">Courses and Universities</a>
                 </li>
 
                 <!-- Financial Page -->

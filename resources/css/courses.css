@@ -1,0 +1,149 @@
+.filter-panel {
+    width: 400px; /* Adjust width as needed */
+    padding: 15px;
+    background: #fff; /* White background */
+    border-radius: 15px;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2);
+    height: 100%;
+    margin: 15px;
+    margin-top: 0;
+}
+
+fieldset {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border: none;
+}
+
+label {
+    padding-top: 10px;
+    font-weight: bold;
+}
+
+select {
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.apply-filters {
+    margin-top: 10px;
+    background-color: #ff9900;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.container{
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+}
+
+.form-control{
+    margin-bottom: 15px;
+    border-radius: 15px;
+}
+
+.py-12{
+    padding: 0;
+}
+
+
+
+/* Results Section Styling */
+.results-title {
+    color: #ff9500;
+    font-weight: bold;
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+/* Course Card Styling */
+.course-card {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+}
+
+.course-card:hover {
+    transform: scale(1.02);
+    box-shadow: 4px 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Title Styling */
+.course-title a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    font-size: 22px;
+}
+
+.course-title a:hover {
+    color: #ff8800;
+}
+
+/* Description Styling */
+.course-description {
+    color: #666;
+    font-size: 14px;
+}
+
+/* Pagination Styling */
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+
+
+/* Section Titles */
+.filter-panel h4 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #d85e0c;
+    margin-bottom: 8px;
+    margin-top: 30px;
+}
+
+
+
+/* Apply Button */
+.btn-primary {
+    background: #ff7f00 !important;
+    border: none;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 12px;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+.btn-primary:hover {
+    background: #e06c00 !important;
+}
+
+.filter-panel {
+    border: 1px solid #ddd;
+    background: #fff;
+}
+
+h5 {
+    margin-bottom: 10px;
+}
+
+.form-check {
+    margin-bottom: 8px;
+}
+
+hr {
+    border-top: 2px solid #ffb300;
+}

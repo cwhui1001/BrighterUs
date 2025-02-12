@@ -16,8 +16,8 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Home') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('universities')" :active="request()->routeIs('universities')">
-                        {{ __('Universities') }}
+                    <x-nav-link :href="route('courses.index')" :active="request()->routeIs('courses.index')">
+                        {{ __('Courses & Universities') }}
                     </x-nav-link>
                     <x-nav-link :href="route('events')" :active="request()->routeIs('events')">
                         {{ __('Events') }}
@@ -44,20 +44,6 @@
                             </x-nav-link>
                         </div>
                     </div>
-
-                    <!-- <script>
-                        document.addEventListener('click', function (event) {
-                            const dropdownButton = document.getElementById('financialAidDropdownButton');
-                            const dropdownMenu = document.getElementById('financialAidDropdownMenu');
-
-                            if (dropdownButton.contains(event.target)) {
-                                dropdownMenu.classList.toggle('hidden');
-                            } else if (!dropdownMenu.contains(event.target)) {
-                                dropdownMenu.classList.add('hidden');
-                            }
-                        });
-                    </script> -->
-
 
                     <x-nav-link :href="route('career')" :active="request()->routeIs('career')">
                         {{ __('Career Match') }}

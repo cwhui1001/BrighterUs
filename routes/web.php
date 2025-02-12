@@ -9,9 +9,16 @@ use App\Models\Faq;
 
 Route::post('/BrighterUs/public/chatbot-query', [ChatbotController::class, 'handleQuery']);
 
-Route::get('/universities', function () {
-    return view('universities');
-})-> name('universities');
+// Route::get('/universities', function () {
+//     return view('universities');
+// })-> name('universities');
+
+use App\Http\Controllers\CourseController;
+
+Route::get('/courses', [CourseController::class, 'index'])->name('courses.index');
+Route::get('/courses/filter', [CourseController::class, 'filter'])->name('courses.filter');
+Route::get('/courses/{id}', [CourseController::class, 'show'])->name('courses.show');
+
 
 Route::get('/events', function () {
     return view('events');
