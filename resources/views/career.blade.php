@@ -432,47 +432,7 @@
         </div>
     </div>
 </div>
-
-        <?php
-            $servername = "localhost";
-            $username = "root"; // XAMPP 默认用户名
-            $password = ""; // XAMPP 默认没有密码
-            $dbname = "brighterus";
-
-            // 创建连接
-            $conn = new mysqli($servername, $username, $password, $dbname);
-
-            // 检查连接
-            if ($conn->connect_error) {
-                die("Connection failed: " . $conn->connect_error);
-            }
-
-            // 获取 ENFJ 数据
-            $sql = "SELECT * FROM mbti_profiles WHERE type='ENFJ'";
-            $result = $conn->query($sql);
-
-            if ($result->num_rows > 0) {
-                $row = $result->fetch_assoc();
-                echo json_encode($row);
-            } else {
-                echo json_encode(["error" => "No data found"]);
-            }
-
-            $conn->close();
-        ?>
-
 <script>
-        fetch('fetch_mbti.php')
-        .then(response => response.json())
-        .then(data => {
-            if (data.error) {
-                console.log(data.error);
-            } else {
-                console.log("ENFJ Profile:", data);
-            }
-        })
-        .catch(error => console.error("Error fetching data:", error));
-
         function startQuiz() {
         document.getElementById('instructions').classList.add('hidden');
         document.getElementById('start-btn').classList.add('hidden');
