@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Brighter') }}</title>
+        <title>{{ config('BrighterUs', 'BrighterUs') }}</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -13,6 +13,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen">
@@ -35,6 +36,22 @@
                 {{ $slot }}
             </main>
         </div>
+
+        <!-- Chatbot -->
+        <!-- Chatbot Button -->
+        <button id="chatbot-btn" class="chatbot-btn">💬 Chat with us</button>
+
+        <!-- Chatbot Popup -->
+        <div id="chatbot-popup" class="chatbot-popup" style="display: none;">
+            <div class="chatbot-header">
+                <span>Chatbot</span>
+                <button id="close-chat" class="close-chat">×</button>
+            </div>
+            <div id="chat-box" class="chat-box"></div>
+            <input type="text" id="user-message" class="user-message" placeholder="Type a message..." />
+            <button id="send-message" class="send-message">Send</button>
+        </div>
+
     </body>
 </html>
 

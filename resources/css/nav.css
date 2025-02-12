@@ -1,0 +1,55 @@
+/* Dropdown menu item styles */
+#financialAidDropdownMenu a {
+    display: block;
+    padding: 0.5rem 1rem; /* Adjust padding as needed */
+    color: black; /* Text remains black by default */
+    text-decoration: none;
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition for both background and text */
+}
+
+/* Hover state for dropdown menu items */
+#financialAidDropdownMenu a:hover {
+    background-color: #f3f4f6; /* Light grey */
+    color: black; /* Keep hover text black for menu items */
+}
+
+/* Focus state (for accessibility) */
+#financialAidDropdownMenu a:focus {
+    background-color: #e1e1e1; /* Light grey */
+    color: black; /* Focused item text remains black */
+}
+
+/* Active state (on click) for menu items */
+#financialAidDropdownMenu a:active {
+    background-color: #e5e7eb; /* Slightly darker grey */
+    color: black; /* Active item text remains black */
+}
+
+/* Default state for the Financial Aid link */
+#financialAidDropdownButton {
+    color: rgb(0, 0, 0); /* Ensure the text is white */
+    transition: color 0.3s ease; /* Smooth transition for color changes */
+}
+
+/* Hover state for Financial Aid dropdown button */
+#financialAidDropdownButton:hover {
+    color: white; /* Text stays white on hover */
+}
+
+/* Active state for the dropdown button */
+#financialAidDropdownButton.active {
+    color: white; /* Keep the text white when active */
+    border-bottom: 2px solid white; /* Optional: underline effect */
+}
+
+/* Ensure the dropdown menu is displayed when not hidden */
+#financialAidDropdownMenu:not(.hidden) {
+    display: block;
+}
+
+/* Adjust the dropdown menu background for better contrast */
+#financialAidDropdownMenu {
+    background-color: #ffffff; /* Example: orange background to match theme */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}

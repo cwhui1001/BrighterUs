@@ -3,10 +3,11 @@ use App\Http\Controllers\DashboardController;
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FinancialController;
+use App\Http\Controllers\ChatbotController;
+use App\Models\Faq;
 
-// Route::get('/', function () {
-//     return view('home');
-// })-> name('home');
+Route::post('/BrighterUs/public/chatbot-query', [ChatbotController::class, 'handleQuery']);
 
 Route::get('/universities', function () {
     return view('universities');
@@ -16,20 +17,21 @@ Route::get('/events', function () {
     return view('events');
 })-> name('events');
 
-Route::get('/financial', function () {
-    return view('financial');
-})-> name('financial');
+Route::prefix('financial')->name('financial.')->group(function () {
+    Route::get('/need-based', [FinancialController::class, 'needBased'])->name('need-based');
+    Route::get('/external-sponsorship', [FinancialController::class, 'external'])->name('external');
+    Route::get('/study-loan', [FinancialController::class, 'loan'])->name('loan');
+    Route::get('/scholarship/{scholarship}', [FinancialController::class, 'show'])->name('scholarship.show');
+});
 
 Route::get('/career', function () {
     return view('career');
 })-> name('career');
 
 Route::get('/', function () {
-    return view('dashboard');
+    $faqs = Faq::all();
+    return view('dashboard', compact('faqs'));
 })-> name('dashboard');
-
-Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
-
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

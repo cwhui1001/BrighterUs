@@ -10,7 +10,6 @@
     background-repeat: no-repeat;
 }
 
-
 /* Custom class for header style */
 .custom-header {
     font-weight: 800; /* font-semibold */
@@ -24,11 +23,9 @@
     color: #1a202c; /* text-gray-900 */
     padding: 1.5rem; /* p-6 */
     background-color: #ffffff; /* bg-white */
-    box-shadow: 0 3px 40px 15px rgba(231, 154, 12, 0.151); /* shadow-sm */
+    box-shadow: 0 3px 30px 10px rgba(231, 154, 12, 0.151); /* shadow-sm */
     border-radius: 2rem; /* sm:rounded-lg */
-    margin-bottom: 100px;
-    display: grid;
-    grid-template-rows: 1fr 2fr;
+    margin-bottom: 80px;
 }
 
 .custom {
@@ -99,7 +96,7 @@
     font-family: 'Montserrat', sans-serif;
     font-weight: bold; /* Make the text bold */
     color: #ffffff; /* Beautiful color (adjust as needed) */
-    letter-spacing: 2px; /* Increase letter spacing for a stylish look */
+    letter-spacing: 3px; /* Increase letter spacing for a stylish look */
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Add a subtle shadow for depth */
     line-height: 1.2; /* Adjust line height for better spacing */
     text-align: left;
@@ -108,7 +105,41 @@
 
 .title-content{
     margin-bottom: 15px;
+    
 }
+/* Animation for typing */
+/* @keyframes typewriter {
+    from {
+        width: 0;
+    }
+    to {
+        width: 100%;
+    }
+}
+
+@keyframes blink {
+    50% {
+        border-color: transparent;
+    }
+} */
+.animate-title {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInMoveUp 1.5s ease-out forwards;
+}
+
+/* Keyframes for the animation */
+@keyframes fadeInMoveUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 
 /* .dash-header {
     position: relative;
@@ -118,6 +149,7 @@
     padding: 2rem 1rem;
     overflow: hidden;
 } */
+
 
 .wavy-bottom svg {
     position: absolute;
@@ -149,7 +181,7 @@ nav {
     border-radius: 50%; /* Makes it a circle */
     overflow: hidden; /* Ensures the image fits inside the circle */
     display: flex; /* Optional: Centers the image */
-    align-items: center; /* Optional: Centers the image */
+    align-items: start; /* Optional: Centers the image */
     justify-content: center; /* Optional: Centers the image */
     border: 4px solid #ccc; /* Optional: Adds a border to the circle */
     box-shadow: 0 15px 100px rgba(0, 0, 0, 0.2); /* Adds a shadow */
@@ -168,6 +200,7 @@ nav {
     font-size: 30px;
     font-weight: 800;
     padding: 20px;
+    text-align: center;
 }
 .about-us{
     display: flex;
@@ -178,4 +211,154 @@ nav {
     padding-right: 100px;
     font-size: 18px;
     padding-bottom: 20px
+}
+
+/* Create a full-screen background for the starry effect */
+
+
+/* 4-pointed star shape */
+.star {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background-color: white;
+    transform-origin: center;
+    animation: sparkle 1.5s infinite alternate;
+    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+}
+
+/* Star sparkle animation */
+@keyframes sparkle {
+    0% {
+        opacity: 0.3;
+        transform: scale(0.8) rotate(0deg);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1.2) rotate(360deg);
+    }
+}
+
+.bounce-animation {
+    animation: bounce 2.9s infinite;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-20px);
+    }
+    60% {
+        transform: translateY(-10px);
+    }
+}
+/*/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+/* chatbot */
+.chatbot-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 12px 20px;
+    border-radius: 30px;
+    background-color:rgb(255, 123, 0);
+    color: white;
+    font-size: 18px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.chatbot-btn:hover {
+    background-color:rgb(179, 101, 0);
+}
+
+/* Chatbot Popup */
+.chatbot-popup {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    width: 300px;
+    height: 400px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    z-index: 999;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.chatbot-header {
+    background-color:rgb(255, 145, 0);
+    color: white;
+    padding: 15px;
+    font-size: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 10px 10px 0 0;
+}
+
+.close-chat {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.chat-box {
+    padding: 10px;
+    overflow-y: auto;
+    flex-grow: 1;
+    max-height: 280px;
+}
+
+.user-message {
+    width: 93%;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 20px;
+    border: 1px solid orange;
+}
+.user,.bot {
+    background-color: #f0f0f0; /* Soft light grey background */
+    border-radius: 8px; /* Rounded corners */
+    padding: 10px; /* Padding for spacing */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    color: #333; /* Dark text color for contrast */
+    font-family: 'Arial', sans-serif; /* Clean, modern font */
+    font-size: 16px; /* Easy-to-read font size */
+    max-width: 280px; /* Limit the width for a neat look */
+    margin: 20px auto; /* Centered horizontally with margin */
+}
+.user{
+    background-color: rgb(253, 195, 80);
+}
+.send-message {
+    background-color:rgb(255, 140, 0);
+    color: white;
+    padding: 10px;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    margin: 10px;
+    width: 93%;
+}
+
+.send-message:hover {
+    background-color:rgb(179, 98, 0);
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
