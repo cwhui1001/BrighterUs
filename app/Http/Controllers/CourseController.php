@@ -73,6 +73,13 @@ class CourseController extends Controller
     return response()->json(['courses' => $courses]);
 }
 
+public function compare(Request $request)
+{
+    $selectedIds = explode(',', $request->query('courses'));
+    $courses = Course::whereIn('id', $selectedIds)->get();
+    
+    return view('courses.compare', compact('courses'));
+}
 
 }
 

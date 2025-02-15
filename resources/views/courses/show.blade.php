@@ -1,20 +1,40 @@
-@vite(['resources/css/courses.css', 'resources/js/courses.js'])
+@vite(['resources/css/courses_show.css', 'resources/js/courses_show.js'])
 <x-app-layout>
     <x-slot name="header">
         <h2 class="custom-header">
-            {{ __('Couses and Universities') }}
+            {{ __('Courses and Universities') }}
         </h2>
     </x-slot>
 
-<!-- resources/views/courses/show.blade.php -->
-<p>Category: {{ $course->category->name }}</p>
-<h1>{{ $course->name }}</h1>
-<p>Field: {{ $course->field->name }}</p>
-<p>University: {{ $course->university->name }}</p>
-<p>Location: {{ $course->location->name }}</p>
-<p>Budget: {{ $course->budget }}</p>
-<p>Ranking: {{ $course->ranking }}</p>
-<p>Description: {{ $course->description }}</p><br>
+    <div class="show-container">
+        <div class="show-course-card">
+            <h1 class="course-title">{{ $course->name }}</h1>
 
+            <div class="course-details">
+                <div class="detail-item">
+                    <span class="label">Category:</span> {{ $course->category->name }}
+                </div>
+                <div class="detail-item">
+                    <span class="label">Field:</span> {{ $course->field->name }}
+                </div>
+                <div class="detail-item">
+                    <span class="label">University:</span> {{ $course->university->name }}
+                </div>
+                <div class="detail-item">
+                    <span class="label">Location:</span> {{ $course->location->name }}
+                </div>
+                <div class="detail-item">
+                    <span class="label">Budget:</span> {{ $course->budget }}
+                </div>
+                <div class="detail-item">
+                    <span class="label">Ranking:</span> {{ $course->ranking }}
+                </div>
+            </div>
 
+            <div class="description">
+                <h3>Description</h3>
+                <p>{{ $course->description }}</p>
+            </div>
+        </div>
+    </div>
 </x-app-layout>
