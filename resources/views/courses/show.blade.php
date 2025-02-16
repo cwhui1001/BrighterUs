@@ -27,7 +27,7 @@
                     <span class="label">Budget:</span> {{ $course->budget }}
                 </div>
                 <div class="detail-item">
-                    <span class="label">Ranking:</span> {{ $course->ranking }}
+                    <span class="label">QS Ranking:</span> {{ $course->ranking->value }}
                 </div>
             </div>
 

@@ -100,7 +100,7 @@
                             <p><strong>Category:</strong> {{ $course->category->name }}</p>
                             <p><strong>Field:</strong> {{ $course->field->name }}</p>
                             <p><strong>University:</strong> {{ $course->university->name }}</p>
-                            <p><strong>Ranking:</strong> {{ $course->ranking }}</p>
+                            <p><strong>QS Ranking:</strong> {{ $course->ranking->value }}</p>
                         </div>
                     </div>
                     <div class="c3">
@@ -158,7 +158,7 @@
                             <p><strong>Category:</strong> ${course.category ? course.category.name : 'N/A'}</p>
                             <p><strong>Field:</strong> ${course.field ? course.field.name : 'N/A'}</p>
                             <p><strong>University:</strong> ${course.university ? course.university.name : 'N/A'}</p>
-                            <p><strong>Ranking:</strong> ${course.ranking}</p>
+                            <p><strong>QS Ranking:</strong> ${course.ranking ? course.ranking.value : 'N/A'}</p>
                         </div>
                         
                     </div>
