@@ -75,6 +75,15 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
+function filterFields() {
+    let input = document.getElementById("filterSearch").value.toLowerCase();
+    let checkboxes = document.querySelectorAll(".filter-panel label");
+
+    checkboxes.forEach(label => {
+        label.style.display = label.textContent.toLowerCase().includes(input) ? "block" : "none";
+    });
+}
+
 
 
 // document.querySelectorAll('.filter-checkbox').forEach(checkbox => {

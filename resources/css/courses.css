@@ -1,6 +1,7 @@
 .filter-panel {
     width: 300px; /* Adjust width as needed */
     padding: 15px;
+    padding-top: 0 !important;
     background: #fff; /* White background */
     border-radius: 15px;
     box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2);
@@ -84,7 +85,7 @@ select {
     transition: all 0.3s ease-in-out;
     
     width: 350px; /* Prevents cards from getting too wide */
-    height: 350px; /* Ensures all cards have a minimum height */
+    height: 370px; /* Ensures all cards have a minimum height */
     display: grid;
     justify-content: space-between; /* Aligns content evenly */
     cursor: pointer;
@@ -102,7 +103,8 @@ select {
 }
 .c2{
     display: grid;
-    grid-template-columns: 1fr 2fr;
+    grid-template-columns: 0.5fr 2fr;
+    gap: 20px;
 }
 
 .course-card:hover {
@@ -197,7 +199,7 @@ hr {
 
 .toggle-filters-btn {
     position: absolute;
-    top: 170px;
+    top: 190px;
     left: 330px; /* Align with filter panel */
     background: #ff9900;
     color: white;
@@ -218,9 +220,10 @@ hr {
 
 
 
-.university-logos img {
+img {
     max-height: 70px;
 }
+
 
 
 
@@ -263,4 +266,28 @@ hr {
 
 
 
+#filterSearch {
+    width: 100%;
+    max-width: 350px; /* Adjust width as needed */
+    padding: 10px 15px;
+    font-size: 14px ;
+    border: 1px solid orange; /* Blue border */
+    border-radius: 25px;
+    outline: none;
+    transition: 0.3s ease-in-out;
+    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+#filterSearch:focus {
+    border-color: #b32d00 ; /* Darker blue on focus */
+    box-shadow: 0 0 8px rgba(255, 115, 0, 0.5);
+}
+
+
+.custom-header {
+    display: flex;
+    flex-direction: row;
+    gap: 650px; /* Adjust space between text and search bar */
+    vertical-align: middle;
+}
 

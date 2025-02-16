@@ -1,9 +1,11 @@
 @vite(['resources/css/courses.css', 'resources/js/courses.js'])
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
 <x-app-layout>
     <x-slot name="header">
         <h2 class="custom-header">
             {{ __('Courses & Universities') }}
+            <input type="text" id="filterSearch" class="search-bar" placeholder="Search for courses, universities, or fields...">
 
         </h2>
     </x-slot>
@@ -12,8 +14,7 @@
     <div class="course-container">
         <!-- Filter Panel -->
         <button id="toggle-filters-btn" class="toggle-filters-btn">⮜</button>
-            <div class="filter-panel p-5 bg-light rounded">
-                
+            <div class="filter-panel p-5 bg-light rounded">             
                 <form id="filter-form">
                     <h4>Category</h4>
                     @foreach ($categories as $category)
@@ -82,6 +83,8 @@
         <div class="results">
             
             <br><h1 class="results-title">Results</h1>
+            
+
             <!-- <button id="compare-btn" class="cta-button">Compare</button>
             <button id="done-btn" class="cta-button" style="display: none;">Done</button> -->
             <br>
@@ -93,9 +96,7 @@
                     <h5 class="course-title">{{ $course->name }}</h5>
                     <hr>
                     <div class="c2">
-                        <div class="university-logos">
-                            <img src="{{ $course->university->logo }}">
-                        </div>
+                        <img src="{{ $course->university->logo }}">
                         <div>
                             <p><strong>Category:</strong> {{ $course->category->name }}</p>
                             <p><strong>Field:</strong> {{ $course->field->name }}</p>
@@ -118,14 +119,20 @@
     </div>
 
     <script>
-        document.querySelectorAll('.filter-checkbox').forEach(checkbox => {
-    checkbox.addEventListener('change', function() {
+        document.querySelectorAll('.filter-checkbox, #filterSearch').forEach(input => {
+    input.addEventListener('input', function () {
         let form = document.getElementById('filter-form');
         let formData = new FormData();
 
         form.querySelectorAll('input[type="checkbox"]:checked').forEach((checkbox) => {
             formData.append(checkbox.name + "[]", checkbox.value);
         });
+
+        // Include search input field
+        let searchQuery = document.getElementById('filterSearch').value;
+        if (searchQuery.trim() !== '') {
+            formData.append('search', searchQuery);
+        }
 
         let query = new URLSearchParams(formData).toString();
 
@@ -137,43 +144,38 @@
         })
         .then(response => response.json())
         .then(data => {
-            console.log(data);
             let coursesList = document.getElementById('courses-list');
             coursesList.innerHTML = ""; // Clear existing content
 
             data.courses.data.forEach(course => {
-                let courseCard = document.createElement('div');
-                courseCard.classList.add('course-card');
-
+                let courseCard = document.createElement('a');
+                courseCard.href = `courses/${course.id}`;
+                courseCard.classList.add('course-card-link');
                 courseCard.innerHTML = `
-                    <h5 class="course-title">
-                        <a href="/courses/${course.id}">${course.name}</a>
-                    </h5>
-                    <hr>
-                    <div class="c2">
-                        <div class="university-logos">
+                    <div class="course-card">
+                        <h5 class="course-title">${course.name}</h5>
+                        <hr>
+                        <div class="c2">
                             <img src="${course.university ? course.university.logo : 'N/A'}">
+                            <div>
+                                <p><strong>Category:</strong> ${course.category ? course.category.name : 'N/A'}</p>
+                                <p><strong>Field:</strong> ${course.field ? course.field.name : 'N/A'}</p>
+                                <p><strong>University:</strong> ${course.university ? course.university.name : 'N/A'}</p>
+                                <p><strong>QS Ranking:</strong> ${course.ranking ? course.ranking.value : 'N/A'}</p>
+                            </div>
                         </div>
-                        <div>
-                            <p><strong>Category:</strong> ${course.category ? course.category.name : 'N/A'}</p>
-                            <p><strong>Field:</strong> ${course.field ? course.field.name : 'N/A'}</p>
-                            <p><strong>University:</strong> ${course.university ? course.university.name : 'N/A'}</p>
-                            <p><strong>QS Ranking:</strong> ${course.ranking ? course.ranking.value : 'N/A'}</p>
+                        <div class="c3">
+                            <p><strong>Budget:</strong><br> RM ${course.budget.toLocaleString()}</p>
+                            <p><strong>Location:</strong><br> ${course.location ? course.location.name : 'N/A'}</p>
                         </div>
-                        
-                    </div>
-                    <div class="c3">
-                        <p><strong>Budget:</strong><br> RM ${course.budget.toLocaleString()}</p>
-                        <p><strong>Location:</strong><br> ${course.location ? course.location.name : 'N/A'}</p>
                     </div>
                 `;
 
-                coursesList.appendChild(courseCard); // Add new course card to the grid
+                coursesList.appendChild(courseCard); // Add new course card
             });
         });
     });
 });
-
 
         
     </script>

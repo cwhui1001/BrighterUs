@@ -46,6 +46,24 @@ class CourseController extends Controller
 {
     $query = Course::with(['category', 'field', 'university', 'location', 'ranking']);
 
+    // Apply search filter
+    if ($request->has('search')) {
+        $search = $request->input('search');
+        $query->where('name', 'LIKE', "%{$search}%")
+              ->orWhereHas('category', function ($q) use ($search) {
+                  $q->where('name', 'LIKE', "%{$search}%");
+              })
+              ->orWhereHas('field', function ($q) use ($search) {
+                  $q->where('name', 'LIKE', "%{$search}%");
+              })
+              ->orWhereHas('university', function ($q) use ($search) {
+                  $q->where('name', 'LIKE', "%{$search}%");
+              })
+              ->orWhereHas('location', function ($q) use ($search) {
+                  $q->where('name', 'LIKE', "%{$search}%");
+              });
+    }
+    
     if ($request->has('category')) {
         $query->whereIn('category_id', $request->category);
     }
