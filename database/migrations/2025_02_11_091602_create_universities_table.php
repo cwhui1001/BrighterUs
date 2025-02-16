@@ -16,7 +16,7 @@ return new class extends Migration
                 $table->id();
                 $table->string('name')->unique();
                 $table->foreignId('location_id');
-                $table->integer('ranking');
+                $table->foreignId('ranking_id');
                 $table->timestamps();
             });
         }
