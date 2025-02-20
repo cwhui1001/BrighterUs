@@ -95,11 +95,13 @@
                 <div class="course-card">
                     <h5 class="course-title">{{ $course->name }}</h5>
                     <hr>
+                  
+
                     <div class="c2">
                         <img src="{{ $course->university->logo }}">
                         <div>
                             <p><strong>Category:</strong> {{ $course->category->name }}</p>
-                            <p><strong>Field:</strong> {{ $course->field->name }}</p>
+                            <p><strong>Field:</strong> {{ $course->field?->name ?? '-' }}</p>
                             <p><strong>University:</strong> {{ $course->university->name }}</p>
                             <p><strong>QS Ranking:</strong> {{ $course->ranking->value }}</p>
                         </div>

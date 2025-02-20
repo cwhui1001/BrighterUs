@@ -19,7 +19,7 @@
                     <span class="label">Category:</span> {{ $course->category->name }}
                 </div>
                 <div class="detail-item">
-                    <span class="label">Field:</span> {{ $course->field->name }}
+                    <span class="label">Field:</span> {{ $course->field?->name ?? '-' }}
                 </div>
                 <div class="detail-item">
                     <span class="label">University:</span> {{ $course->university->name }}
@@ -52,16 +52,18 @@
             </div>
             <br><br>
             <div class="tuition-fee">
-                <div class="cost"><strong>Total Tuition Fee:</strong><br> RM {{ $course->budget }}</div>
+                <div class="cost"><strong>Total Tuition Fee:</strong><br> RM {{ number_format($course->budget, 0)  }}</div>
                 <div class="cost">
                     <p>✅ PTPN</p>
                     <p>✅ Scholarships Available</p>
                 </div>
             </div>
             <br>
-            <a href="https://sunwaycollege.edu.my/programmes/pre-university-foundation/sunway-foundation-in-arts" target="_blank">
-                <button class="ctaa-button">More Info</button>
-            </a>
+            @if(!empty($course->link))
+                <a href="{{ $course->link }}" target="_blank">
+                    <button class="ctaa-button">More Info</button>
+                </a>
+            @endif
             <a href="{{ url('/financial/need-based') }}" target="_blank">
                 <button class="ctaa-button">View Scholarships</button>
             </a>

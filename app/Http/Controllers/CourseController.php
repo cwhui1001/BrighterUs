@@ -17,7 +17,7 @@ class CourseController extends Controller
     public function index()
     {
         try {
-            $courses = Course::with(['category', 'field', 'university', 'location', 'ranking'])->paginate(10);
+            $courses = Course::with(['category', 'field', 'university', 'location', 'ranking'])->get();
             $fields = Field::all();
             $universities = University::all();
             $locations = Location::all();
@@ -88,7 +88,8 @@ class CourseController extends Controller
         $query->where('ranking_id', $request->ranking);
     }
 
-    $courses = $query->paginate(10);
+    $courses = $query->paginate(100);
+    
 
     return response()->json(['courses' => $courses]);
 }
