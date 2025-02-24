@@ -20,9 +20,11 @@
                 <ul class="navbar-nav me-auto">
                     
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('admin.dashboard') }}">Manage Users</a>
+                        <a class="nav-link" href="{{ route('admin.users') }}">Users</a>
                     </li>
-                    
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('admin.courses') }}">Courses</a>
+                    </li>
                 </ul>
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
+use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
@@ -23,6 +24,29 @@ class AdminController extends Controller
     }
 
     public function index()
+    {
+        // This method returns the dashboard view
+        return view('admin.dashboard'); // your dashboard Blade file
+    }
+
+    public function updateProfilePhoto(Request $request)
+    {
+        $request->validate([
+            'profile_photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        // Generate a consistent file name, e.g. user_5.jpg
+        $filename = 'user_' . Auth::id() . '.jpg';
+
+        // Store it in the profile_photos folder within storage/app/public
+        $request->file('profile_photo')->storeAs('profile_photos', $filename, 'public');
+
+        return redirect()->route('admin.dashboard')->with('success', 'Profile photo updated successfully!');
+    }
+
+
+
+    public function users()
     {
         $users = User::all();
         return view('admin.users', compact('users'));
@@ -56,9 +80,10 @@ class AdminController extends Controller
         return view('admin.edit_user', compact('user'));
     }
 
-    public function updateUser(Request $request, $id) {
+    public function updateUser(Request $request, $id)
+    {
         $user = User::findOrFail($id);
-        
+
         // Validate input
         $request->validate([
             'name' => 'required|string|max:255',
@@ -69,7 +94,7 @@ class AdminController extends Controller
         // Update user details
         $user->name = $request->name;
         $user->email = $request->email;
-        
+
         // Only update password if provided
         if ($request->filled('password')) {
             $user->password = Hash::make($request->password);

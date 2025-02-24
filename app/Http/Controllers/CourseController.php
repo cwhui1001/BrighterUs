@@ -43,64 +43,65 @@ class CourseController extends Controller
     }
 
     public function filter(Request $request)
-{
-    $query = Course::with(['category', 'field', 'university', 'location', 'ranking']);
+    {
+        $query = Course::with(['category', 'field', 'university', 'location', 'ranking']);
 
-    // Apply search filter
-    if ($request->has('search')) {
-        $search = $request->input('search');
-        $query->where('name', 'LIKE', "%{$search}%")
-              ->orWhereHas('category', function ($q) use ($search) {
-                  $q->where('name', 'LIKE', "%{$search}%");
-              })
-              ->orWhereHas('field', function ($q) use ($search) {
-                  $q->where('name', 'LIKE', "%{$search}%");
-              })
-              ->orWhereHas('university', function ($q) use ($search) {
-                  $q->where('name', 'LIKE', "%{$search}%");
-              })
-              ->orWhereHas('location', function ($q) use ($search) {
-                  $q->where('name', 'LIKE', "%{$search}%");
-              });
+        // Apply search filter
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $query->where('name', 'LIKE', "%{$search}%")
+                ->orWhereHas('category', function ($q) use ($search) {
+                    $q->where('name', 'LIKE', "%{$search}%");
+                })
+                ->orWhereHas('field', function ($q) use ($search) {
+                    $q->where('name', 'LIKE', "%{$search}%");
+                })
+                ->orWhereHas('university', function ($q) use ($search) {
+                    $q->where('name', 'LIKE', "%{$search}%");
+                })
+                ->orWhereHas('location', function ($q) use ($search) {
+                    $q->where('name', 'LIKE', "%{$search}%");
+                });
+        }
+        
+        if ($request->has('category')) {
+            $query->whereIn('category_id', $request->category);
+        }
+
+        if ($request->has('field')) {
+            $query->whereIn('field_id', $request->field);
+        }
+
+        if ($request->has('university')) {
+            $query->whereIn('university_id', $request->university);
+        }
+
+        if ($request->has('location')) {
+            $query->whereIn('location_id', $request->location);
+        }
+
+        if ($request->has('budget')) {
+            $query->where('budget', '<=', max($request->budget));
+        }
+
+        if ($request->has('ranking')) {
+            $query->where('ranking_id', $request->ranking);
+        }
+
+        $courses = $query->paginate(100);
+        
+
+        return response()->json(['courses' => $courses]);
     }
+
+    public function compare(Request $request)
+    {
+        $selectedIds = explode(',', $request->query('courses'));
+        $courses = Course::whereIn('id', $selectedIds)->get();
+        
+        return view('courses.compare', compact('courses'));
+    }
+
     
-    if ($request->has('category')) {
-        $query->whereIn('category_id', $request->category);
-    }
-
-    if ($request->has('field')) {
-        $query->whereIn('field_id', $request->field);
-    }
-
-    if ($request->has('university')) {
-        $query->whereIn('university_id', $request->university);
-    }
-
-    if ($request->has('location')) {
-        $query->whereIn('location_id', $request->location);
-    }
-
-    if ($request->has('budget')) {
-        $query->where('budget', '<=', max($request->budget));
-    }
-
-    if ($request->has('ranking')) {
-        $query->where('ranking_id', $request->ranking);
-    }
-
-    $courses = $query->paginate(100);
-    
-
-    return response()->json(['courses' => $courses]);
-}
-
-public function compare(Request $request)
-{
-    $selectedIds = explode(',', $request->query('courses'));
-    $courses = Course::whereIn('id', $selectedIds)->get();
-    
-    return view('courses.compare', compact('courses'));
-}
-
 }
 

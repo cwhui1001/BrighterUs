@@ -1,20 +1,18 @@
 document.addEventListener("DOMContentLoaded", function () {
     window.openEditModal = function (button) {
-        // Get user data from button attributes
-        let userId = button.getAttribute("data-id");
-        let userName = button.getAttribute("data-name");
-        let userEmail = button.getAttribute("data-email");
+        const userId = button.getAttribute('data-id');
+    const userName = button.getAttribute('data-name');
+    const userEmail = button.getAttribute('data-email');
 
-        // Populate modal fields
-        document.getElementById("editUserId").value = userId;
-        document.getElementById("editUserName").value = userName;
-        document.getElementById("editUserEmail").value = userEmail;
+    // Set form action with user ID
+    document.getElementById('editUserForm').action = `users/${userId}`;
 
-        // Update form action URL
-        document.getElementById("editUserForm").action = "/admin/users/" + userId;
+    // Populate form fields
+    document.getElementById('editUserId').value = userId;
+    document.getElementById('editUserName').value = userName;
+    document.getElementById('editUserEmail').value = userEmail;
 
-        // Show modal
-        let editModal = new bootstrap.Modal(document.getElementById("editUserModal"));
-        editModal.show();
+    // Show the modal
+    new bootstrap.Modal(document.getElementById('editUserModal')).show();
     };
 });

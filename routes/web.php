@@ -51,19 +51,27 @@ use App\Http\Controllers\AdminController;
 
 Route::middleware('auth')->group(function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
-    Route::get('/admin/users', [AdminController::class, 'users'])->name('admin.users');
-    // Show edit form
-    
+    Route::post('/admin/update-profile-photo', [AdminController::class, 'updateProfilePhoto'])
+     ->name('admin.updateProfilePhoto');
 
+    Route::get('/admin/users', [AdminController::class, 'users'])->name('admin.users');
+    
     // Update user info
     Route::put('/admin/users/{id}', [AdminController::class, 'updateUser'])->name('admin.users.update');
 
     // Delete user
-    Route::delete('/admin/users/{id}', [AdminController::class, 'deleteUser'])->name('admin.users.delete');
+    Route::delete('/admin/users/{id}', [AdminController::class, 'destroy'])->name('admin.users.delete');
 
     // Add user
     Route::post('/admin/users/add', [AdminController::class, 'store'])->name('admin.users.add');
 });
+
+use App\Http\Controllers\AdminCourseController;
+
+Route::get('/admin/courses', [AdminCourseController::class, 'index'])->name('admin.courses');
+Route::post('/admin/courses', [AdminCourseController::class, 'store'])->name('admin.courses.store');
+Route::put('/admin/courses/{id}', [AdminCourseController::class, 'update'])->name('admin.courses.update');
+
 
 
 require __DIR__.'/auth.php';

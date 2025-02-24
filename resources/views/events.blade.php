@@ -54,7 +54,7 @@
                     </td>
                     <td class="column3">
                         <div class="description">
-                            <p>{{ $event->description }}</p>
+                            {!! $event->description !!}
                         </div>
                     </td>
                 </tr>
