@@ -22,10 +22,8 @@ Route::get('/compare', [CourseController::class, 'compare'])->name('courses.comp
 
 
 
-
-Route::get('/events', function () {
-    return view('events');
-})-> name('events');
+use App\Http\Controllers\EventController;
+Route::get('/events', [EventController::class, 'index'])->name('events');
 
 Route::prefix('financial')->name('financial.')->group(function () {
     Route::get('/need-based', [FinancialController::class, 'needBased'])->name('need-based');

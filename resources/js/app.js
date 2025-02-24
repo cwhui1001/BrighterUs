@@ -77,3 +77,6 @@ userMessageInput.addEventListener('keypress', function (e) {
 
 // Send message on button click
 sendMessageBtn.addEventListener('click', sendMessage);
+
+import './career.js';
+import './mbtiData.js';
