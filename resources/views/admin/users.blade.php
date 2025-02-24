@@ -66,7 +66,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
-                <form id="editUserForm" action="" method="POST">
+                <form id="editUserForm" method="POST">
                     @csrf
                     @method('PUT')
 
