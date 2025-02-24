@@ -30,10 +30,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-window.initMap = function () {
-    console.log("Google Maps API loaded successfully!");
-};
-
 window.showMap = function (mapId, placeId) {
     console.log("Clicked map icon!");
 
@@ -64,16 +60,32 @@ window.showMap = function (mapId, placeId) {
             console.error("Place details request failed:", status);
         }
     });
+
+    // Ensure the close button inside the current map popup closes only that popup
+    const closeBtn = mapPopup.querySelector(".close-btn");
+    if (closeBtn) {
+        closeBtn.onclick = function () {
+            mapPopup.style.display = "none";
+            overlay.style.display = "none";
+        };
+    }
 };
 
 // Close Map Function
 // Ensure the function is available globally
 function closeMap() {
-    const popup = document.querySelector(".map-popup");
+    // Find all popups and overlays
+    const popups = document.querySelectorAll(".map-popup");
     const overlay = document.querySelector(".overlay");
 
-    if (popup && overlay) {
-        popup.style.display = "none";
+    // Hide only the currently visible popups
+    popups.forEach(popup => {
+        if (popup.style.display === "block") {
+            popup.style.display = "none";
+        }
+    });
+
+    if (overlay) {
         overlay.style.display = "none";
     }
 }
