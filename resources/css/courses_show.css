@@ -1,0 +1,134 @@
+.show-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+/* Course Card */
+.schow-course-card {
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+}
+
+
+/* Course Title */
+.course-title {
+    font-size: 32px;
+    font-weight: bold;
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Course Details */
+.course-details {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.detail-item {
+    background: #f8f8f8;
+    padding: 15px;
+    border-left: 5px solid #dbd334;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.label {
+    font-weight: bold;
+    font-size: 17px;
+    color: #000000;
+}
+
+/* Description */
+.description {
+    margin-top: 20px;
+}
+
+.description h3 {
+    font-size: 20px;
+    color: #000000;
+    margin-bottom: 10px;
+}
+
+.description p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #555;
+}
+
+.compare-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.course-card {
+    width: 45%; /* Adjust width for two columns */
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.detail-item {
+    margin-bottom: 8px;
+}
+
+.label {
+    font-weight: bold;
+}
+
+
+.uni-logo{
+    display: flex;
+    justify-content: center;
+    padding-bottom: 25px;
+}
+
+.uni-logo img{
+    width: 150px;
+}
+
+
+.tuition-fee {
+    margin-top: 15px;
+    line-height: 1.6;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+.cost{
+    background: #f8f8f8;
+    padding: 15px;
+    border-left: 5px solid #dbd334;
+    border-radius: 8px;
+    font-size: 18px;
+}
+
+.ctaa-button {
+    background-color: #ff9f22;
+    color: #fff;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 15px;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: background-color 0.3s, transform 0.2s;
+    align-items: center;
+    margin: 30px;
+}
+
+.ctaa-button:hover {
+    background-color: #e64a19;
+    transform: translateY(-3px);
+}

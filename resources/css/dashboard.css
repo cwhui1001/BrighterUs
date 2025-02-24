@@ -35,6 +35,9 @@
     transform: scale(1.1);
 }
 
+h3{
+    padding-top: 20px;
+}
 .cta-button {
     display: inline-block;
     background-color: #ff5722;

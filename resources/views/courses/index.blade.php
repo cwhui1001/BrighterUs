@@ -1,17 +1,20 @@
 @vite(['resources/css/courses.css', 'resources/js/courses.js'])
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
 <x-app-layout>
     <x-slot name="header">
         <h2 class="custom-header">
             {{ __('Courses & Universities') }}
+            <input type="text" id="filterSearch" class="search-bar" placeholder="Search for courses, universities, or fields...">
+
         </h2>
     </x-slot>
 
     <!-- Main Content -->
-    <div class="container">
+    <div class="course-container">
         <!-- Filter Panel -->
-        <div class="col-md-3">
-            <div class="filter-panel p-5 bg-light rounded">
+        <button id="toggle-filters-btn" class="toggle-filters-btn">⮜</button>
+            <div class="filter-panel p-5 bg-light rounded">             
                 <form id="filter-form">
                     <h4>Category</h4>
                     @foreach ($categories as $category)
@@ -74,87 +77,120 @@
                     </div>
                 </form>
             </div>
-        </div>
+       
                 
         <!-- Results Section -->
-        <div class="col-md-9">
-            <br><h1 class="results-title">Results</h1><br>
+        <div class="results">
+            
+            <br><h1 class="results-title">Results</h1>
+            
+
+            <!-- <button id="compare-btn" class="cta-button">Compare</button>
+            <button id="done-btn" class="cta-button" style="display: none;">Done</button> -->
+            <br>
             <div id="courses-list">
-                @foreach ($courses as $course)
+            @foreach ($courses as $course)
+            
+            <a href="{{ route('courses.show', $course->id) }}" class="course-card-link">
                 <div class="course-card">
-                    <h5 class="course-title">
-                        <a href="{{ route('courses.show', $course->id) }}">{{ $course->name }}</a>
-                    </h5>
+                    <h5 class="course-title">{{ $course->name }}</h5>
                     <hr>
-                    <p><strong>Category:</strong> {{ $course->category->name }}</p>
-                    <p><strong>Field:</strong> {{ $course->field->name }}</p>
-                    <p><strong>University:</strong> {{ $course->university->name }}</p>
-                    <p><strong>Location:</strong> {{ is_object($course->location) ? $course->location->name : $course->location }}</p>
-                    <p><strong>Budget:</strong> ${{ number_format($course->budget, 2) }}</p>
-                    <p><strong>Ranking:</strong> {{ $course->ranking }}</p>
-                    <p class="course-description"><strong>Description:</strong> {{ $course->description }}</p>
+                  
+
+                    <div class="c2">
+                        <img src="{{ $course->university->logo }}">
+                        <div>
+                            <p><strong>Category:</strong> {{ $course->category->name }}</p>
+                            <p><strong>Field:</strong> {{ $course->field?->name ?? '-' }}</p>
+                            <p><strong>University:</strong> {{ $course->university->name }}</p>
+                            <p><strong>QS Ranking:</strong> {{ $course->ranking->value }}</p>
+                        </div>
+                    </div>
+                    <div class="c3">
+                        <p><strong>Budget:</strong><br> RM {{ number_format($course->budget, 0) }}</p>
+                        <p><strong>Location:</strong><br> {{ is_object($course->location) ? $course->location->name : $course->location }}</p>
+                    </div>
                 </div>
-                @endforeach
+            </a>
+
+            @endforeach
             </div>
                 
-            <!-- Pagination -->
-            <div class="pagination-container">
-                {{ $courses->links() }}
-            </div>
+            
         </div>
     </div>
 
     <script>
-        document.querySelectorAll('.filter-checkbox').forEach(checkbox => {
-            checkbox.addEventListener('change', function() {
-                let form = document.getElementById('filter-form');
-                let formData = new FormData();
+        document.querySelectorAll('.filter-checkbox, #filterSearch').forEach(input => {
+    input.addEventListener('input', function () {
+        let form = document.getElementById('filter-form');
+        let formData = new FormData();
 
-                form.querySelectorAll('input[type="checkbox"]:checked').forEach((checkbox) => {
-                    formData.append(checkbox.name + "[]", checkbox.value);
-                });
+        form.querySelectorAll('input[type="checkbox"]:checked').forEach((checkbox) => {
+            formData.append(checkbox.name + "[]", checkbox.value);
+        });
 
+        // Include search input field
+        let searchQuery = document.getElementById('filterSearch').value;
+        if (searchQuery.trim() !== '') {
+            formData.append('search', searchQuery);
+        }
 
-                let query = new URLSearchParams(formData).toString();
+        let query = new URLSearchParams(formData).toString();
 
-                fetch("{{ route('courses.filter') }}?" + query, {
-                    method: "GET",
-                    headers: {
-                        'X-Requested-With': 'XMLHttpRequest'
-                    }
-                })
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data);
-                    let coursesList = document.getElementById('courses-list');
-                    coursesList.innerHTML = "";
+        fetch("{{ route('courses.filter') }}?" + query, {
+            method: "GET",
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            let coursesList = document.getElementById('courses-list');
+            coursesList.innerHTML = ""; // Clear existing content
 
-                    data.courses.data.forEach(course => {
-                        let courseCard = document.createElement('div');
-                        courseCard.classList.add('course-card');
+            data.courses.data.forEach(course => {
+                let courseCard = document.createElement('a');
+                courseCard.href = `courses/${course.id}`;
+                courseCard.classList.add('course-card-link');
+                courseCard.innerHTML = `
+                    <div class="course-card">
+                        <h5 class="course-title">${course.name}</h5>
+                        <hr>
+                        <div class="c2">
+                            <img src="${course.university ? course.university.logo : 'N/A'}">
+                            <div>
+                                <p><strong>Category:</strong> ${course.category ? course.category.name : 'N/A'}</p>
+                                <p><strong>Field:</strong> ${course.field ? course.field.name : 'N/A'}</p>
+                                <p><strong>University:</strong> ${course.university ? course.university.name : 'N/A'}</p>
+                                <p><strong>QS Ranking:</strong> ${course.ranking ? course.ranking.value : 'N/A'}</p>
+                            </div>
+                        </div>
+                        <div class="c3">
+                            <p><strong>Budget:</strong><br> RM ${course.budget.toLocaleString()}</p>
+                            <p><strong>Location:</strong><br> ${course.location ? course.location.name : 'N/A'}</p>
+                        </div>
+                    </div>
+                `;
 
-                        courseCard.innerHTML = `
-                            <h5 class="course-title">
-                                <a href="/courses/${course.id}">${course.name}</a>
-                            </h5>
-                            <hr>
-                            <p><strong>Category:</strong> ${course.category ? course.category.name : 'N/A'}</p>
-                            <p><strong>Field:</strong> ${course.field ? course.field.name : 'N/A'}</p>
-                            <p><strong>University:</strong> ${course.university ? course.university.name : 'N/A'}</p>
-                            <p><strong>Location:</strong> ${course.location ? course.location.name : 'N/A'}</p>
-                            <p><strong>Budget:</strong> $${course.budget.toLocaleString()}</p>
-                            <p><strong>Ranking:</strong> ${course.ranking}</p>
-                            <p class="course-description"><strong>Description:</strong> ${course.description}</p>
-                        `;
-
-                        coursesList.appendChild(courseCard);
-                    });
-                })
-                
+                coursesList.appendChild(courseCard); // Add new course card
             });
         });
+    });
+});
 
         
     </script>
+    <script>
+        doneBtn.addEventListener("click", function () {
+    const compareRoute = "{{ route('courses.compare') }}";
+
+    function redirectToCompare() {
+        window.location.href = compareRoute + "?courses=" + selectedCourses.join(",");
+    }
+});
+</script>
+
     
 </x-app-layout>
+

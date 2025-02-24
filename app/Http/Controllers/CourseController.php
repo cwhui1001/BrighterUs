@@ -8,6 +8,7 @@ use App\Models\Field;
 use App\Models\University;
 use App\Models\Location;
 use App\Models\CourseCategory;
+use App\Models\Ranking;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Exception;
 
@@ -16,13 +17,14 @@ class CourseController extends Controller
     public function index()
     {
         try {
-            $courses = Course::with(['category', 'field', 'university', 'location'])->paginate(10);
+            $courses = Course::with(['category', 'field', 'university', 'location', 'ranking'])->get();
             $fields = Field::all();
             $universities = University::all();
             $locations = Location::all();
             $categories = CourseCategory::all();
+            $rankings = Ranking::all();
 
-            return view('courses.index', compact('courses', 'fields', 'universities', 'locations', 'categories'));
+            return view('courses.index', compact('courses', 'fields', 'universities', 'locations', 'categories', 'rankings'));
         } catch (Exception $e) {
             return back()->with('error', 'An error occurred while fetching the courses.');
         }
@@ -42,8 +44,26 @@ class CourseController extends Controller
 
     public function filter(Request $request)
 {
-    $query = Course::with(['category', 'field', 'university', 'location']);
+    $query = Course::with(['category', 'field', 'university', 'location', 'ranking']);
 
+    // Apply search filter
+    if ($request->has('search')) {
+        $search = $request->input('search');
+        $query->where('name', 'LIKE', "%{$search}%")
+              ->orWhereHas('category', function ($q) use ($search) {
+                  $q->where('name', 'LIKE', "%{$search}%");
+              })
+              ->orWhereHas('field', function ($q) use ($search) {
+                  $q->where('name', 'LIKE', "%{$search}%");
+              })
+              ->orWhereHas('university', function ($q) use ($search) {
+                  $q->where('name', 'LIKE', "%{$search}%");
+              })
+              ->orWhereHas('location', function ($q) use ($search) {
+                  $q->where('name', 'LIKE', "%{$search}%");
+              });
+    }
+    
     if ($request->has('category')) {
         $query->whereIn('category_id', $request->category);
     }
@@ -65,14 +85,22 @@ class CourseController extends Controller
     }
 
     if ($request->has('ranking')) {
-        $query->where('ranking', '<=', max($request->ranking));
+        $query->where('ranking_id', $request->ranking);
     }
 
-    $courses = $query->paginate(10);
+    $courses = $query->paginate(100);
+    
 
     return response()->json(['courses' => $courses]);
 }
 
+public function compare(Request $request)
+{
+    $selectedIds = explode(',', $request->query('courses'));
+    $courses = Course::whereIn('id', $selectedIds)->get();
+    
+    return view('courses.compare', compact('courses'));
+}
 
 }
 

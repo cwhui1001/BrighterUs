@@ -18,6 +18,9 @@ use App\Http\Controllers\CourseController;
 Route::get('/courses', [CourseController::class, 'index'])->name('courses.index');
 Route::get('/courses/filter', [CourseController::class, 'filter'])->name('courses.filter');
 Route::get('/courses/{id}', [CourseController::class, 'show'])->name('courses.show');
+Route::get('/compare', [CourseController::class, 'compare'])->name('courses.compare');
+
+
 
 use App\Http\Controllers\EventController;
 Route::get('/events', [EventController::class, 'index'])->name('events');

@@ -1,4 +1,3 @@
-
 @vite(['resources/css/dashboard.css', 'resources/js/dashboard.js'])
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
    
@@ -46,53 +45,13 @@
             </div>
         
             <h1 class="section-title">Why Choose Us?</h1><br>
-                <div class="custom-vertical flow-up">
-                    <div class="why-choose-us-section" >
-                        <h2 class="sub-title3">Explore Top Universities All Over Malaysia!</h2><br>
-                        <div class="university-logos">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Sunway_logo.jpg/1200px-Sunway_logo.jpg" alt="University Logo 1">
-                            <img src="https://jmeducationgroup.com/wp-content/uploads/2021/03/Taylors-University-Logo.jpeg" alt="University Logo 2">
-                            <img src="https://d30mzt1bxg5llt.cloudfront.net/public/uploads/images/_signatoryLogo/2016-MonashUniversityMALAYSIA_2-MonoCMYKoutlines.jpg" alt="University Logo 3">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQR8y9ZDsvA9NHsWgJQbo7g9C97_XgzkS8bww&s" alt="University Logo 4">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/2/29/Multimedia_University_secondary_logo_2020.png" alt="University Logo 4">
-                            <img src="https://erasmusplusfriends.eu/wp-content/uploads/2019/05/APU-Logo_Final_Vertical_V1_HR1-copy-1024x966.png" alt="University Logo 4">
-                        </div><br>
-                        <h3>Compare Universities by price, ranking, location just by your finger tips!</h3>
-                        <a class="cta-button mt-4" href="{{ url('/universities') }}">See All Universities</a>
-
-                    </div>
-                    <div class="why-choose-us-section" >
-                        <h3 class="sub-title3">Grab Chances of Getting Full Scholarships!</h3><br>
-                        <div class="university-logos">
-                            <img src="https://sunway.edu.my/sites/default/files/inline-images/jcf-logo%402x.png" alt="University Logo 1">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNOwxmmuX1D6LAWoX7ZU_AgDXtVHG5kn4Yhy-cUhQ-tlCrxAwWGS4LBKGeociHGgtdaBE&usqp=CAU" alt="University Logo 2">
-                            <img src="https://logolook.net/wp-content/uploads/2022/07/Petronas-Logo-2013.png" alt="University Logo 3">
-                            <img src="https://www.khazanah.com.my/media/uploads/2020/06/Yayasan-Hasanah-Logo-1.png" alt="University Logo 4">
-                            <img src="https://mdec.my/static/images/mdcap/resource-bnm-logo.png" alt="University Logo 4">
-                            <img src="https://ik.imagekit.io/impian/kouk-foundation.jpg?updatedAt=1689601512471" alt="University Logo 4">
-                        </div><br>
-                        <h3>Get scholarships and sponsorships on tuition fees, hostels, flights, and many more grants!</h3>
-                        <a class="cta-button mt-4" href="{{ url('/financial') }}">See All Scholarships</a>
-                    </div>
-
-                    <div class="why-choose-us-section" >
-                        <h3 class="sub-title3">Get Updated with Upcoming Education Fair!</h3><br>
-                        <img src="{{ asset('images/event1.jpg') }}">
-                        <br>
-                        <h3>Get notified with all the upcoming education fairs in Malaysia!</h3>
-                        <a class="cta-button mt-4" href="{{ url('/events') }}">Explore All Events</a>
-                    </div>
-
-                    <div class="why-choose-us-section">
-                        <h3 class="sub-title3">Get Personalized Career Advice!</h3><br>
-                        <img src="{{ asset('images/mbti.png') }}">                        <br>
-                        <h3>Get personalized pathway advice by going through a quick career assessment!</h3>
-                        <a class="cta-button mt-4" href="{{ url('/career') }}">Take a career test</a>
-                    </div>
-                    
-                </div>
-
-
+            <div id="why-choose-us-container" class="custom-vertical flow-up">
+                <!-- Dynamic content will be inserted here -->
+            </div>
+            <script>
+                
+            </script>
+            <br>
             <div class="faq-container flow-up">
                 <div class="faq-con mx-auto p-6 shadow">
                     <h1 class="text-2xl font-bold text-center mb-6">Frequently Asked Questions</h1>
@@ -120,24 +79,19 @@
             </div>
         </div>
     </div>
+
     <script>
-    function toggleFaq(button) {
-        const content = button.nextElementSibling; // Get the content div
-        const isHidden = content.classList.contains('hidden');
+        window.appUrls = {
+            courses: "{{ url('/courses') }}",
+            needBased: "{{ url('/financial/need-based') }}",
+            career: "{{ url('/career') }}"
+        };
+        window.appImages = {
+            event1: "{{ asset('images/event1.jpg') }}",
+            mbti: "{{ asset('images/mbti.png') }}"
+        };
+    </script>
+    <script src="{{ asset('js/why-choose-us.js') }}" defer></script>
 
-        // Close all FAQ contents first
-        document.querySelectorAll('.faq-content').forEach((faq) => faq.classList.add('hidden'));
-        document.querySelectorAll('.faq-toggle .faq-icon').forEach((icon) => (icon.textContent = '+'));
 
-        // Toggle the current FAQ
-        if (isHidden) {
-            content.classList.remove('hidden'); // Show the content
-            button.querySelector('.faq-icon').textContent = '×'; // Change the icon to ×
-        } else {
-            content.classList.add('hidden'); // Hide the content
-            button.querySelector('.faq-icon').textContent = '+'; // Change the icon back to +
-        }
-    }
-</script>
-    
 </x-app-layout>

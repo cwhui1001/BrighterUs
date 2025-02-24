@@ -20,7 +20,7 @@ return new class extends Migration
                 $table->foreignId('university_id')->constrained('universities')->onDelete('cascade');
                 $table->foreignId('location_id')->constrained('locations')->onDelete('cascade');
                 $table->foreignId('budget')->constrained('budgets')->onDelete('cascade');
-                $table->foreignId('ranking')->constrained('rankings')->onDelete('cascade');
+                $table->foreignId('ranking_id')->constrained('rankings')->onDelete('cascade');
                 $table->timestamps();
             });
         }

@@ -1,6 +1,7 @@
 .filter-panel {
-    width: 400px; /* Adjust width as needed */
+    width: 300px; /* Adjust width as needed */
     padding: 15px;
+    padding-top: 0 !important;
     background: #fff; /* White background */
     border-radius: 15px;
     box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2);
@@ -38,9 +39,19 @@ select {
     cursor: pointer;
 }
 
-.container{
+.course-container{
     display: grid;
-    grid-template-columns: 1fr 2fr;
+    grid-template-columns: 350px 1fr; /* Default: filter panel + results */
+    
+    transition: all 0.3s ease-in-out;
+}
+
+.filter-panel.hidden {
+    display: none; /* Hides the filter panel */
+}
+
+.course-container.full-width {
+    grid-template-columns: 1fr; /* When filter is hidden, results take full space */
 }
 
 .form-control{
@@ -59,7 +70,8 @@ select {
     color: #ff9500;
     font-weight: bold;
     font-size: 28px;
-    margin-bottom: 20px;
+    margin: 10px;
+    text-align: center;
 }
 
 /* Course Card Styling */
@@ -67,10 +79,32 @@ select {
     background-color: white;
     border: 1px solid #ddd;
     border-radius: 15px;
-    padding: 20px;
+    padding: 25px;
     margin-bottom: 20px;
     box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease-in-out;
+    
+    width: 350px; /* Prevents cards from getting too wide */
+    height: 370px; /* Ensures all cards have a minimum height */
+    display: grid;
+    justify-content: space-between; /* Aligns content evenly */
+    cursor: pointer;
+    position: relative;
+}
+.course-card-link {
+    text-decoration: none; /* Remove underline */
+    color: inherit; /* Keep text color the same */
+    display: block; /* Ensure the card behaves like a block */
+}
+
+.c3{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+.c2{
+    display: grid;
+    grid-template-columns: 0.5fr 2fr;
+    gap: 20px;
 }
 
 .course-card:hover {
@@ -79,14 +113,14 @@ select {
 }
 
 /* Title Styling */
-.course-title a {
+.course-title {
     text-decoration: none;
     color: #333;
     font-weight: bold;
     font-size: 22px;
 }
 
-.course-title a:hover {
+.course-title:hover {
     color: #ff8800;
 }
 
@@ -112,6 +146,7 @@ select {
     color: #d85e0c;
     margin-bottom: 8px;
     margin-top: 30px;
+    
 }
 
 
@@ -147,3 +182,112 @@ h5 {
 hr {
     border-top: 2px solid #ffb300;
 }
+
+
+
+
+#courses-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    align-items: stretch; /* Ensures all cards stretch to the same height */
+}
+
+
+
+
+.toggle-filters-btn {
+    position: absolute;
+    top: 190px;
+    left: 330px; /* Align with filter panel */
+    background: #ff9900;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 20px;
+    font-size: 15px;
+    cursor: pointer;
+    z-index: 10;
+    transition: left 0.3s ease-in-out; /* Smooth movement */
+}
+
+/* When the filter panel is hidden */
+.filter-panel.hidden + .toggle-filters-btn {
+    left: 10px; /* Move the button to the left */
+}
+
+
+
+
+img {
+    max-height: 70px;
+}
+
+
+
+
+
+
+.select-overlay {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(255, 255, 255, 0.7);
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.course-checkbox {
+    display: none; /* Hide checkboxes initially */
+}
+
+
+.cta-button {
+    background-color: #ff9f22;
+    color: #fff;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 15px;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: background-color 0.3s, transform 0.2s;
+    align-items: center;
+    margin-bottom: 15px;
+    margin-left: 32px;
+}
+
+.cta-button:hover {
+    background-color: #e64a19;
+    transform: translateY(-3px);
+}
+
+
+
+
+#filterSearch {
+    width: 100%;
+    max-width: 350px; /* Adjust width as needed */
+    padding: 10px 15px;
+    font-size: 14px ;
+    border: 1px solid orange; /* Blue border */
+    border-radius: 25px;
+    outline: none;
+    transition: 0.3s ease-in-out;
+    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+#filterSearch:focus {
+    border-color: #b32d00 ; /* Darker blue on focus */
+    box-shadow: 0 0 8px rgba(255, 115, 0, 0.5);
+}
+
+
+.custom-header {
+    display: flex;
+    flex-direction: row;
+    gap: 650px; /* Adjust space between text and search bar */
+    vertical-align: middle;
+}
+
