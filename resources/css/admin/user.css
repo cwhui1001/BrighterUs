@@ -1,0 +1,97 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+/* Navigation Bar */
+.navbar {
+    background: linear-gradient(90deg, #ffa500, #ff7f50);
+}
+.navbar .navbar-brand, .navbar .nav-link {
+    color: #fff !important;
+    font-weight: bold;
+}
+.navbar .nav-link:hover {
+    color: #f1f1f1 !important;
+}
+
+/* Admin Header */
+.admin-header-container {
+    text-align: center;
+    margin: 20px 0;
+    padding: 10px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Form Styling */
+form {
+    gap: 10px;
+    justify-content: center;
+    padding: 20px;
+    border-radius: 8px;
+    width: fit-content;
+    margin: auto;
+}
+input, button {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+button {
+    background: #ff7f50;
+    color: #fff;
+    border: none;
+    border-radius: 8px!important;
+    cursor: pointer;
+}
+button:hover {
+    background: #ff4500;
+}
+
+/* User Table */
+table {
+    width: 80%;
+    margin: 20px auto;
+    background: #fff;
+    border-collapse: collapse;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+th, td {
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.user-table th {
+    text-align: center;
+    vertical-align: middle;
+    background: #ffa500;
+    color: #fff;
+}
+
+td button {
+    background: #ff4d4d;
+    color: #fff;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+td button:hover {
+    background: #cc0000;
+}
+
+
+.modal-header {
+    background: #ffa500;
+    color: #fff;
+    padding: 10px;
+    border-radius: 8px 8px 0 0;
+}
