@@ -1,0 +1,248 @@
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #fff5e5;
+        margin: 0;
+        padding: 0;
+    }
+    .custom-header {
+        text-align: center;
+        font-size: 24px;
+        color: #333;
+        margin-bottom: 20px;
+    }
+    .custom-text {
+        text-align: center;
+        font-size: 18px;
+        color: #666;
+        margin-bottom: 40px;
+    }
+    
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 0 auto;
+        background-color: white;
+    }
+    
+    td {
+        border: 2px solid #f4a41d;
+        padding: 20px;
+        vertical-align: top;
+        
+    }
+    .column1 {
+        text-align: center;
+        position: relative;
+        width: 25%;
+    }
+    .column1 img {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 30px;
+        height: auto;
+        cursor: pointer;
+    }
+    .date {
+        font-size: 30px;
+        font-weight: bold;
+        color:rgb(48, 26, 1);
+        margin: 40px 0;
+    }
+    .buttons {
+        margin-top: 20px;
+    }
+    .button1 {
+        display: block;
+        background-color:rgb(216, 109, 56);
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 5px 15px;
+        margin: 5px auto;
+        cursor: pointer;
+        font-size: 14px;
+        width: 50%;
+    }
+    .button2 {
+        display: block;
+        background-color:rgb(217, 153, 55);
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 5px 15px;
+        margin: 5px auto;
+        cursor: pointer;
+        font-size: 14px;
+        width: 70%;
+    }
+    .button1:hover {
+        background-color:rgb(167, 85, 44);
+    }
+    .button2:hover {
+        background-color:rgb(166, 116, 42);
+    }
+    .column2 {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;    
+    }
+    .column2a img {
+        width: 250px;
+        height: 200px;
+        margin-right: 20px;
+    }
+    .column2b img{
+        width: 28px;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .time, .location {
+        font-size: 16px;
+        color: #666;
+        display: flex;
+        margin: 10px;
+    
+        align-items: flex-start;
+    }
+    .time img, .location img {
+        margin-right: 10px;
+    }
+    .column3 {
+        flex-direction: row;
+        align-items: center;
+        width: 30%;
+    }
+
+    /* Map Popup Container */
+    .map-popup {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 80%; /* Adjust width as needed */
+        max-width: 600px; /* Limit max width */
+        height: 60%; /* Adjust height as needed */
+        background-color: #ffffff;
+        border-radius: 15px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        z-index: 1000;
+        display: none; /* Hidden by default */
+        overflow: hidden;
+        animation: fadeIn 0.3s ease-in-out;
+    }
+
+    /* Overlay Background */
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 999; /* Just below the popup */
+        display: none;
+    }
+
+    /* Close Button */
+    .map-popup .close-btn {
+        position: absolute;
+        top: 10px;
+        left: 47%;
+        background-color: #e74c3c;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        cursor: pointer;
+        font-size: 18px;
+        text-align: center;
+        line-height: 40px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        z-index: 1100; /* Higher than the popup */
+        transition: all 0.3s ease-in-out;
+    }
+
+    .map-popup .close-btn:hover {
+        background-color: #c0392b;
+        transform: scale(1.1);
+    }
+    /* Map Container Inside Popup */
+    #map-klcc {
+        width: 100%;
+        height: calc(100% - 60px); /* Leave space for the close button */
+        border-top: 1px solid #f4f4f4;
+        border-radius: 0 0 15px 15px;
+    }
+    /* Fade-in Animation */
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translate(-50%, -60%);
+        }
+        to {
+            opacity: 1;
+            transform: translate(-50%, -50%);
+        }
+    }
+
+    /* Countdown Container Styling */
+    /* Countdown Container */
+    .countdown-container {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 12px; /* Make it smaller to fit */
+    }
+
+    /* Event Title */
+    .event-title {
+    font-size: 15px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    }
+
+    /* Countdown Box Styling */
+    .countdown-box {
+    display: flex;
+    justify-content: space-between;
+    gap: 5px;
+    width: 90%;
+    }
+
+    /* Individual Countdown Element */
+    .countdown-element {
+    text-align: center;
+    padding: 3px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    min-width: 50px; /* Smaller width */
+    max-width: 100px;
+    background-color: #fff5e5;
+    }
+
+    /* Countdown Value Styling */
+    .countdown-value {
+    font-size: 16px;
+    font-weight: bold;
+    display: block;
+    }
+
+    /* Countdown Label Styling */
+    .countdown-label {
+    font-size: 10px;
+    letter-spacing: 0.5px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+    .countdown-box {
+    flex-direction: column;
+    }
+
+    .countdown-element {
+    margin-bottom: 5px;
+    }
+    }

@@ -19,10 +19,8 @@ Route::get('/courses', [CourseController::class, 'index'])->name('courses.index'
 Route::get('/courses/filter', [CourseController::class, 'filter'])->name('courses.filter');
 Route::get('/courses/{id}', [CourseController::class, 'show'])->name('courses.show');
 
-
-Route::get('/events', function () {
-    return view('events');
-})-> name('events');
+use App\Http\Controllers\EventController;
+Route::get('/events', [EventController::class, 'index'])->name('events');
 
 Route::prefix('financial')->name('financial.')->group(function () {
     Route::get('/need-based', [FinancialController::class, 'needBased'])->name('need-based');
