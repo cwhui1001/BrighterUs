@@ -1,0 +1,87 @@
+
+/* Table Styling */
+.table {
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.table thead {
+    background: #343a40;
+    color: #fff;
+}
+
+.table tbody tr:nth-child(even) {
+    background: #f8f9fa;
+}
+
+.table td, .table th {
+    padding: 10px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+/* Buttons */
+.btn {
+    border-radius: 5px;
+    padding: 8px 12px;
+    font-weight: bold;
+}
+
+/* Add Event Button */
+.btn-primary {
+    background-color: #ff3700;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #b32100;
+}
+
+/* Edit Button */
+.btn-warning {
+    background-color: #f39c12;
+    border: none;
+    color: white;
+}
+
+.btn-warning:hover {
+    background-color: #e67e22;
+}
+
+/* Delete Button */
+.btn-danger {
+    background-color: #e7d93c;
+    border: none;
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: #b0b028;
+}
+
+/* Modals */
+.modal-content {
+    border-radius: 10px;
+}
+
+.modal-header {
+    background: #ffa200;
+    color: white;
+    border-radius: 10px 10px 0 0;
+}
+
+.modal-footer {
+    background: #f4f7f6;
+}
+
+/* Form Fields */
+.form-control {
+    border-radius: 5px;
+    padding: 8px;
+    border: 1px solid #ccc;
+}
+
+.form-group label {
+    font-weight: bold;
+}

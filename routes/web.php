@@ -20,7 +20,13 @@ Route::get('/courses/filter', [CourseController::class, 'filter'])->name('course
 Route::get('/courses/{id}', [CourseController::class, 'show'])->name('courses.show');
 Route::get('/compare', [CourseController::class, 'compare'])->name('courses.compare');
 
+use App\Http\Controllers\AdminEventController;
 
+// Admin Routes
+Route::get('/admin/events', [AdminEventController::class, 'index'])->name('admin.events');
+Route::post('/admin/events/store', [AdminEventController::class, 'store'])->name('admin.events.store');
+Route::post('/admin/events/update/{id}', [AdminEventController::class, 'update'])->name('admin.events.update');
+Route::delete('/admin/events/delete/{id}', [AdminEventController::class, 'destroy'])->name('admin.events.destroy');
 
 use App\Http\Controllers\EventController;
 Route::get('/events', [EventController::class, 'index'])->name('events');
