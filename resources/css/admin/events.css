@@ -1,3 +1,15 @@
+.admin-header-container {
+    background-image: url('/public/images/brighterus1.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: white;
+    text-align: center;
+    margin-bottom: 25px;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
 
 /* Table Styling */
 .table {
@@ -20,7 +32,10 @@
     text-align: center;
     vertical-align: middle;
 }
-
+.table th {
+    background-color: #ffa500 !important; /* Bootstrap primary color */
+    color: white !important;
+}
 /* Buttons */
 .btn {
     border-radius: 5px;

@@ -17,33 +17,36 @@
     </button>
     <ul class="nav-list">
         <li>
-            <a href="{{ route('admin.dashboard') }}">
+            <a href="{{ route('admin.dashboard') }}" class="{{ Request::routeIs('admin.dashboard') ? 'active' : '' }}">
                 <i class="fas fa-home"></i> <span class="nav-text">Dashboard</span>
             </a>
         </li>
         <li>
-            <a href="{{ route('admin.users') }}">
+            <a href="{{ route('admin.users') }}" class="{{ Request::routeIs('admin.users') ? 'active' : '' }}">
                 <i class="fas fa-users"></i> <span class="nav-text">Users</span>
             </a>
         </li>
         <li>
-            <a href="{{ route('admin.courses') }}">
+            <a href="{{ route('admin.courses') }}" class="{{ Request::routeIs('admin.courses') ? 'active' : '' }}">
                 <i class="fas fa-book"></i> <span class="nav-text">Courses</span>
             </a>
         </li>
         <li>
-            <a href="{{ route('admin.events') }}">
+            <a href="{{ route('admin.events') }}" class="{{ Request::routeIs('admin.events') ? 'active' : '' }}">
                 <i class="fas fa-calendar"></i> <span class="nav-text">Events</span>
             </a>
         </li>
+
+
         <li>
             <form class="admin-logout" action="{{ route('logout') }}" method="POST">
                 @csrf
-                <button type="submit">
+                <button type="submit" class="admin-logout-btn">
                     <i class="fas fa-sign-out-alt"></i> <span class="nav-text">Logout</span>
                 </button>
             </form>
         </li>
+
     </ul>
 </div>
 

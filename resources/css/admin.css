@@ -58,22 +58,19 @@ body {
 
 .sidebar .nav-list li a,
 .sidebar .nav-list li button {
-    text-decoration: none;
-    color: white;
     display: flex;
     align-items: center;
-    border: none;
-    background: none;
-    width: 100%;
-    padding: 10px 15px;
-    font-size: 16px;
-    cursor: pointer;
+    padding: 10px;
+    text-decoration: none;
+    color: white;
+    border-radius: 10px;
+    transition: background 0.3s;
 }
 
 .sidebar .nav-list li a:hover,
-.sidebar .nav-list li button:hover {
+.sidebar .nav-list li button:hover,
+.sidebar .nav-list li a.active {
     background: rgba(255, 255, 255, 0.2);
-    border-radius: 10px;
 }
 
 /* Icons */
@@ -116,4 +113,14 @@ body {
     display: flex;
     align-items: center;
     gap: 20px; /* Adjust the gap as needed */
+}
+
+.admin-logout-btn{
+    background: #33302a;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    padding: 10px 20px;
+    width: 100%;
 }
