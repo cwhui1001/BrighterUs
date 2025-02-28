@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+
+use App\Models\Course;
+use App\Models\Event;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -25,9 +28,33 @@ class AdminController extends Controller
 
     public function index()
     {
-        // This method returns the dashboard view
-        return view('admin.dashboard'); // your dashboard Blade file
+        $totalUsers = User::count();
+        $totalCourses = Course::count();
+        $totalEvents = Event::count();
+
+        $userData = User::selectRaw('DATE(created_at) as date, COUNT(*) as count')
+            ->groupBy('date')
+            ->orderBy('date', 'ASC')
+            ->get()
+            ->toArray();
+
+        $courseData = Course::join('universities', 'courses.university_id', '=', 'universities.id')
+            ->selectRaw('universities.name as university, DATE(courses.created_at) as date, COUNT(*) as count')
+            ->groupBy('universities.name', 'date')
+            ->orderBy('date', 'ASC')
+            ->get()
+            ->toArray();
+
+        $eventData = Event::selectRaw('DATE(created_at) as date, COUNT(*) as count')
+            ->groupBy('date')
+            ->orderBy('date', 'ASC')
+            ->get()
+            ->toArray();
+
+        // Now return the view with all data
+        return view('admin.dashboard', compact('totalUsers', 'totalCourses', 'totalEvents', 'userData', 'courseData', 'eventData'));
     }
+
 
     public function updateProfilePhoto(Request $request)
     {
@@ -104,4 +131,43 @@ class AdminController extends Controller
 
         return redirect()->route('admin.users')->with('success', 'User updated successfully!');
     }
+
+    public function getChartData()
+{
+    // Fetch user registration count per month
+    $users = User::selectRaw('MONTH(created_at) as month, COUNT(*) as count')
+        ->groupBy('month')
+        ->orderBy('month')
+        ->get();
+
+    $courses = Course::selectRaw('MONTH(created_at) as month, COUNT(*) as count')
+        ->groupBy('month')
+        ->orderBy('month')
+        ->get();
+
+    $events = Event::selectRaw('type, COUNT(*) as count')
+        ->groupBy('type')
+        ->get();
+
+    return response()->json([
+        'users' => [
+            'labels' => $users->pluck('month')->map(fn($m) => date("F", mktime(0, 0, 0, $m, 1))),
+            'counts' => $users->pluck('count'),
+        ],
+        'courses' => [
+            'labels' => $courses->pluck('month')->map(fn($m) => date("F", mktime(0, 0, 0, $m, 1))),
+            'counts' => $courses->pluck('count'),
+        ],
+        'events' => [
+            'labels' => $events->pluck('type'),
+            'counts' => $events->pluck('count'),
+        ]
+    ]);
+}
+
+
+
+
+
+
 }

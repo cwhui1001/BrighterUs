@@ -61,7 +61,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/admin/update-profile-photo', [AdminController::class, 'updateProfilePhoto'])
      ->name('admin.updateProfilePhoto');
 
-    Route::get('/admin/users', [AdminController::class, 'users'])->name('admin.users');
+    Route::get('/admin/users', [AdminController::class, 'users'])->name('admin.users'); 
+
     
     // Update user info
     Route::put('/admin/users/{id}', [AdminController::class, 'updateUser'])->name('admin.users.update');
@@ -71,6 +72,7 @@ Route::middleware('auth')->group(function () {
 
     // Add user
     Route::post('/admin/users/add', [AdminController::class, 'store'])->name('admin.users.add');
+
 });
 
 use App\Http\Controllers\AdminCourseController;

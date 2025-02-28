@@ -1,19 +1,20 @@
   
 @vite(['resources/css/admin/user.css', 'resources/js/admin/user.js'])
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 @extends('layouts.admin')
 
 @section('content')
 <div class="admin-header-container">
-    <h1>Admin Dashboard</h1>
-    <p>Welcome, {{ auth()->user()->name }}!</p>
+    <h1>User Management</h1>
 </div>
 
 <div class="py-12">
     @if(session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
+
 
     <!-- Add User Form -->
     <form action="{{ route('admin.users.add') }}" method="POST">
@@ -96,5 +97,6 @@
         </div>
     </div>
 </div>
+
 
 @endsection
