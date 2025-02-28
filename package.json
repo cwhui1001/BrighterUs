@@ -17,6 +17,7 @@
         "vite": "^6.0.3"
     },
     "dependencies": {
-        "@mendable/firecrawl-js": "^1.15.7"
+        "@mendable/firecrawl-js": "^1.15.7",
+        "marked": "^15.0.7"
     }
 }

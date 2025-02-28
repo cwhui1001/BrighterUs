@@ -291,3 +291,16 @@ img {
     vertical-align: middle;
 }
 
+
+
+.bookmark-icon {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #ccc; /* Default color */
+}
+.bookmarked {
+    color: gold !important; /* Change color when bookmarked */
+}

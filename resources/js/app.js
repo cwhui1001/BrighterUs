@@ -1,7 +1,6 @@
 import './bootstrap';
-
 import Alpine from 'alpinejs';
-
+import { marked } from 'marked';
 window.Alpine = Alpine;
 
 Alpine.start();
@@ -18,7 +17,12 @@ const userMessageInput = document.getElementById('user-message');
 // Open the chatbot popup
 chatbotBtn.addEventListener('click', function () {
     chatbotPopup.style.display = 'flex';
+    // Check if the chatbot already has messages to prevent duplicate welcome messages
+    if (chatBox.children.length === 0) {
+        addMessage("Hello! How can I assist you today?", "bot");
+    }
 });
+
 
 // Close the chatbot popup
 closeChat.addEventListener('click', function () {
@@ -29,9 +33,24 @@ closeChat.addEventListener('click', function () {
 function addMessage(message, sender = 'user') {
     const messageDiv = document.createElement('div');
         messageDiv.classList.add(sender); // Add 'user' or 'bot' class
-        messageDiv.textContent = message;
+
+        if (sender === 'bot') {
+            // Convert Markdown to HTML first
+            let formattedMessage = marked.parse(message);
+    
+            // Convert new lines into <br> tags to maintain spacing
+            formattedMessage = formattedMessage.replace(/\n/g, '<br>');
+    
+            messageDiv.innerHTML = formattedMessage;
+        } else {
+            messageDiv.textContent = message;
+        }
         chatBox.appendChild(messageDiv);
-        chatBox.scrollTop = chatBox.scrollHeight; // Scroll to the bottom
+        // Smoothly scroll just enough to show the start of the new message
+        chatBox.scrollTo({ 
+            top: chatBox.scrollHeight - chatBox.clientHeight - 500,  // Adjust 100 as needed
+            behavior: "smooth"
+        });
 }
 
 // Send message to chatbot
@@ -45,7 +64,7 @@ async function sendMessage() {
 
     try {
         // Send user message to Laravel API
-        const response = await fetch('BrighterUs/public/chatbot-query', {
+        const response = await fetch('chatbot-query', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
