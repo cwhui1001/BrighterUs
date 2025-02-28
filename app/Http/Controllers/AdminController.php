@@ -73,9 +73,24 @@ class AdminController extends Controller
 
 
 
-    public function users()
+
+    public function users(Request $request)
     {
-        $users = User::all();
+        // Start building the query
+        $query = User::query();
+
+        // Apply filters
+        if ($request->has('name') && $request->name != '') {
+            $query->where('name', 'like', '%' . $request->name . '%');
+        }
+
+        if ($request->has('email') && $request->email != '') {
+            $query->where('email', 'like', '%' . $request->email . '%');
+        }
+
+        // Fetch filtered users
+        $users = $query->get();
+
         return view('admin.users', compact('users'));
     }
 
@@ -111,7 +126,7 @@ class AdminController extends Controller
     {
         $user = User::findOrFail($id);
 
-        // Validate input
+        // Validate input 
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,'.$id,

@@ -12,9 +12,30 @@
 
 <div class="py-12">
     @if(session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
+        <div class="alert alert-success">{{ session('success') }}</div> 
     @endif
 
+     <!-- Filter Form -->
+     <div class="card mb-4">
+        <div class="card-body">
+            <form action="{{ route('admin.users') }}" method="GET">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label for="name">Name</label>
+                        <input type="text" name="name" id="name" class="form-control" value="{{ request('name') }}" placeholder="Filter by name">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="email">Email</label>
+                        <input type="text" name="email" id="email" class="form-control" value="{{ request('email') }}" placeholder="Filter by email">
+                    </div>
+                    <div class="col-md-4 d-flex align-items-end">
+                        <button type="submit" class="btn btn-primary">Filter</button>
+                        <a href="{{ route('admin.users') }}" class="btn btn-secondary ml-2">Reset</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <!-- Add User Form -->
     <form action="{{ route('admin.users.add') }}" method="POST">
