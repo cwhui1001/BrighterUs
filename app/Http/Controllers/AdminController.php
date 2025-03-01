@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Course;
 use App\Models\Event;
+use App\Models\Scholarship;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -31,6 +32,7 @@ class AdminController extends Controller
         $totalUsers = User::count();
         $totalCourses = Course::count();
         $totalEvents = Event::count();
+        $totalFinancialAid = Scholarship::count();
 
         $userData = User::selectRaw('DATE(created_at) as date, COUNT(*) as count')
             ->groupBy('date')
@@ -39,9 +41,9 @@ class AdminController extends Controller
             ->toArray();
 
         $courseData = Course::join('universities', 'courses.university_id', '=', 'universities.id')
-            ->selectRaw('universities.name as university, DATE(courses.created_at) as date, COUNT(*) as count')
-            ->groupBy('universities.name', 'date')
-            ->orderBy('date', 'ASC')
+            ->selectRaw('universities.id as university_id, universities.name as university, COUNT(*) as count')
+            ->groupBy('universities.id', 'universities.name') // Group by university_id and name
+            ->orderBy('universities.name', 'ASC') // Optional: Order by university name
             ->get()
             ->toArray();
 
@@ -52,7 +54,7 @@ class AdminController extends Controller
             ->toArray();
 
         // Now return the view with all data
-        return view('admin.dashboard', compact('totalUsers', 'totalCourses', 'totalEvents', 'userData', 'courseData', 'eventData'));
+        return view('admin.dashboard', compact('totalUsers', 'totalCourses', 'totalEvents', 'totalFinancialAid', 'userData', 'courseData', 'eventData'));
     }
 
 

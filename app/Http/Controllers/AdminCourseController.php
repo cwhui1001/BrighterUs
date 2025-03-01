@@ -56,7 +56,19 @@ class AdminCourseController extends Controller
         // Fetch filtered courses
         $courses = $query->get();
 
-        return view('admin.courses', compact('courses', 'categories', 'fields', 'universities', 'locations', 'rankings'));
+        return view('admin.courses.index', compact('courses', 'categories', 'fields', 'universities', 'locations', 'rankings'));
+    }
+
+    // Show the create form
+    public function create()
+    {
+        $categories = CourseCategory::all();
+        $fields = Field::all();
+        $universities = University::all();
+        $locations = Location::all();
+        $rankings = Ranking::all();
+
+        return view('admin.courses.create', compact('categories', 'fields', 'universities', 'locations', 'rankings'));
     }
 
     public function store(Request $request)
@@ -75,7 +87,20 @@ class AdminCourseController extends Controller
 
         Course::create($request->all());
 
-        return redirect()->route('admin.courses')->with('success', 'Course added successfully.');
+        return redirect()->route('admin.courses.index')->with('success', 'Course added successfully.');
+    }
+
+    // Show the edit form
+    public function edit($id)
+    {
+        $course = Course::findOrFail($id);
+        $categories = CourseCategory::all();
+        $fields = Field::all();
+        $universities = University::all();
+        $locations = Location::all();
+        $rankings = Ranking::all();
+
+        return view('admin.courses.edit', compact('course', 'categories', 'fields', 'universities', 'locations', 'rankings'));
     }
 
     public function update(Request $request, $id)
@@ -96,6 +121,15 @@ class AdminCourseController extends Controller
 
         $course->update($validatedData);
 
-        return redirect()->route('admin.courses')->with('success', 'Course updated successfully');
+        return redirect()->route('admin.courses.index')->with('success', 'Course updated successfully');
+    }
+
+    // Delete a course
+    public function destroy($id)
+    {
+        $course = Course::findOrFail($id);
+        $course->delete();
+
+        return redirect()->route('admin.courses.index')->with('success', 'Course deleted successfully.');
     }
 }

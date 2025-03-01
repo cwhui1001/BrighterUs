@@ -8,6 +8,7 @@ use App\Models\Field;
 
 class Course extends Model
 {
+    public $timestamps = false;
     use HasFactory;
 
     protected $fillable = ['name', 'description', 'category_id', 'field_id', 'university_id', 'location_id', 'budget', 'ranking_id', 'link'];

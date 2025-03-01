@@ -62,14 +62,10 @@ Route::middleware('auth')->group(function () {
      ->name('admin.updateProfilePhoto');
 
     Route::get('/admin/users', [AdminController::class, 'users'])->name('admin.users'); 
-
-    
     // Update user info
     Route::put('/admin/users/{id}', [AdminController::class, 'updateUser'])->name('admin.users.update');
-
     // Delete user
     Route::delete('/admin/users/{id}', [AdminController::class, 'destroy'])->name('admin.users.delete');
-
     // Add user
     Route::post('/admin/users/add', [AdminController::class, 'store'])->name('admin.users.add');
 
@@ -77,10 +73,26 @@ Route::middleware('auth')->group(function () {
 
 use App\Http\Controllers\AdminCourseController;
 
-Route::get('/admin/courses', [AdminCourseController::class, 'index'])->name('admin.courses');
-Route::post('/admin/courses', [AdminCourseController::class, 'store'])->name('admin.courses.store');
-Route::put('/admin/courses/{id}', [AdminCourseController::class, 'update'])->name('admin.courses.update');
+Route::prefix('admin/courses')->name('admin.courses.')->middleware('auth')->group(function () {
+    Route::get('/', [AdminCourseController::class, 'index'])->name('index'); // List all courses
+    Route::get('/create', [AdminCourseController::class, 'create'])->name('create'); // Show create form
+    Route::post('/', [AdminCourseController::class, 'store'])->name('store'); // Store new course
+    Route::get('/{id}/edit', [AdminCourseController::class, 'edit'])->name('edit'); // Show edit form
+    Route::put('/{id}', [AdminCourseController::class, 'update'])->name('update'); // Update course
+    Route::delete('/{id}', [AdminCourseController::class, 'destroy'])->name('destroy'); // Delete course
+});
 
 
+use App\Http\Controllers\AdminFinancialController;
+
+
+Route::prefix('admin/financial')->name('admin.financial.')->middleware('auth')->group(function () {
+    Route::get('/scholarships', [AdminFinancialController::class, 'index'])->name('scholarships');
+    Route::get('/scholarships/create', [AdminFinancialController::class, 'create'])->name('scholarships.create');
+    Route::post('/scholarships', [AdminFinancialController::class, 'store'])->name('scholarships.store');
+    Route::get('/scholarships/{id}/edit', [AdminFinancialController::class, 'edit'])->name('scholarships.edit');
+    Route::put('/scholarships/{id}', [AdminFinancialController::class, 'update'])->name('scholarships.update');
+    Route::delete('/scholarships/{id}', [AdminFinancialController::class, 'destroy'])->name('scholarships.destroy');
+});
 
 require __DIR__.'/auth.php';

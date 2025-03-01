@@ -27,7 +27,7 @@
             </a>
         </li>
         <li>
-            <a href="{{ route('admin.courses') }}" class="{{ Request::routeIs('admin.courses') ? 'active' : '' }}">
+            <a href="{{ route('admin.courses.index') }}" class="{{ Request::routeIs('admin.courses.index') ? 'active' : '' }}">
                 <i class="fas fa-book"></i> <span class="nav-text">Courses</span>
             </a>
         </li>
@@ -37,6 +37,11 @@
             </a>
         </li>
 
+        <li>
+            <a href="{{ route('admin.financial.scholarships') }}" class="{{ Request::routeIs('admin.financial.scholarships') ? 'active' : '' }}">
+                <i class="fas fa-hand-holding-usd me-2"></i> <span class="nav-text">Financial Aid</span>
+            </a>
+        </li>
 
         <li>
             <form class="admin-logout" action="{{ route('logout') }}" method="POST">

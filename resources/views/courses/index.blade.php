@@ -32,7 +32,7 @@
                         </div>
                     @endforeach
 
-                    <h4>University</h4>
+                    <h4>Universities & Colleges</h4>
                     @foreach ($universities as $university)
                         <div class="form-check">
                             <input class="form-check-input filter-checkbox" type="checkbox" name="university[]" value="{{ $university->id }}" id="university{{ $university->id }}">
@@ -51,15 +51,15 @@
                     <h4>Budget</h4>
                     <div class="form-check">
                         <input class="form-check-input filter-checkbox" type="checkbox" name="budget[]" value="5000" id="budget5000">
-                        <label class="form-check-label" for="budget5000">Below $5000</label>
+                        <label class="form-check-label" for="budget5000">Below RM 5000</label>
                     </div>
                     <div class="form-check">
                         <input class="form-check-input filter-checkbox" type="checkbox" name="budget[]" value="10000" id="budget10000">
-                        <label class="form-check-label" for="budget10000">Below $10000</label>
+                        <label class="form-check-label" for="budget10000">Below RM 10000</label>
                     </div>
                     <div class="form-check">
                         <input class="form-check-input filter-checkbox" type="checkbox" name="budget[]" value="20000" id="budget20000">
-                        <label class="form-check-label" for="budget20000">Below $20000</label>
+                        <label class="form-check-label" for="budget20000">Below RM 20000</label>
                     </div>
 
                     <h4>Ranking</h4>

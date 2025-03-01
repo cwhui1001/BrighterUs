@@ -3,6 +3,7 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
 
 
 @extends('layouts.admin')
@@ -20,7 +21,7 @@
 
     
     <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-3">
         <div class="card custom-card text-white mb-3 shadow card-user">
             <div class="card-header d-flex align-items-center">
                 <i class="fas fa-users me-2"></i> <span>Total Users</span>
@@ -32,7 +33,7 @@
         </div>
     </div>
 
-    <div class="col-md-4">
+    <div class="col-md-3">
         <div class="card custom-card text-white mb-3 shadow card-courses">
             <div class="card-header d-flex align-items-center">
                 <i class="fas fa-book me-2"></i> <span>Total Courses</span>
@@ -44,7 +45,7 @@
         </div>
     </div>
 
-    <div class="col-md-4">
+    <div class="col-md-3">
         <div class="card custom-card text-white mb-3 shadow card-events">
             <div class="card-header d-flex align-items-center">
                 <i class="fas fa-calendar-alt me-2"></i> <span>Total Events</span>
@@ -55,6 +56,19 @@
             </div>
         </div>
     </div>
+
+    <div class="col-md-3">
+        <div class="card custom-card text-white mb-3 shadow card-financialaid">
+            <div class="card-header d-flex align-items-center">
+                <i class="fas fa-hand-holding-usd me-2"></i> <span>Total Financial Aid</span>
+            </div>
+            <div class="card-body text-center">
+                <h2 class="display-4 fw-bold">{{ $totalFinancialAid }}</h2>
+                <p class="card-text">Available financial aid</p>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 
@@ -109,33 +123,66 @@
         });
 
         const groupedData = {};
-    
+
         // Organize data by university
         courseData.forEach(item => {
-            if (!groupedData[item.university]) {
-                groupedData[item.university] = [];
-            }
-            groupedData[item.university].push({ date: item.date, count: item.count });
+            groupedData[item.university_id] = { name: item.university, count: item.count };
         });
 
-        const universityLabels = Object.keys(groupedData);
-        const dataset = universityLabels.map(uni => ({
-            label: uni,
-            data: groupedData[uni].map(d => d.count),
-            backgroundColor: getRandomColor(), // Function to generate random colors
-        }));
+        const universityIDs = Object.keys(groupedData); // University IDs
+        const universityCounts = universityIDs.map(id => groupedData[id].count); // Course counts
+        const universityNames = universityIDs.map(id => groupedData[id].name); 
+
+        const dataset = [{
+            label: "Number of Courses",
+            data: universityCounts, // Array of counts matching university IDs
+            backgroundColor: universityIDs.map(() => getRandomColor()), // Generate colors dynamically
+        }];
 
         new Chart(document.getElementById('courseChart'), {
             type: 'bar',
             data: {
-                labels: [...new Set(courseData.map(d => d.date))], // Unique dates
+                labels: universityIDs, // Keep University IDs on x-axis
                 datasets: dataset
             },
             options: {
                 responsive: true,
+                plugins: {
+                    legend: { 
+                        display: true, // Show legend
+                        labels: {
+                            
+                            generateLabels: function(chart) {
+                                return universityIDs.map((id, index) => ({
+                                    text: universityNames[index], // Use university names in legend
+                                    fillStyle: dataset[0].backgroundColor[index], // Match bar colors
+                                    strokeStyle: dataset[0].backgroundColor[index], // Match border color to the bar color
+                                    hidden: false,
+                                    lineWidth: 1,
+                                }));
+                            }
+                        }
+                    }, 
+                    tooltip: {
+                        callbacks: {
+                            title: function(tooltipItems) {
+                                const id = tooltipItems[0].label; 
+                                return groupedData[id].name; // Show university name in tooltip
+                            },
+                            label: function(tooltipItem) {
+                                return `Courses: ${tooltipItem.raw}`;
+                            }
+                        }
+                    }
+                },
                 scales: {
-                    x: { title: { display: true, text: 'Date' } },
-                    y: { title: { display: true, text: 'Number of Courses' }, beginAtZero: true }
+                    x: { 
+                        title: { display: true, text: 'University ID' } // Keep University ID on x-axis
+                    },
+                    y: { 
+                        title: { display: true, text: 'Number of Courses' }, 
+                        beginAtZero: true 
+                    }
                 }
             }
         });

@@ -84,6 +84,7 @@
         window.appUrls = {
             courses: "{{ url('/courses') }}",
             needBased: "{{ url('/financial/need-based') }}",
+            events: "{{ url('/events') }}",
             career: "{{ url('/career') }}"
         };
         window.appImages = {

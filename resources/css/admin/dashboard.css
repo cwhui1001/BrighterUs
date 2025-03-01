@@ -108,6 +108,7 @@ form {
 .custom-card {
     border-radius: 15px !important; /* Adjust border-radius as needed */
     overflow: hidden; /* Ensures child elements (like header) follow rounded corners */
+    height: 100%;
 }
 
 .card-user {
@@ -124,7 +125,7 @@ form {
 
 
 .chart-container{
-    margin-top: 30px;
+    margin-bottom: 15px;
 }
 
 .graph-container {
@@ -139,4 +140,17 @@ canvas {
     width: 100% !important;
     height: auto !important;
     padding: 15px;
+}
+
+.card-financialaid {
+    background: linear-gradient(135deg, #28a745, #218838);
+}
+
+.card-financialaid .card-header {
+    background: transparent; /* Remove solid header background */
+}
+
+.row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
 }

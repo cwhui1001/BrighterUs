@@ -13,11 +13,13 @@
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
-    <!-- <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addCourseModal">Add New Course</button> -->
+    <!-- Add Course Button -->
+    <a href="{{ route('admin.courses.create') }}" class="btn btn-primary mb-3">Add Course</a>
+
     <!-- Filter Form -->
     <div class="card mb-4">
         <div class="card-body">
-            <form action="{{ route('admin.courses') }}" method="GET">
+            <form action="{{ route('admin.courses.index') }}" method="GET">
                 <div class="row">
                     <div class="col-md-3">
                         <label for="category_id">Category</label>
@@ -77,8 +79,8 @@
                         </select>
                     </div>
                     <div class="col-md-3 d-flex align-items-end">
-                        <button type="submit" class="btn btn-primary">Filter</button>
-                        <a href="{{ route('admin.courses') }}" class="btn btn-secondary ml-2">Reset</a>
+                        <button type="submit" class="btn btn-primary">Apply Filters</button>
+                        <a href="{{ route('admin.courses.index') }}" class="btn btn-secondary ms-2">Reset</a>
                     </div>
                 </div>
             </form>
@@ -89,6 +91,7 @@
     <table class="course-table table-bordered">
         <thead>
             <tr>
+                <th>Actions</th>
                 <th>ID</th>
                 <th>Course Name</th>
                 <th>Description</th>
@@ -99,12 +102,19 @@
                 <th>Budget</th>
                 <th>Ranking</th>
                 <th>Link</th>
-                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
             @foreach($courses as $course)
             <tr>
+                <td>
+                    <a href="{{ route('admin.courses.edit', $course->id) }}" class="btn btn-warning btn-sm edit">Edit</a><br><br>
+                    <form action="{{ route('admin.courses.destroy', $course->id) }}" method="POST" style="display:inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Delete this course?')">Delete</button>
+                    </form>
+                </td>
                 <td>{{ $course->id }}</td>
                 <td>{{ $course->name }}</td>
                 <td>{{ $course->description }}</td>
@@ -114,38 +124,12 @@
                 <td>{{ $course->location->name }}</td>
                 <td>{{ $course->budget }}</td>
                 <td>{{ $course->ranking->value }}</td>
-                <td><a href="{{ $course->link }}" target="_blank">View</a></td>
-                <td>
-                <button class="btn btn-warning btn-sm edit-course-btn"
-                    data-id="{{ $course->id }}"
-                    data-name="{{ e($course->name) }}"
-                    data-description="{{ e($course->description) }}"
-                    data-category-id="{{ $course->category?->id ?? '' }}"
-                    data-category-name="{{ e($course->category?->name ?? '') }}"
-                    data-field-id="{{ $course->field?->id ?? '' }}"
-                    data-field-name="{{ e($course->field?->name ?? '') }}"
-                    data-university-id="{{ $course->university?->id ?? '' }}"
-                    data-university-name="{{ e($course->university?->name ?? '') }}"
-                    data-location-id="{{ $course->location?->id ?? '' }}"
-                    data-location-name="{{ e($course->location?->name ?? '') }}"
-                    data-budget="{{ $course->budget ?? '' }}"
-                    data-ranking-id="{{ $course->ranking?->id ?? '' }}"
-                    data-ranking-value="{{ e($course->ranking?->value ?? '') }}"
-                    data-link="{{ e($course->link) }}"
-                    data-bs-toggle="modal"
-                    data-bs-target="#editCourseModal">
-                    Edit
-                </button>
-
-                </td>
+                <td><a href="{{ $course->link }}" target="_blank">View</a></td>  
             </tr>
             @endforeach
         </tbody>
     </table>
 </div>
 
-<!-- Include Add and Edit Course Modals -->
-@include('admin.partials.add_course_modal')
-@include('admin.partials.edit_course_modal')
 
 @endsection
