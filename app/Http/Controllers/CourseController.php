@@ -95,12 +95,29 @@ class CourseController extends Controller
     }
 
     public function compare(Request $request)
-    {
-        $selectedIds = explode(',', $request->query('courses'));
-        $courses = Course::whereIn('id', $selectedIds)->get();
-        
-        return view('courses.compare', compact('courses'));
+{
+    $courseIds = $request->query('courses');
+
+    if (!$courseIds) {
+        return redirect()->back()->with('error', 'No courses selected for comparison.');
     }
+
+    $courseIds = explode(',', $courseIds);
+
+    // Validate course IDs
+    if (empty($courseIds)) {
+        return redirect()->back()->with('error', 'Invalid course IDs provided.');
+    }
+
+    $courses = Course::whereIn('id', $courseIds)->get();
+
+    if ($courses->isEmpty()) {
+        return redirect()->back()->with('error', 'No courses found with the provided IDs.');
+    }
+
+    return view('courses.compare', compact('courses'));
+}
+
 
     
 }

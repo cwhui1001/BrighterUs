@@ -1,37 +1,31 @@
 <?php
-use App\Http\Controllers\DashboardController;
 
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\FinancialController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ChatbotController;
 use App\Models\Faq;
 
+Route::get('/', function () {
+    $faqs = Faq::all();
+    return view('dashboard', compact('faqs'));
+})-> name('dashboard');
+
 Route::post('chatbot-query', [ChatbotController::class, 'handleQuery']);
 
-// Route::get('/universities', function () {
-//     return view('universities');
-// })-> name('universities');
 
 use App\Http\Controllers\CourseController;
 
 Route::get('/courses', [CourseController::class, 'index'])->name('courses.index');
 Route::get('/courses/filter', [CourseController::class, 'filter'])->name('courses.filter');
-Route::get('/courses/{id}', [CourseController::class, 'show'])->name('courses.show');
+Route::get('/courses/{course}', [CourseController::class, 'show'])->name('courses.show');
 Route::get('/compare', [CourseController::class, 'compare'])->name('courses.compare');
 
-
-use App\Http\Controllers\AdminEventController;
-
-// Admin Routes
-Route::get('/admin/events', [AdminEventController::class, 'index'])->name('admin.events');
-Route::post('/admin/events/store', [AdminEventController::class, 'store'])->name('admin.events.store');
-Route::post('/admin/events/update/{id}', [AdminEventController::class, 'update'])->name('admin.events.update');
-Route::delete('/admin/events/delete/{id}', [AdminEventController::class, 'destroy'])->name('admin.events.destroy');
 
 use App\Http\Controllers\EventController;
 Route::get('/events', [EventController::class, 'index'])->name('events');
 
+
+use App\Http\Controllers\FinancialController;
 Route::prefix('financial')->name('financial.')->group(function () {
     Route::get('/need-based', [FinancialController::class, 'needBased'])->name('need-based');
     Route::get('/external-sponsorship', [FinancialController::class, 'external'])->name('external');
@@ -43,10 +37,8 @@ Route::get('/career', function () {
     return view('career');
 })-> name('career');
 
-Route::get('/', function () {
-    $faqs = Faq::all();
-    return view('dashboard', compact('faqs'));
-})-> name('dashboard');
+
+use App\Http\Controllers\ProfileController;
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -58,15 +50,10 @@ use App\Http\Controllers\AdminController;
 
 Route::middleware('auth')->group(function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
-    Route::post('/admin/update-profile-photo', [AdminController::class, 'updateProfilePhoto'])
-     ->name('admin.updateProfilePhoto');
-
+    Route::post('/admin/update-profile-photo', [AdminController::class, 'updateProfilePhoto'])->name('admin.updateProfilePhoto');
     Route::get('/admin/users', [AdminController::class, 'users'])->name('admin.users'); 
-    // Update user info
     Route::put('/admin/users/{id}', [AdminController::class, 'updateUser'])->name('admin.users.update');
-    // Delete user
     Route::delete('/admin/users/{id}', [AdminController::class, 'destroy'])->name('admin.users.delete');
-    // Add user
     Route::post('/admin/users/add', [AdminController::class, 'store'])->name('admin.users.add');
 
 });
@@ -82,6 +69,13 @@ Route::prefix('admin/courses')->name('admin.courses.')->middleware('auth')->grou
     Route::delete('/{id}', [AdminCourseController::class, 'destroy'])->name('destroy'); // Delete course
 });
 
+use App\Http\Controllers\AdminEventController;
+
+// Admin Routes
+Route::get('/admin/events', [AdminEventController::class, 'index'])->name('admin.events');
+Route::post('/admin/events/store', [AdminEventController::class, 'store'])->name('admin.events.store');
+Route::post('/admin/events/update/{id}', [AdminEventController::class, 'update'])->name('admin.events.update');
+Route::delete('/admin/events/delete/{id}', [AdminEventController::class, 'destroy'])->name('admin.events.destroy');
 
 use App\Http\Controllers\AdminFinancialController;
 

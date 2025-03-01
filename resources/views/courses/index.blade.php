@@ -1,4 +1,4 @@
-@vite(['resources/css/courses.css', 'resources/js/courses.js'])
+@vite(['resources/css/courses.css', 'resources/js/courses.js', 'resources/js/courses_show.js'])
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
 <x-app-layout>
@@ -10,7 +10,7 @@
         </h2>
     </x-slot>
 
-    <!-- Main Content -->
+    <!-- Main Content --> 
     <div class="course-container">
         <!-- Filter Panel -->
         <button id="toggle-filters-btn" class="toggle-filters-btn">⮜</button>
@@ -78,25 +78,38 @@
                 </form>
             </div>
        
-                
         <!-- Results Section -->
         <div class="results">
-            
             <br><h1 class="results-title">Results</h1>
-            
-
-            <!-- <button id="compare-btn" class="cta-button">Compare</button>
-            <button id="done-btn" class="cta-button" style="display: none;">Done</button> -->
             <br>
+
+           
+
+            <div id="compare-container" class="compare-box" ondrop="drop(event)" ondragover="allowDrop(event)">
+                <h2>Compare Courses</h2>
+                <div id="selected-courses">
+                    <p id="placeholder-text">Drag and drop courses here to compare</p>
+                </div>
+                <div class="button-group">
+                    <button id="compare-btn" data-route="{{ route('courses.compare') }}" onclick="redirectToCompare()">Compare</button>
+                    <button id="clear-btn" onclick="clearCompareBox()">Clear</button>
+                </div>
+            </div>
+
+
+          
+
             <div id="courses-list">
             @foreach ($courses as $course)
             
-            <a href="{{ route('courses.show', $course->id) }}" class="course-card-link">
-                <div class="course-card">
+            <a id="course-{{ $course->id }}" href="{{ route('courses.show', $course->id) }}" 
+                class="course-card-link" draggable="true" 
+                data-course-id="{{ $course->id }}" 
+                ondragstart="event.dataTransfer.setData('text', this.id)">
+
+                <div class="course-card" draggable="true" data-course-id="{{ $course->id }}" ondragstart="drag(event)">
                     <h5 class="course-title">{{ $course->name }}</h5>
                     <hr>
-                  
-
                     <div class="c2">
                         <img src="{{ $course->university->logo }}">
                         <div>
@@ -115,82 +128,75 @@
 
             @endforeach
             </div>
-                
-            
         </div>
     </div>
 
     <script>
         document.querySelectorAll('.filter-checkbox, #filterSearch').forEach(input => {
-    input.addEventListener('input', function () {
-        let form = document.getElementById('filter-form');
-        let formData = new FormData();
+        input.addEventListener('input', function () {
+            let form = document.getElementById('filter-form');
+            let formData = new FormData();
 
-        form.querySelectorAll('input[type="checkbox"]:checked').forEach((checkbox) => {
-            formData.append(checkbox.name + "[]", checkbox.value);
-        });
+            form.querySelectorAll('input[type="checkbox"]:checked').forEach((checkbox) => {
+                formData.append(checkbox.name + "[]", checkbox.value);
+            });
 
-        // Include search input field
-        let searchQuery = document.getElementById('filterSearch').value;
-        if (searchQuery.trim() !== '') {
-            formData.append('search', searchQuery);
-        }
-
-        let query = new URLSearchParams(formData).toString();
-
-        fetch("{{ route('courses.filter') }}?" + query, {
-            method: "GET",
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest'
+            let searchQuery = document.getElementById('filterSearch').value;
+            if (searchQuery.trim() !== '') {
+                formData.append('search', searchQuery);
             }
-        })
-        .then(response => response.json())
-        .then(data => {
-            let coursesList = document.getElementById('courses-list');
-            coursesList.innerHTML = ""; // Clear existing content
 
-            data.courses.data.forEach(course => {
-                let courseCard = document.createElement('a');
-                courseCard.href = `courses/${course.id}`;
-                courseCard.classList.add('course-card-link');
-                courseCard.innerHTML = `
-                    <div class="course-card">
-                        <h5 class="course-title">${course.name}</h5>
-                        <hr>
-                        <div class="c2">
-                            <img src="${course.university ? course.university.logo : 'N/A'}">
-                            <div>
-                                <p><strong>Category:</strong> ${course.category ? course.category.name : 'N/A'}</p>
-                                <p><strong>Field:</strong> ${course.field ? course.field.name : 'N/A'}</p>
-                                <p><strong>University:</strong> ${course.university ? course.university.name : 'N/A'}</p>
-                                <p><strong>QS Ranking:</strong> ${course.ranking ? course.ranking.value : 'N/A'}</p>
+            let query = new URLSearchParams(formData).toString();
+
+            fetch("{{ route('courses.filter') }}?" + query, {
+                method: "GET",
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                let coursesList = document.getElementById('courses-list');
+                coursesList.innerHTML = ""; // Clear existing content
+
+                data.courses.data.forEach(course => {
+                    let courseCard = document.createElement('a');
+                    courseCard.href = `courses/${course.id}`;
+                    courseCard.classList.add('course-card-link');
+                    courseCard.draggable = true; // Make draggable
+                    courseCard.dataset.courseId = course.id; // Store course ID
+                    courseCard.innerHTML = `
+                        <div class="course-card">
+                            <h5 class="course-title">${course.name}</h5>
+                            <hr>
+                            <div class="c2">
+                                <img src="${course.university ? course.university.logo : 'N/A'}">
+                                <div>
+                                    <p><strong>Category:</strong> ${course.category ? course.category.name : 'N/A'}</p>
+                                    <p><strong>Field:</strong> ${course.field ? course.field.name : 'N/A'}</p>
+                                    <p><strong>University:</strong> ${course.university ? course.university.name : 'N/A'}</p>
+                                    <p><strong>QS Ranking:</strong> ${course.ranking ? course.ranking.value : 'N/A'}</p>
+                                </div>
+                            </div>
+                            <div class="c3">
+                                <p><strong>Budget:</strong><br> RM ${course.budget.toLocaleString()}</p>
+                                <p><strong>Location:</strong><br> ${course.location ? course.location.name : 'N/A'}</p>
                             </div>
                         </div>
-                        <div class="c3">
-                            <p><strong>Budget:</strong><br> RM ${course.budget.toLocaleString()}</p>
-                            <p><strong>Location:</strong><br> ${course.location ? course.location.name : 'N/A'}</p>
-                        </div>
-                    </div>
-                `;
+                    `;
 
-                coursesList.appendChild(courseCard); // Add new course card
+                    coursesList.appendChild(courseCard);
+                });
+
+                // Reapply drag-and-drop after updating courses
+                enableDragDrop();
             });
         });
     });
-});
 
-        
-    </script>
-    <script>
-        doneBtn.addEventListener("click", function () {
-    const compareRoute = "{{ route('courses.compare') }}";
 
-    function redirectToCompare() {
-        window.location.href = compareRoute + "?courses=" + selectedCourses.join(",");
-    }
-});
 </script>
 
-    
+
 </x-app-layout>
 

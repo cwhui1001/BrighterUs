@@ -276,6 +276,7 @@ img {
     outline: none;
     transition: 0.3s ease-in-out;
     box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
+    top: 50px;
 }
 
 #filterSearch:focus {
@@ -287,20 +288,86 @@ img {
 .custom-header {
     display: flex;
     flex-direction: row;
-    gap: 650px; /* Adjust space between text and search bar */
+    gap: 50px; /* Adjust space between text and search bar */
     vertical-align: middle;
+    top: 50px;
 }
 
 
+/* Compare Box Styling */
+#compare-container {
+    position: fixed;
+    top: 70px;
+    right: 20px;
+    width: 250px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    padding: 15px;
+    z-index: 1000;
+}
 
-.bookmark-icon {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    font-size: 24px;
+.compare-box h2 {
+    font-size: 16px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+#selected-courses {
+    min-height: 50px;
+    border: 2px dashed #ccc;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    text-align: center;
+}
+
+.button-group {
+    display: flex;
+    gap: 10px; /* Adds spacing between buttons */
+    margin-top: 10px;
+}
+
+#compare-btn, #clear-btn {
+    flex: 1; /* Makes both buttons the same width */
+    padding: 10px; /* Ensures same height */
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
-    color: #ccc; /* Default color */
+    text-align: center;
 }
-.bookmarked {
-    color: gold !important; /* Change color when bookmarked */
+
+#compare-btn {
+    background-color: #007bff; /* Blue */
+    color: white;
+}
+
+#clear-btn {
+    background-color: #dc3545; /* Red */
+    color: white;
+}
+
+#compare-btn:hover {
+    background-color: #0056b3;
+}
+
+#clear-btn:hover {
+    background-color: #a71d2a;
+}
+
+.course-item {
+    padding: 10px;
+    border-bottom: 1px solid #ccc; /* Separator line */
+    text-align: center;
+}
+
+.course-item:last-child {
+    border-bottom: none; /* Remove border for last item */
+}
+
+#placeholder-text {
+    font-size: 15px; /* Adjust the size */
+    color: grey; /* Make text grey */
+    text-align: center; /* Center align */
 }
