@@ -17,6 +17,7 @@ return new class extends Migration
                 $table->string('name')->unique();
                 $table->foreignId('location_id');
                 $table->foreignId('ranking_id');
+                $table->boolean('is_listed')->default(true);
                 $table->timestamps();
             });
         }

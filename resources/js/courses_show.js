@@ -7,8 +7,7 @@ function goToComparePage() {
     }
     
     // Redirect to compare page
-    window.location.href = `/compare?courses=${selectedCourses.join(',')}`;
-}
+    window.open(`/compare?courses=${selectedCourses.join(',')}`, '_blank');}
 
 
 
@@ -103,10 +102,10 @@ window.onload = function () {
 
     // Compare button functionality
     document.getElementById("compare-btn").addEventListener("click", function () {
-        if (selectedCourses && selectedCourses.length > 0) {
+        if (selectedCourses && selectedCourses.length > 1) {
             window.location.href = `${compareRoute}?courses=${selectedCourses.join(",")}`;
         } else {
-            alert("Please select at least one course to compare.");
+            alert("Please select at least 2 courses to compare.");
         }
     });
 

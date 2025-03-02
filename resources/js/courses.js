@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
-
+ 
 function filterFields() {
     let input = document.getElementById("filterSearch").value.toLowerCase();
     let checkboxes = document.querySelectorAll(".filter-panel label");

@@ -34,11 +34,18 @@
 
                     <h4>Universities & Colleges</h4>
                     @foreach ($universities as $university)
-                        <div class="form-check">
-                            <input class="form-check-input filter-checkbox" type="checkbox" name="university[]" value="{{ $university->id }}" id="university{{ $university->id }}">
-                            <label class="form-check-label" for="university{{ $university->id }}">{{ $university->name }}</label>
-                        </div>
+                        @if ($university->is_listed) <!-- Or use a predefined list -->
+                            <div class="form-check">
+                                <input class="form-check-input filter-checkbox" type="checkbox" name="university[]" value="{{ $university->id }}" id="university{{ $university->id }}">
+                                <label class="form-check-label" for="university{{ $university->id }}">{{ $university->name }}</label>
+                            </div>
+                        @endif
                     @endforeach
+                    <!-- Add the "Other" option -->
+                    <div class="form-check">
+                        <input class="form-check-input filter-checkbox" type="checkbox" name="university[]" value="other" id="universityOther">
+                        <label class="form-check-label" for="universityOther">Other</label>
+                    </div>
 
                     <h4>Location</h4>
                     @foreach ($locations as $location)
@@ -133,67 +140,85 @@
 
     <script>
         document.querySelectorAll('.filter-checkbox, #filterSearch').forEach(input => {
-        input.addEventListener('input', function () {
-            let form = document.getElementById('filter-form');
-            let formData = new FormData();
+    input.addEventListener('input', function () {
+        let form = document.getElementById('filter-form');
+        let formData = new FormData();
 
-            form.querySelectorAll('input[type="checkbox"]:checked').forEach((checkbox) => {
-                formData.append(checkbox.name + "[]", checkbox.value);
-            });
+        // Track selected universities
+        let selectedUniversities = [];
 
-            let searchQuery = document.getElementById('filterSearch').value;
-            if (searchQuery.trim() !== '') {
-                formData.append('search', searchQuery);
+        // Add all checked checkboxes to the form data
+        form.querySelectorAll('input[type="checkbox"]:checked').forEach((checkbox) => {
+            if (checkbox.name === "university[]") {
+                selectedUniversities.push(checkbox.value); // Track selected universities
             }
+            formData.append(checkbox.name + "[]", checkbox.value);
+        });
 
-            let query = new URLSearchParams(formData).toString();
+        // Check if "Other" is selected
+        let isOtherSelected = selectedUniversities.includes("other");
 
-            fetch("{{ route('courses.filter') }}?" + query, {
-                method: "GET",
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest'
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                let coursesList = document.getElementById('courses-list');
-                coursesList.innerHTML = ""; // Clear existing content
+        // If "Other" is selected, ensure the backend knows to filter by is_listed = 0
+        if (isOtherSelected) {
+            formData.append('is_other', 'true'); // Add a flag for "Other"
+        }
 
-                data.courses.data.forEach(course => {
-                    let courseCard = document.createElement('a');
-                    courseCard.href = `courses/${course.id}`;
-                    courseCard.classList.add('course-card-link');
-                    courseCard.draggable = true; // Make draggable
-                    courseCard.dataset.courseId = course.id; // Store course ID
-                    courseCard.innerHTML = `
-                        <div class="course-card">
-                            <h5 class="course-title">${course.name}</h5>
-                            <hr>
-                            <div class="c2">
-                                <img src="${course.university ? course.university.logo : 'N/A'}">
-                                <div>
-                                    <p><strong>Category:</strong> ${course.category ? course.category.name : 'N/A'}</p>
-                                    <p><strong>Field:</strong> ${course.field ? course.field.name : 'N/A'}</p>
-                                    <p><strong>University:</strong> ${course.university ? course.university.name : 'N/A'}</p>
-                                    <p><strong>QS Ranking:</strong> ${course.ranking ? course.ranking.value : 'N/A'}</p>
-                                </div>
-                            </div>
-                            <div class="c3">
-                                <p><strong>Budget:</strong><br> RM ${course.budget.toLocaleString()}</p>
-                                <p><strong>Location:</strong><br> ${course.location ? course.location.name : 'N/A'}</p>
+        // Add the search query to the form data
+        let searchQuery = document.getElementById('filterSearch').value;
+        if (searchQuery.trim() !== '') {
+            formData.append('search', searchQuery);
+        }
+
+        // Convert form data to a query string
+        let query = new URLSearchParams(formData).toString();
+
+        // Send the filter request to the backend
+        fetch("{{ route('courses.filter') }}?" + query, {
+            method: "GET",
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            let coursesList = document.getElementById('courses-list');
+            coursesList.innerHTML = ""; // Clear existing content
+
+            // Loop through the filtered courses and create course cards
+            data.courses.data.forEach(course => {
+                let courseCard = document.createElement('a');
+                courseCard.href = `courses/${course.id}`;
+                courseCard.classList.add('course-card-link');
+                courseCard.draggable = true; // Make draggable
+                courseCard.dataset.courseId = course.id; // Store course ID
+                courseCard.innerHTML = `
+                    <div class="course-card">
+                        <h5 class="course-title">${course.name}</h5>
+                        <hr>
+                        <div class="c2">
+                            <img src="${course.university ? course.university.logo : 'N/A'}">
+                            <div>
+                                <p><strong>Category:</strong> ${course.category ? course.category.name : 'N/A'}</p>
+                                <p><strong>Field:</strong> ${course.field ? course.field.name : 'N/A'}</p>
+                                <p><strong>University:</strong> ${course.university ? course.university.name : 'N/A'}</p>
+                                <p><strong>QS Ranking:</strong> ${course.ranking ? course.ranking.value : 'N/A'}</p>
                             </div>
                         </div>
-                    `;
+                        <div class="c3">
+                            <p><strong>Budget:</strong><br> RM ${course.budget.toLocaleString()}</p>
+                            <p><strong>Location:</strong><br> ${course.location ? course.location.name : 'N/A'}</p>
+                        </div>
+                    </div>
+                `;
 
-                    coursesList.appendChild(courseCard);
-                });
-
-                // Reapply drag-and-drop after updating courses
-                enableDragDrop();
+                coursesList.appendChild(courseCard);
             });
+
+            // Reapply drag-and-drop after updating courses
+            enableDragDrop();
         });
     });
-
+});
 
 </script>
 
