@@ -46,6 +46,7 @@ class ChatbotController extends Controller
                                 - If the query is sensitive or personal, offer general guidance.
                                 - If the query is inappropriate or harmful, promote responsible behavior.
                                 - If the query is urgent or critical, provide immediate assistance or relevant contacts.
+                                - Do suggest the user to drop an email to cwenhui10@gmail.com for further assistance.
 
                                 **Example Queries & Responses:**
                                 1. *What are the top universities for computer science in Malaysia?*  

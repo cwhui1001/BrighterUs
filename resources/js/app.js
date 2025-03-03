@@ -16,10 +16,13 @@ const userMessageInput = document.getElementById('user-message');
 
 // Open the chatbot popup
 chatbotBtn.addEventListener('click', function () {
-    chatbotPopup.style.display = 'flex';
-    // Check if the chatbot already has messages to prevent duplicate welcome messages
-    if (chatBox.children.length === 0) {
-        addMessage("Hello! How can I assist you today?", "bot");
+    if (chatbotPopup.style.display === 'none' || chatbotPopup.style.display === '') {
+        chatbotPopup.style.display = 'flex';
+        if (chatBox.children.length === 0) {
+            addMessage("Hello! How can I assist you today?", "bot");
+        }
+    } else {
+        chatbotPopup.style.display = 'none';
     }
 });
 
@@ -37,20 +40,17 @@ function addMessage(message, sender = 'user') {
         if (sender === 'bot') {
             // Convert Markdown to HTML first
             let formattedMessage = marked.parse(message);
-    
             // Convert new lines into <br> tags to maintain spacing
             formattedMessage = formattedMessage.replace(/\n/g, '<br>');
-    
+            // Convert Markdown-style links to actual HTML links
+            message = message.replace(/\[([^\]]+)\]\(("([^"]+)"|'([^']+)')\)/g, '<a href=$2 target="_blank">$1</a>');
             messageDiv.innerHTML = formattedMessage;
         } else {
             messageDiv.textContent = message;
         }
         chatBox.appendChild(messageDiv);
         // Smoothly scroll just enough to show the start of the new message
-        chatBox.scrollTo({ 
-            top: chatBox.scrollHeight - chatBox.clientHeight - 500,  // Adjust 100 as needed
-            behavior: "smooth"
-        });
+        chatBox.scrollTo({ top: chatBox.scrollHeight, behavior: "smooth" });
 }
 
 // Send message to chatbot

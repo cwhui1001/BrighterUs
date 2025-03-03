@@ -361,3 +361,14 @@ nav {
         opacity: 1;
     }
 }
+
+
+.bot a {
+    color: blue;
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+.bot a:hover {
+    color: darkblue;
+}

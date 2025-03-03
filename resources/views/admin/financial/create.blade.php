@@ -1,10 +1,10 @@
 @extends('layouts.admin')
 
 @section('content')
-    <h2 style="background-color: orange; padding: 20px; color: white; border-radius: 15px">Add Scholarship</h2>
+<h2 style="background-color: orange; padding: 20px; color: white; border-radius: 15px">Add Scholarship</h2>
 
 
-    <form style="padding: 20px;" action="{{ route('admin.financial.scholarships.store') }}" method="POST">
+    <form style="padding: 30px;" action="{{ route('admin.financial.scholarships.store') }}" method="POST">
         @csrf
         <label>Type:</label>
         <input type="text" name="type" class="form-control" required><br>

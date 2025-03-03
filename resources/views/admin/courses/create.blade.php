@@ -1,12 +1,10 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="admin-header-container">
-    <h1>Create New Course</h1>
-</div>
+<h2 style="background-color: orange; padding: 20px; color: white; border-radius: 15px">Create New Course</h2>
 
 <div class="py-12">
-    <form action="{{ route('admin.courses.store') }}" method="POST">
+    <form action="{{ route('admin.courses.store') }}" method="POST" style="padding: 30px;">
         @csrf
         <div class="mb-3">
             <label for="name" class="form-label">Course Name</label>

@@ -293,8 +293,6 @@ img {
     top: 50px;
 }
 
-
-/* Compare Box Styling */
 #compare-container {
     position: fixed;
     top: 70px;
@@ -305,6 +303,7 @@ img {
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
     padding: 15px;
     z-index: 1000;
+    transition: all 0.3s ease-in-out;
 }
 
 .compare-box h2 {
@@ -370,4 +369,30 @@ img {
     font-size: 15px; /* Adjust the size */
     color: grey; /* Make text grey */
     text-align: center; /* Center align */
+}
+
+
+/* Toggle Button (Floating Button) */
+.toggle-btn {
+    position: fixed;
+    bottom: 720px;  /* Adjust position */
+    right: 20px;   /* Adjust position */
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #ff6a00;
+    color: white;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 1001; /* Higher than compare box */
+    display: flex;
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */
+    text-align: center;
+}
+
+.toggle-btn:hover {
+    background-color: #b33300;
 }

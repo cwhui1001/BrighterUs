@@ -1,12 +1,10 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="admin-header-container">
-    <h1>Edit Course</h1>
-</div>
+<h2 style="background-color: orange; padding: 20px; color: white; border-radius: 15px">Edit Course</h2>
 
 <div class="py-12">
-    <form action="{{ route('admin.courses.update', $course->id) }}" method="POST">
+    <form action="{{ route('admin.courses.update', $course->id) }}" method="POST" style="padding: 30px;">
         @csrf
         @method('PUT')
         <div class="mb-3">
