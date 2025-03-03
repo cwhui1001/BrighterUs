@@ -41,6 +41,7 @@ class AdminController extends Controller
             ->toArray();
 
         $courseData = Course::join('universities', 'courses.university_id', '=', 'universities.id')
+            ->where('universities.is_listed', 1)
             ->selectRaw('universities.id as university_id, universities.name as university, COUNT(*) as count')
             ->groupBy('universities.id', 'universities.name') // Group by university_id and name
             ->orderBy('universities.name', 'ASC') // Optional: Order by university name
