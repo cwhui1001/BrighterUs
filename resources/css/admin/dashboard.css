@@ -33,7 +33,7 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    padding: 40px 20px;
+    padding: 25px;
     color: white;
     text-align: center;
     border-radius: 10px;
@@ -41,13 +41,14 @@
 }
 
 .admin-title {
-    font-size: 2.5rem;
+    font-size: 2.3rem;
     font-weight: 700;
 }
 
 .admin-subtitle {
     font-size: 1.2rem;
     font-weight: 400;
+    margin-bottom: 0;
 }
 
 .card {
@@ -57,8 +58,10 @@
 
 .card-header {
     padding: 1.5rem;
-    font-size: 1.5rem;
-    background: linear-gradient(90deg, #ffa500, #ff7f50);
+    font-size: 1.3rem;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold
 }
 
 .profile-picture-container {
@@ -100,4 +103,54 @@ form {
     margin-bottom: 30px;
     justify-content: center;
     padding-top: 8px;
+}
+
+.custom-card {
+    border-radius: 15px !important; /* Adjust border-radius as needed */
+    overflow: hidden; /* Ensures child elements (like header) follow rounded corners */
+    height: 100%;
+}
+
+.card-user {
+    background: linear-gradient(135deg, #ff7eb3, #ff758c);
+}
+
+.card-courses {
+    background: linear-gradient(135deg, #7ed6df, #22a6b3);
+}
+
+.card-events {
+    background: linear-gradient(135deg, #7e6ff5, #4834d4);
+}
+
+
+.chart-container{
+    margin-bottom: 15px;
+}
+
+.graph-container {
+    background-color: white;
+    box-shadow: rgba(122, 99, 41, 0.5) 0px 4px 40px -10px;
+    border-radius: 25px;
+    padding: 20px;
+    margin: 10px;
+}
+
+canvas {
+    width: 100% !important;
+    height: auto !important;
+    padding: 15px;
+}
+
+.card-financialaid {
+    background: linear-gradient(135deg, #28a745, #218838);
+}
+
+.card-financialaid .card-header {
+    background: transparent; /* Remove solid header background */
+}
+
+.row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
 }

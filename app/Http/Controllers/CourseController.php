@@ -11,6 +11,7 @@ use App\Models\CourseCategory;
 use App\Models\Ranking;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Exception;
+use Illuminate\Support\Facades\Log;
 
 class CourseController extends Controller
 {
@@ -73,8 +74,16 @@ class CourseController extends Controller
         }
 
         if ($request->has('university')) {
-            $query->whereIn('university_id', $request->university);
+            if ($request->has('is_other')) {
+                // Fetch courses from universities where is_listed = 0
+                $query->whereHas('university', function ($q) {
+                    $q->where('is_listed', 0);
+                });
+            } else {
+                $query->whereIn('university_id', $request->university);
+            }
         }
+    
 
         if ($request->has('location')) {
             $query->whereIn('location_id', $request->location);
@@ -89,18 +98,35 @@ class CourseController extends Controller
         }
 
         $courses = $query->paginate(100);
-        
-
+        Log::info('Filter Results: ', $courses->items());
         return response()->json(['courses' => $courses]);
     }
 
+
     public function compare(Request $request)
-    {
-        $selectedIds = explode(',', $request->query('courses'));
-        $courses = Course::whereIn('id', $selectedIds)->get();
-        
-        return view('courses.compare', compact('courses'));
+{
+    $courseIds = $request->query('courses');
+
+    if (!$courseIds) {
+        return redirect()->back()->with('error', 'No courses selected for comparison.');
     }
+
+    $courseIds = explode(',', $courseIds);
+
+    // Validate course IDs
+    if (empty($courseIds)) {
+        return redirect()->back()->with('error', 'Invalid course IDs provided.');
+    }
+
+    $courses = Course::whereIn('id', $courseIds)->get();
+
+    if ($courses->isEmpty()) {
+        return redirect()->back()->with('error', 'No courses found with the provided IDs.');
+    }
+
+    return view('courses.compare', compact('courses'));
+}
+
 
     
 }

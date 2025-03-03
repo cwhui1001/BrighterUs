@@ -151,7 +151,7 @@ const sections = [
       title: "Get Updated with Upcoming Education Fair!",
       images: [window.appImages.event1],
       description: "Stay updated and get notified about all the upcoming education fairs across Malaysia!",
-      link: "{{ url('/events') }}",
+      link: window.appUrls.events,
       linkText: "Explore All Events",
       useUniversityLogos: false
   },

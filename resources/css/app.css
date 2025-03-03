@@ -279,8 +279,8 @@ nav {
     position: fixed;
     bottom: 80px;
     right: 20px;
-    width: 300px;
-    height: 400px;
+    width: 380px;
+    height: 550px;
     background-color: white;
     border-radius: 10px;
     box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
@@ -311,7 +311,6 @@ nav {
 }
 
 .chat-box {
-    padding: 10px;
     overflow-y: auto;
     flex-grow: 1;
     max-height: 280px;
@@ -332,7 +331,7 @@ nav {
     color: #333; /* Dark text color for contrast */
     font-family: 'Arial', sans-serif; /* Clean, modern font */
     font-size: 16px; /* Easy-to-read font size */
-    max-width: 280px; /* Limit the width for a neat look */
+    max-width: 320px; /* Limit the width for a neat look */
     margin: 20px auto; /* Centered horizontally with margin */
 }
 .user{

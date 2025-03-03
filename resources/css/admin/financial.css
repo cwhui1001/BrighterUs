@@ -1,0 +1,77 @@
+.admin-header-container {
+    background-image: url('/public/images/brighterus1.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: white;
+    text-align: center;
+    margin-bottom: 25px;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.financial-table {
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%; /* Ensure table takes full container width */
+    max-width: 100%; /* Prevent overflow */
+    table-layout: fixed; /* Maintain column widths */
+    overflow-x: auto; /* Allow horizontal scrolling if needed */
+    display: block; /* Ensure proper rendering */
+}
+
+.financial-table th {
+    background-color: #ffa500; /* Bootstrap primary color */
+    color: white;
+    text-align: center;
+    padding: 12px;
+    overflow: hidden;
+}
+
+.financial-table td {
+    padding: 10px;
+    vertical-align: top;
+}
+
+.financial-table a {
+    color: #ffffff;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.financial-table a:hover {
+    text-decoration: underline;
+}
+
+.edit-course-btn {
+    padding: 5px 10px;
+    font-size: 14px;
+    border-radius: 5px;
+}
+
+.card {
+    border-radius: 20px !important;
+}
+
+td {
+    font-size: 14px; /* Adjust as needed */
+}
+td h1, td h2, td h3 {
+    font-size: 16px; /* Force smaller font for headings inside table */
+}
+
+
+
+#participating_programmes {
+    font-size: 14px; /* Adjust size as needed */
+}
+
+.financial-table th, td {
+    word-wrap: break-word;
+    overflow: hidden;
+    padding: 5px;
+    font-size: 14px;
+}

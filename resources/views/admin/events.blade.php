@@ -15,12 +15,15 @@
     </div>
 @endif
 
-@section('content')
-<div class="container mt-4">
-    <h2>Event Management</h2><br>
+@section('content') 
+<div class="admin-header-container">
+    <h1>Events Management</h1>
+</div>
+
+<div class="py-12">
     <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addEventModal">
-    Add New Event
-</button>
+        Add New Event
+    </button>
 
     <!-- Event Table -->
     <table class="table table-bordered">

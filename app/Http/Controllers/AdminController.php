@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+
+use App\Models\Course;
+use App\Models\Event;
+use App\Models\Scholarship;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -25,9 +29,34 @@ class AdminController extends Controller
 
     public function index()
     {
-        // This method returns the dashboard view
-        return view('admin.dashboard'); // your dashboard Blade file
+        $totalUsers = User::count();
+        $totalCourses = Course::count();
+        $totalEvents = Event::count();
+        $totalFinancialAid = Scholarship::count();
+
+        $userData = User::selectRaw('DATE(created_at) as date, COUNT(*) as count')
+            ->groupBy('date')
+            ->orderBy('date', 'ASC')
+            ->get()
+            ->toArray();
+
+        $courseData = Course::join('universities', 'courses.university_id', '=', 'universities.id')
+            ->selectRaw('universities.id as university_id, universities.name as university, COUNT(*) as count')
+            ->groupBy('universities.id', 'universities.name') // Group by university_id and name
+            ->orderBy('universities.name', 'ASC') // Optional: Order by university name
+            ->get()
+            ->toArray();
+
+        $eventData = Event::selectRaw('DATE(created_at) as date, COUNT(*) as count')
+            ->groupBy('date')
+            ->orderBy('date', 'ASC')
+            ->get()
+            ->toArray();
+
+        // Now return the view with all data
+        return view('admin.dashboard', compact('totalUsers', 'totalCourses', 'totalEvents', 'totalFinancialAid', 'userData', 'courseData', 'eventData'));
     }
+
 
     public function updateProfilePhoto(Request $request)
     {
@@ -46,9 +75,24 @@ class AdminController extends Controller
 
 
 
-    public function users()
+
+    public function users(Request $request)
     {
-        $users = User::all();
+        // Start building the query
+        $query = User::query();
+
+        // Apply filters
+        if ($request->has('name') && $request->name != '') {
+            $query->where('name', 'like', '%' . $request->name . '%');
+        }
+
+        if ($request->has('email') && $request->email != '') {
+            $query->where('email', 'like', '%' . $request->email . '%');
+        }
+
+        // Fetch filtered users
+        $users = $query->get();
+
         return view('admin.users', compact('users'));
     }
 
@@ -84,7 +128,7 @@ class AdminController extends Controller
     {
         $user = User::findOrFail($id);
 
-        // Validate input
+        // Validate input 
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,'.$id,
@@ -104,4 +148,43 @@ class AdminController extends Controller
 
         return redirect()->route('admin.users')->with('success', 'User updated successfully!');
     }
+
+    public function getChartData()
+{
+    // Fetch user registration count per month
+    $users = User::selectRaw('MONTH(created_at) as month, COUNT(*) as count')
+        ->groupBy('month')
+        ->orderBy('month')
+        ->get();
+
+    $courses = Course::selectRaw('MONTH(created_at) as month, COUNT(*) as count')
+        ->groupBy('month')
+        ->orderBy('month')
+        ->get();
+
+    $events = Event::selectRaw('type, COUNT(*) as count')
+        ->groupBy('type')
+        ->get();
+
+    return response()->json([
+        'users' => [
+            'labels' => $users->pluck('month')->map(fn($m) => date("F", mktime(0, 0, 0, $m, 1))),
+            'counts' => $users->pluck('count'),
+        ],
+        'courses' => [
+            'labels' => $courses->pluck('month')->map(fn($m) => date("F", mktime(0, 0, 0, $m, 1))),
+            'counts' => $courses->pluck('count'),
+        ],
+        'events' => [
+            'labels' => $events->pluck('type'),
+            'counts' => $events->pluck('count'),
+        ]
+    ]);
+}
+
+
+
+
+
+
 }

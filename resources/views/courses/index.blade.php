@@ -1,4 +1,4 @@
-@vite(['resources/css/courses.css', 'resources/js/courses.js'])
+@vite(['resources/css/courses.css', 'resources/js/courses.js', 'resources/js/courses_show.js'])
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
 <x-app-layout>
@@ -10,7 +10,7 @@
         </h2>
     </x-slot>
 
-    <!-- Main Content -->
+    <!-- Main Content --> 
     <div class="course-container">
         <!-- Filter Panel -->
         <button id="toggle-filters-btn" class="toggle-filters-btn">⮜</button>
@@ -32,13 +32,20 @@
                         </div>
                     @endforeach
 
-                    <h4>University</h4>
+                    <h4>Universities & Colleges</h4>
                     @foreach ($universities as $university)
-                        <div class="form-check">
-                            <input class="form-check-input filter-checkbox" type="checkbox" name="university[]" value="{{ $university->id }}" id="university{{ $university->id }}">
-                            <label class="form-check-label" for="university{{ $university->id }}">{{ $university->name }}</label>
-                        </div>
+                        @if ($university->is_listed) <!-- Or use a predefined list -->
+                            <div class="form-check">
+                                <input class="form-check-input filter-checkbox" type="checkbox" name="university[]" value="{{ $university->id }}" id="university{{ $university->id }}">
+                                <label class="form-check-label" for="university{{ $university->id }}">{{ $university->name }}</label>
+                            </div>
+                        @endif
                     @endforeach
+                    <!-- Add the "Other" option -->
+                    <div class="form-check">
+                        <input class="form-check-input filter-checkbox" type="checkbox" name="university[]" value="other" id="universityOther">
+                        <label class="form-check-label" for="universityOther">Other</label>
+                    </div>
 
                     <h4>Location</h4>
                     @foreach ($locations as $location)
@@ -51,15 +58,15 @@
                     <h4>Budget</h4>
                     <div class="form-check">
                         <input class="form-check-input filter-checkbox" type="checkbox" name="budget[]" value="5000" id="budget5000">
-                        <label class="form-check-label" for="budget5000">Below $5000</label>
+                        <label class="form-check-label" for="budget5000">Below RM 5000</label>
                     </div>
                     <div class="form-check">
                         <input class="form-check-input filter-checkbox" type="checkbox" name="budget[]" value="10000" id="budget10000">
-                        <label class="form-check-label" for="budget10000">Below $10000</label>
+                        <label class="form-check-label" for="budget10000">Below RM 10000</label>
                     </div>
                     <div class="form-check">
                         <input class="form-check-input filter-checkbox" type="checkbox" name="budget[]" value="20000" id="budget20000">
-                        <label class="form-check-label" for="budget20000">Below $20000</label>
+                        <label class="form-check-label" for="budget20000">Below RM 20000</label>
                     </div>
 
                     <h4>Ranking</h4>
@@ -78,25 +85,38 @@
                 </form>
             </div>
        
-                
         <!-- Results Section -->
         <div class="results">
-            
             <br><h1 class="results-title">Results</h1>
-            
-
-            <!-- <button id="compare-btn" class="cta-button">Compare</button>
-            <button id="done-btn" class="cta-button" style="display: none;">Done</button> -->
             <br>
+
+           
+
+            <div id="compare-container" class="compare-box" ondrop="drop(event)" ondragover="allowDrop(event)">
+                <h2>Compare Courses</h2>
+                <div id="selected-courses">
+                    <p id="placeholder-text">Drag and drop courses here to compare</p>
+                </div>
+                <div class="button-group">
+                    <button id="compare-btn" data-route="{{ route('courses.compare') }}" onclick="redirectToCompare()">Compare</button>
+                    <button id="clear-btn" onclick="clearCompareBox()">Clear</button>
+                </div>
+            </div>
+
+
+          
+
             <div id="courses-list">
             @foreach ($courses as $course)
             
-            <a href="{{ route('courses.show', $course->id) }}" class="course-card-link">
-                <div class="course-card">
+            <a id="course-{{ $course->id }}" href="{{ route('courses.show', $course->id) }}" 
+                class="course-card-link" draggable="true" 
+                data-course-id="{{ $course->id }}" 
+                ondragstart="event.dataTransfer.setData('text', this.id)">
+
+                <div class="course-card" draggable="true" data-course-id="{{ $course->id }}" ondragstart="drag(event)">
                     <h5 class="course-title">{{ $course->name }}</h5>
                     <hr>
-                  
-
                     <div class="c2">
                         <img src="{{ $course->university->logo }}">
                         <div>
@@ -115,8 +135,6 @@
 
             @endforeach
             </div>
-                
-            
         </div>
     </div>
 
@@ -126,18 +144,35 @@
         let form = document.getElementById('filter-form');
         let formData = new FormData();
 
+        // Track selected universities
+        let selectedUniversities = [];
+
+        // Add all checked checkboxes to the form data
         form.querySelectorAll('input[type="checkbox"]:checked').forEach((checkbox) => {
+            if (checkbox.name === "university[]") {
+                selectedUniversities.push(checkbox.value); // Track selected universities
+            }
             formData.append(checkbox.name + "[]", checkbox.value);
         });
 
-        // Include search input field
+        // Check if "Other" is selected
+        let isOtherSelected = selectedUniversities.includes("other");
+
+        // If "Other" is selected, ensure the backend knows to filter by is_listed = 0
+        if (isOtherSelected) {
+            formData.append('is_other', 'true'); // Add a flag for "Other"
+        }
+
+        // Add the search query to the form data
         let searchQuery = document.getElementById('filterSearch').value;
         if (searchQuery.trim() !== '') {
             formData.append('search', searchQuery);
         }
 
+        // Convert form data to a query string
         let query = new URLSearchParams(formData).toString();
 
+        // Send the filter request to the backend
         fetch("{{ route('courses.filter') }}?" + query, {
             method: "GET",
             headers: {
@@ -149,10 +184,13 @@
             let coursesList = document.getElementById('courses-list');
             coursesList.innerHTML = ""; // Clear existing content
 
+            // Loop through the filtered courses and create course cards
             data.courses.data.forEach(course => {
                 let courseCard = document.createElement('a');
                 courseCard.href = `courses/${course.id}`;
                 courseCard.classList.add('course-card-link');
+                courseCard.draggable = true; // Make draggable
+                courseCard.dataset.courseId = course.id; // Store course ID
                 courseCard.innerHTML = `
                     <div class="course-card">
                         <h5 class="course-title">${course.name}</h5>
@@ -173,24 +211,17 @@
                     </div>
                 `;
 
-                coursesList.appendChild(courseCard); // Add new course card
+                coursesList.appendChild(courseCard);
             });
+
+            // Reapply drag-and-drop after updating courses
+            enableDragDrop();
         });
     });
 });
 
-        
-    </script>
-    <script>
-        doneBtn.addEventListener("click", function () {
-    const compareRoute = "{{ route('courses.compare') }}";
-
-    function redirectToCompare() {
-        window.location.href = compareRoute + "?courses=" + selectedCourses.join(",");
-    }
-});
 </script>
 
-    
+
 </x-app-layout>
 

@@ -7,44 +7,58 @@
     <!-- Include CSS and JS files -->
     @vite(['resources/css/admin.css', 'resources/js/admin.js'])
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
 </head>
 <body>
-    <!-- Admin Navigation Bar -->
-    <nav class="navbar navbar-expand-lg navbar" >
-        <div class="container">
-            <a class="navbar-brand" href="{{ route('admin.dashboard') }}">Admin Panel</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#adminNavbar">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="adminNavbar">
-                <ul class="navbar-nav me-auto">
-                    
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('admin.users') }}">Users</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('admin.courses') }}">Courses</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('admin.events') }}">Events</a>
-                    </li>
-                </ul>
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <form action="{{ route('logout') }}" method="POST">
-                            @csrf
-                            <button type="submit" class="btn btn-link nav-link">Logout</button>
-                        </form>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+<div class="sidebar" id="sidebar">
+    <button class="toggle-btn" id="toggle-btn">
+        <i class="fas fa-bars"></i>  <span class="nav-text">BrighterUs</span>
+    </button>
+    <ul class="nav-list">
+        <li>
+            <a href="{{ route('admin.dashboard') }}" class="{{ Request::routeIs('admin.dashboard') ? 'active' : '' }}">
+                <i class="fas fa-home"></i> <span class="nav-text">Dashboard</span>
+            </a>
+        </li>
+        <li>
+            <a href="{{ route('admin.users') }}" class="{{ Request::routeIs('admin.users') ? 'active' : '' }}">
+                <i class="fas fa-users"></i> <span class="nav-text">Users</span>
+            </a>
+        </li>
+        <li>
+            <a href="{{ route('admin.courses.index') }}" class="{{ Request::routeIs('admin.courses.index') ? 'active' : '' }}">
+                <i class="fas fa-book"></i> <span class="nav-text">Courses</span>
+            </a>
+        </li>
+        <li>
+            <a href="{{ route('admin.events') }}" class="{{ Request::routeIs('admin.events') ? 'active' : '' }}">
+                <i class="fas fa-calendar"></i> <span class="nav-text">Events</span>
+            </a>
+        </li>
 
-    <!-- Main Content -->
-    <div class="container mt-4">
-        @yield('content')
-    </div>
+        <li>
+            <a href="{{ route('admin.financial.scholarships') }}" class="{{ Request::routeIs('admin.financial.scholarships') ? 'active' : '' }}">
+                <i class="fas fa-hand-holding-usd me-2"></i> <span class="nav-text">Financial Aid</span>
+            </a>
+        </li>
+
+        <li>
+            <form class="admin-logout" action="{{ route('logout') }}" method="POST">
+                @csrf
+                <button type="submit" class="admin-logout-btn">
+                    <i class="fas fa-sign-out-alt"></i> <span class="nav-text">Logout</span>
+                </button>
+            </form>
+        </li>
+
+    </ul>
+</div>
+
+<!-- Main Content -->
+<div class="main-content">
+    @yield('content')
+</div>
 
     <!-- Include Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
