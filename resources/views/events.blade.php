@@ -47,7 +47,7 @@
                             </div>
                             <div class="countdown-container">
                                 <h2 class="event-title">Event Countdown:</h2>
-                                <div class="countdown-box" id="countdown-{{ $event->id }}"></div>
+                                <div class="countdown-box" id="countdown-{{ $event->id }}" data-time="{{ $event->start_time }}"></div>
                             </div>
                             </div>
                         </div>

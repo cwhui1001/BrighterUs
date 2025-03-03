@@ -25,8 +25,9 @@ use App\Http\Controllers\AdminEventController;
 // Admin Routes
 Route::get('/admin/events', [AdminEventController::class, 'index'])->name('admin.events');
 Route::post('/admin/events/store', [AdminEventController::class, 'store'])->name('admin.events.store');
-Route::post('/admin/events/update/{id}', [AdminEventController::class, 'update'])->name('admin.events.update');
+Route::put('/admin/events/{id}', [AdminEventController::class, 'update'])->name('admin.events.update');
 Route::delete('/admin/events/delete/{id}', [AdminEventController::class, 'destroy'])->name('admin.events.destroy');
+
 
 use App\Http\Controllers\EventController;
 Route::get('/events', [EventController::class, 'index'])->name('events');
@@ -53,9 +54,14 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+use App\Http\Controllers\NotificationController;
+
+Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications');
+Route::post('/notifications/{id}/read', [NotificationController::class, 'markAsRead']);
+
 use App\Http\Controllers\AdminController;
 
-Route::middleware('auth')->group(function () {
+    Route::middleware('auth')->group(function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
     Route::post('/admin/update-profile-photo', [AdminController::class, 'updateProfilePhoto'])
      ->name('admin.updateProfilePhoto');

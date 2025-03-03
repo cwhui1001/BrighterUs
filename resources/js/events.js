@@ -8,10 +8,10 @@ document.addEventListener("DOMContentLoaded", function () {
             const distance = eventTime - now;
 
             if (distance < 0) {
-                box.innerHTML = "<p>Event has started!</p>";
+                box.innerHTML = `<p class="event-started">Event has started!</p>`;
                 return;
             }
-
+            
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
             const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));

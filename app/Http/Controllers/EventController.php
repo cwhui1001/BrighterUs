@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\NewEventNotification;
+use Illuminate\Support\Facades\Mail;
+use App\Models\User; // Import User model
 use Illuminate\Http\Request;
 use App\Models\Event;
 
@@ -15,6 +18,24 @@ class EventController extends Controller
             'image' => 'required|url'
         ]);
     }
+    public function store(Request $request)
+{
+    $event = Event::create([
+        'title' => $request->title,
+        'date' => $request->date,
+        'description' => $request->description,
+    ]);
+
+    // Get all users
+    $users = User::all();
+
+    // Send email to each user
+    foreach ($users as $user) {
+        Mail::to($user->email)->send(new NewEventNotification($event));
+    }
+
+    return back()->with('success', 'Event created and notifications sent!');
+}
     public function showEvent($id)
 {
     $event = Event::find($id);

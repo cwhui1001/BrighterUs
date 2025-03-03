@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\User;  // Ensure you import the User model
+use App\Events\NewEventAdded;
 use Illuminate\Http\Request;
 use App\Models\Event;
 
@@ -26,7 +27,16 @@ class AdminEventController extends Controller
             'website' => 'required|url',
         ]);
 
-        Event::create($request->all());
+        // Create event in the database
+        $event = Event::create($request->all());
+
+        // Fetch all users who should receive the email (modify if necessary)
+        $users = User::where('is_admin', 0)->get(); // Only admin users
+
+
+        foreach ($users as $user) {
+            event(new NewEventAdded($event, $user->email));
+        }
 
         return redirect()->route('admin.events')->with('success', 'Event added successfully.');
     }
@@ -35,7 +45,7 @@ class AdminEventController extends Controller
     {
         $event = Event::findOrFail($id);
 
-        $request->validate([
+        $validatedData = $request->validate([
             'title' => 'required',
             'description' => 'required',
             'location' => 'required',
@@ -46,7 +56,7 @@ class AdminEventController extends Controller
             'website' => 'required|url',
         ]);
 
-        $event->update($request->all());
+        $event->update($validatedData);
 
         return redirect()->route('admin.events')->with('success', 'Event updated successfully.');
     }
