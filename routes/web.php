@@ -46,10 +46,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-use App\Http\Controllers\NotificationController;
-
-Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications');
-Route::post('/notifications/{id}/read', [NotificationController::class, 'markAsRead']);
 
 use App\Http\Controllers\AdminController;
 
