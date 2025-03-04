@@ -70,7 +70,7 @@
             <tr>
                 <td>{{ $event->id }}</td>
                 <td>{{ $event->title }}</td>
-                <td>{{ $event->description }}</td>
+                <td>{{ strip_tags($event->description) }}</td>
                 <td>{{ $event->location }}</td>
                 <td><img src="{{ $event->image }}" alt="Event Image" width="50"></td>
                 <td>{{ $event->start_time }}</td>

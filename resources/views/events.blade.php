@@ -17,7 +17,7 @@
                 <tr>
                     <td class="column1">
                         <img src="{{ asset('images/location2.jpg') }}" alt="Location icon" onclick="showMap('map-{{ $event->id }}', '{{ $event->map_location }}')">
-                        <div class="date">{{ \Carbon\Carbon::parse($event->start_time)->format('d M Y') }} > {{ \Carbon\Carbon::parse($event->end_time)->format('d M Y') }}</div>
+                        <div class="date">{{ \Carbon\Carbon::parse($event->start_time)->format('d M Y') }} ><br> {{ \Carbon\Carbon::parse($event->end_time)->format('d M Y') }}</div>
                         <div class="buttons">
                         <a href="{{ $event->website }}" target="_blank" class="button1">More Info</a>
 
@@ -49,7 +49,7 @@
                                 <h2 class="event-title">Event Countdown:</h2>
                                 <div class="countdown-box" id="countdown-{{ $event->id }}" data-time="{{ $event->start_time }}"></div>
                             </div>
-                            </div>
+                            </div class="event-started"></div>
                         </div>
                     </td>
                     <td class="column3">
