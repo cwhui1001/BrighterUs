@@ -83,7 +83,8 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('editEventMapLocation').value = mapLocation;
             document.getElementById('editEventWebsite').value = website;
 
-            document.getElementById('editEventForm').action = `events/${eventId}`;
+            document.getElementById('editEventForm').action = `{{ route('admin.events.update', '') }}/${eventId}`;
+
         });
     });
 });
