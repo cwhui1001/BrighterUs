@@ -4,7 +4,7 @@
 @section('content')
     <h2 style="background-color: orange; padding: 20px; color: white; border-radius: 15px">Edit Scholarship</h2>
 
-    <form style="padding: 20px;" action="{{ route('admin.financial.scholarships.update', $scholarship->id) }}" method="POST">
+    <form style="padding: 30px;" action="{{ route('admin.financial.scholarships.update', $scholarship->id) }}" method="POST">
         @csrf
         @method('PUT')
 

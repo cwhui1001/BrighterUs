@@ -164,13 +164,31 @@ window.onload = function () {
                     `;
 
                     coursesList.appendChild(courseCard);
+                    
+                    enableDragDrop();
                 });
 
                 // Reapply drag-and-drop after updating courses
                 enableDragDrop();
+            });enableDragDrop();
+        });enableDragDrop();
+    });enableDragDrop();
+    
+    function enableDragDrop() {
+        document.querySelectorAll('.course-card').forEach(card => {
+            card.setAttribute('draggable', 'true'); // Force draggable attribute
+    
+            card.addEventListener('dragstart', function (event) {
+                let courseId = this.getAttribute('data-course-id');
+                let courseName = this.querySelector('.course-title')?.innerText || 'Unknown Course';
+    
+                if (courseId) {
+                    event.dataTransfer.setData('courseId', courseId);
+                    event.dataTransfer.setData('courseName', courseName);
+                    console.log("Dragging Course:", courseName);
+                }
             });
         });
-    });
-};
-    
+    }
+};    
 

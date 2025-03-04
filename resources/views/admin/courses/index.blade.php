@@ -9,8 +9,16 @@
 </div>
 
 <div class="py-12">
-    @if(session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
+    @if (session('success'))
+        <div id="success-alert" class="alert alert-success" style="z-index: 1050;">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    @if (session('error'))
+        <div id="error-alert" class="alert alert-danger " style="z-index: 1050;">
+            {{ session('error') }}
+        </div>
     @endif
 
     <!-- Add Course Button -->
@@ -130,6 +138,25 @@
         </tbody>
     </table>
 </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        function fadeOutAlert(alertId) {
+            let alertBox = document.getElementById(alertId);
+            if (alertBox) {
+                setTimeout(function () {
+                    alertBox.style.transition = "opacity 0.5s ease";
+                    alertBox.style.opacity = "0";
+                    setTimeout(function () {
+                        alertBox.style.display = "none";
+                    }, 500);
+                }, 3000);
+            }
+        }
 
+        // Auto-hide success and error messages
+        fadeOutAlert("success-alert");
+        fadeOutAlert("error-alert");
+    });
+</script>
 
 @endsection

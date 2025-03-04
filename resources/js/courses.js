@@ -22,58 +22,6 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
-document.addEventListener("DOMContentLoaded", function () {
-    const compareBtn = document.getElementById("compare-btn");
-    const doneBtn = document.getElementById("done-btn");
-    const courseCards = document.querySelectorAll(".course-card");
-    let compareMode = false;
-    let selectedCourses = [];
-
-    // Toggle Compare Mode
-    compareBtn.addEventListener("click", function () {
-        compareMode = !compareMode;
-
-        document.querySelectorAll(".course-checkbox").forEach(checkbox => {
-            checkbox.style.display = compareMode ? "block" : "none"; // Show/hide checkboxes
-            checkbox.checked = false; // Reset checkboxes
-        });
-
-        doneBtn.style.display = compareMode ? "inline-block" : "none";
-        selectedCourses = [];
-    });
-
-    // Course Card Click Handling
-    courseCards.forEach(card => {
-        card.addEventListener("click", function (event) {
-            if (compareMode) {
-                // Prevent navigation, allow selection
-                event.preventDefault();
-
-                const checkbox = this.querySelector(".course-checkbox");
-                checkbox.checked = !checkbox.checked;
-                const courseId = this.getAttribute("data-id");
-
-                if (checkbox.checked) {
-                    selectedCourses.push(courseId);
-                } else {
-                    selectedCourses = selectedCourses.filter(id => id !== courseId);
-                }
-            } else {
-                // Redirect normally if not in compare mode
-                window.location.href = this.querySelector("a").href;
-            }
-        });
-    });
-
-    // Done Button Click - Navigate to Compare Page
-    doneBtn.addEventListener("click", function () {
-        if (selectedCourses.length > 0) {
-            window.location.href = `{{ route('courses.compare') }}?courses=${selectedCourses.join(",")}`;
-        } else {
-            alert("Please select at least one course to compare.");
-        }
-    });
-});
  
 function filterFields() {
     let input = document.getElementById("filterSearch").value.toLowerCase();
@@ -86,3 +34,72 @@ function filterFields() {
 
 
 
+document.addEventListener("DOMContentLoaded", function () {
+    const compareContainer = document.getElementById("compare-container");
+    const toggleCompareBtn = document.getElementById("toggle-compare-btn");
+
+    if (!compareContainer || !toggleCompareBtn) {
+        console.error("Element(s) not found!");
+        return;
+    }
+
+    let isCompareBoxVisible = true;
+
+    function showReminder() {
+        if (document.getElementById("compare-reminder")) return; // Prevent duplicate reminders
+
+        const reminder = document.createElement("div");
+        reminder.id = "compare-reminder";
+        reminder.innerHTML = `
+            <button id="close-reminder" style="
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            padding: 0px 4px;
+            background: white;
+            border: 1px solid gray;
+            border-radius: 50%;
+            color: black;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 8px;
+            width: 14px;
+            height: 14px;
+            line-height: 12px;
+            text-align: center;
+        ">X</button>
+            <span style="margin-left: 8px;">Course compare box is over here!</span>
+            
+        `;
+        reminder.style.position = "fixed";
+        reminder.style.bottom = "680px"; // Align with toggle button
+        reminder.style.right = "20px"; // Next to the toggle button
+        reminder.style.background = "rgba(0, 0, 0, 0.33)";
+        reminder.style.color = "white";
+        reminder.style.padding = "8px 12px";
+        reminder.style.borderRadius = "5px";
+        reminder.style.fontSize = "14px";
+        reminder.style.boxShadow = "0 2px 5px rgba(0, 0, 0, 0.44)";
+        reminder.style.zIndex = "1000";
+        document.body.appendChild(reminder);
+
+        // Close reminder on X button click
+        document.getElementById("close-reminder").addEventListener("click", function () {
+            reminder.remove();
+        });
+    }
+
+    toggleCompareBtn.addEventListener("click", function () {
+        if (isCompareBoxVisible) {
+            compareContainer.style.display = "none"; 
+            toggleCompareBtn.textContent = "+";
+            showReminder(); // Show the reminder when hiding the box
+        } else {
+            compareContainer.style.display = "block"; 
+            toggleCompareBtn.textContent = "-";
+            const reminder = document.getElementById("compare-reminder");
+            if (reminder) reminder.remove(); // Remove the reminder when showing the box
+        }
+        isCompareBoxVisible = !isCompareBoxVisible;
+    });
+});

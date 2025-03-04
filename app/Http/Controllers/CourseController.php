@@ -85,7 +85,7 @@ class CourseController extends Controller
         }
     
 
-        if ($request->has('location')) {
+        if ($request->has('location')) { 
             $query->whereIn('location_id', $request->location);
         }
 

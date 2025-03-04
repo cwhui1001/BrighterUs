@@ -40,7 +40,7 @@
         <!-- Chatbot -->
         <!-- Chatbot Button -->
         <button id="chatbot-btn" class="chatbot-btn">💬 Chat with us</button>
-
+ 
         <!-- Chatbot Popup -->
         <div id="chatbot-popup" class="chatbot-popup" style="display: none;">
             <div class="chatbot-header">

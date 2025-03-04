@@ -89,10 +89,7 @@
         <div class="results">
             <br><h1 class="results-title">Results</h1>
             <br>
-
-           
-
-            <div id="compare-container" class="compare-box" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <div id="compare-container" class="compare-box">
                 <h2>Compare Courses</h2>
                 <div id="selected-courses">
                     <p id="placeholder-text">Drag and drop courses here to compare</p>
@@ -103,8 +100,9 @@
                 </div>
             </div>
 
+            <!-- Toggle Button (Always Visible) -->
+            <button id="toggle-compare-btn" class="toggle-btn">-</button>
 
-          
 
             <div id="courses-list">
             @foreach ($courses as $course)
