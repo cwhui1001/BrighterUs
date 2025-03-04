@@ -8,9 +8,27 @@ use App\Models\Event;
 
 class AdminEventController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $events = Event::all();
+        $query = Event::query();
+
+        // Filter by title
+        if ($request->has('title') && $request->title != '') {
+            $query->where('title', 'like', '%' . $request->title . '%');
+        }
+
+        // Filter by location
+        if ($request->has('location') && $request->location != '') {
+            $query->where('location', 'like', '%' . $request->location . '%');
+        }
+
+        // Filter by start time
+        if ($request->has('start_time') && $request->start_time != '') {
+            $query->whereDate('start_time', '=', $request->start_time);
+        }
+
+        $events = $query->get();
+
         return view('admin.events', compact('events'));
     }
 
@@ -25,7 +43,7 @@ class AdminEventController extends Controller
             'end_time' => 'required|date',
             'map_location' => 'required',
             'website' => 'required|url',
-        ]);
+        ]); 
 
         // Create event in the database
         $event = Event::create($request->all());

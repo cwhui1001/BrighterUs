@@ -14,16 +14,40 @@
         {{ session('error') }}
     </div>
 @endif
-
+ 
 @section('content') 
 <div class="admin-header-container">
     <h1>Events Management</h1>
 </div>
 
 <div class="py-12">
+
     <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addEventModal">
         Add New Event
     </button>
+
+    <!-- Filter Form -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <form action="{{ route('admin.events') }}" method="GET" class="mb-4">
+                <div class="row g-3">
+                    <div class="col-md-3">
+                        <input type="text" name="title" class="form-control" placeholder="Filter by Title" value="{{ request('title') }}">
+                    </div>
+                    <div class="col-md-3">
+                        <input type="text" name="location" class="form-control" placeholder="Filter by Location" value="{{ request('location') }}">
+                    </div>
+                    <div class="col-md-3">
+                        <input type="date" name="start_time" class="form-control" placeholder="Filter by Start Time" value="{{ request('start_time') }}">
+                    </div>
+                    <div class="col-md-3">
+                        <button type="submit" class="btn btn-primary">Apply Filter</button>
+                        <a href="{{ route('admin.events') }}" class="btn btn-secondary">Reset</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <!-- Event Table -->
     <table class="table table-bordered">
