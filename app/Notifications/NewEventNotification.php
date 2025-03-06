@@ -27,10 +27,10 @@ class NewEventNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            'event_id' => $event->id,
-            'title' => $event->title,
+            'event_id' => $this->event->id,
+            'title' => $this->event->title,
             'description' => 'A new event has been added!',
-            'start_time' => $event->start_time,
-        ];
+            'start_time' => $this->event->start_time,
+        ];        
     }
 }

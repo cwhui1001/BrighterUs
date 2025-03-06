@@ -35,7 +35,6 @@
 @endif
 
 
-<!-- JavaScript for Toggle Functionality -->
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         let bellButton = document.getElementById("notificationBell");
@@ -51,6 +50,30 @@
             if (!bellButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
                 dropdownMenu.style.display = "none";
             }
+        });
+
+        // Attach event listeners to all 'Mark as Read' buttons
+        document.querySelectorAll(".mark-as-read").forEach(button => {
+            button.addEventListener("click", function () {
+                let notificationId = this.getAttribute("data-id");
+                let notificationItem = this.closest("li"); // Get the notification item
+
+                fetch("{{ url('/notifications/mark-as-read/') }}/" + notificationId, {
+                    method: "POST",
+                    headers: {
+                        "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content"),
+                        "Content-Type": "application/json",
+                    }
+                }).then(response => {
+                    if (response.ok) {
+                        notificationItem.style.backgroundColor ="#ffffff"; // Light red
+                        notificationItem.style.transition = "background-color 0.5s ease-in-out";
+                        this.remove(); // Remove the button after marking as read
+                    } else {
+                        console.error("Failed to mark as read");
+                    }
+                }).catch(error => console.error("Error:", error));
+            });
         });
     });
 </script>
