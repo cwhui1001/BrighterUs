@@ -67,7 +67,6 @@
             </button>
 
             <div style="margin-right: 25px;">
-
                 @include('admin.partials.bell_notification')
             </div>
                 @if (Auth::check())
