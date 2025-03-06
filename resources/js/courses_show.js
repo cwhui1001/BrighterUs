@@ -1,16 +1,5 @@
 let selectedCourses = [];
 
-function goToComparePage() {
-    if (selectedCourses.length < 2) {
-        alert('Please select at least 2 courses to compare.');
-        return;
-    }
-    
-    // Redirect to compare page
-    window.open(`/compare?courses=${selectedCourses.join(',')}`, '_blank');}
-
-
-
 function clearCompareBox() {
     let selectedCourses = document.getElementById("selected-courses");
     selectedCourses.innerHTML = '<p id="placeholder-text">Drag and drop courses here to compare</p>'; // Restore placeholder
