@@ -1,4 +1,5 @@
-@vite(['resources/css/nav.css', 'resources/js/nav.js'])
+@vite(['resources/css/nav.css', 'resources/js/nav.js','resources/css/notification.css'])
+
 <nav x-data="{ open: false }">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -48,7 +49,10 @@
                     <x-nav-link :href="route('career')" :active="request()->routeIs('career')">
                         {{ __('Career Match') }}
                     </x-nav-link>
+                    @include('admin.partials.bell_notification')
                 </div>
+
+                <div class="flex items-center space-x-4">
             </div>
 
             <!-- Check if user is authenticated -->

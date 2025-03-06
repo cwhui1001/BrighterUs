@@ -13,6 +13,12 @@ Route::get('/', function () {
 Route::post('chatbot-query', [ChatbotController::class, 'handleQuery']);
 
 
+
+use App\Http\Controllers\NotificationController;
+Route::post('/notifications/mark-as-read/{id}', [NotificationController::class, 'markAsRead'])->middleware('auth');
+
+
+
 use App\Http\Controllers\CourseController;
 
 Route::get('/courses', [CourseController::class, 'index'])->name('courses.index');

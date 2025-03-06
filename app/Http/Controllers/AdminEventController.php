@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\User;  // Ensure you import the User model
 use App\Events\NewEventAdded;
+use App\Notifications\NewEventNotification;
 use Illuminate\Http\Request;
 use App\Models\Event;
 
@@ -54,6 +55,10 @@ class AdminEventController extends Controller
 
         foreach ($users as $user) {
             event(new NewEventAdded($event, $user->email));
+        }
+        
+        foreach ($users as $user) {
+            $user->notify(new NewEventNotification($event));
         }
 
         return redirect()->route('admin.events')->with('success', 'Event added successfully.');

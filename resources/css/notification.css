@@ -1,0 +1,110 @@
+/* Notification Button Styling */
+#notificationBell {
+    background: rgb(255, 255, 255);
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    font-size: 15px;
+    position: relative;
+    transition: 0.3s ease-in-out;
+    border-radius: 45%;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+#notificationBell:hover {
+    background: #727272;
+}
+
+/* Badge for Unread Notifications */
+#notificationBell .badge {
+    font-size: 12px;
+    font-weight: bold;
+    padding: 5px 7px;
+    color: rgb(135, 3, 3);
+}
+
+/* Notification Dropdown */
+#notificationDropdown {
+    position: absolute;
+    top: 100%; /* Places it directly below the button */
+    left: 50%; /* Centers it relative to the button */
+    transform: translateX(-50%); /* Adjust for perfect centering */
+    width: 300px;
+    max-height: 400px;
+    background: #fff8de;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    display: none;
+    z-index: 1000;
+}
+
+#notificationDropdown.show {
+    display: block;
+}
+
+/* Notification Items */
+#notificationDropdown li {
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+    transition: 0.3s;
+}
+
+#notificationDropdown li:last-child {
+    border-bottom: none;
+}
+
+#notificationDropdown li:hover {
+    background: rgb(255, 255, 255);
+}
+
+/* Notification Title */
+#notificationDropdown strong {
+    color: #333;
+    font-size: 20px;
+}
+
+/* Notification Description */
+#notificationDropdown p {
+    font-size: 14px;
+    color: #505050;
+    margin: 5px 0;
+}
+
+
+/* Dropdown Positioned Below Button */
+.dropdown-menu {
+    min-width: 320px;
+    max-width: 350px;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Event Link */
+.event-link {
+    text-decoration: none;
+    color: #333;
+}
+
+.event-link:hover {
+    color: #ff5722;
+}
+
+/* Mark as Read Button */
+.mark-as-read {
+    background: #77af4c;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    font-size: 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.mark-as-read:hover {
+    background: #fbe649;
+    color:#333
+}
+
+

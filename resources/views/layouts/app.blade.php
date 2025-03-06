@@ -20,6 +20,7 @@
             <!-- Shared Background Image -->
             <div class="bg-image">
                 @include('layouts.navigation')
+               
 
                 <!-- Page Heading -->
                 @isset($header)
