@@ -66,9 +66,10 @@
                 @endif
             </button>
 
-            
+            <div style="margin-right: 25px;">
+
                 @include('admin.partials.bell_notification')
-            
+            </div>
                 @if (Auth::check())
                     <!-- Logged-in User Dropdown -->
                     <x-dropdown align="right" width="48">

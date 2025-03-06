@@ -38,9 +38,8 @@
 /* Notification Dropdown */
 #notificationDropdown {
     position: absolute;
-    top: 100%; /* Places it directly below the button */
-    left: 50%; /* Centers it relative to the button */
-    transform: translateX(-50%); /* Adjust for perfect centering */
+    top: 100% !important; 
+    left: 70% !important;
     width: 300px;
     background: #ffffff;
     border-radius: 8px;
@@ -106,15 +105,16 @@
 
 /* Mark as Read Button */
 .mark-as-read {
-    background: #77af4c;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    font-size: 12px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: 0.2s;
+    background: #77af4c !important; /* Ensures this background color is applied */
+    color: white !important;
+    border: none !important;
+    padding: 5px 10px !important;
+    font-size: 12px !important;
+    border-radius: 5px !important;
+    cursor: pointer !important;
+    transition: 0.2s !important;
 }
+
 
 .mark-as-read:hover {
     background: #fbe649;
