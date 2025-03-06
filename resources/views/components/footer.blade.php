@@ -44,8 +44,8 @@
 
             <!-- Follow Us -->
             <div>
-    <h3 class="text-lg font-semibold mb-4">Follow Us</h3>
-    <div class="flex space-x-4">
+    <h3 class="text-lg font-semibold mb-4">Follow Us</h3><br>
+    <div class="flex space-x-5">
         <!-- Facebook -->
         <a href="#" class="text-[#1877F2] hover:text-[#166FE5] transition duration-300 transform hover:scale-110">
             <i class="fab fa-facebook fa-lg"></i>
