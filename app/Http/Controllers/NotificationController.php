@@ -3,20 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Notifications\DatabaseNotification;
 
 class NotificationController extends Controller
 {
     public function markAsRead($id)
     {
-        $user = Auth::user();
-        $notification = $user->notifications()->where('id', $id)->first();
-
+        $notification = DatabaseNotification::find($id);
         if ($notification) {
-            $notification->markAsRead();
-            return response()->json(['success' => true]);
+            $notification->markAsRead(); // Laravel's built-in function
+            return response()->json(['status' => 'success']);
         }
-
-        return response()->json(['success' => false], 404);
+        return response()->json(['status' => 'error', 'message' => 'Notification not found.'], 404);
     }
 }

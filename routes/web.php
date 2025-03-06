@@ -15,7 +15,7 @@ Route::post('chatbot-query', [ChatbotController::class, 'handleQuery']);
 
 
 use App\Http\Controllers\NotificationController;
-Route::post('/notifications/mark-as-read/{id}', [NotificationController::class, 'markAsRead'])->middleware('auth');
+Route::post('/notifications/mark-as-read/{id}', [NotificationController::class, 'markAsRead'])->name('notifications.markAsRead');
 
 
 
