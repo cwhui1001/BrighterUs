@@ -452,3 +452,12 @@ img {
     opacity: 1;
 }
 
+.selected-course {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ccc; /* Add a border at the bottom of each course */
+}
+
+.selected-course:last-child {
+    border-bottom: none; /* Remove the border for the last course */
+}
