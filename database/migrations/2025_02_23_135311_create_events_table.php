@@ -32,6 +32,5 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('events');
-        $table->dropColumn('website'); // Removes the column when rolling back
     }
 };

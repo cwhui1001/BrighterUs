@@ -2,7 +2,7 @@
     <div class="dropdown">
         <!-- Notification Button -->
         <button class="btn position-relative" id="notificationBell" data-bs-toggle="dropdown" aria-expanded="false">
-            🔔
+            <i class="far fa-bell bell-icon"></i>
             @if(auth()->user()->unreadNotifications->count() > 0)
                 <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                     {{ auth()->user()->unreadNotifications->count() }}
@@ -29,10 +29,52 @@
         </ul>
     </div>
 @else
-    <button class="btn btn-light" onclick="window.location.href='{{ route('login') }}'"><a href="{{ route('login') }}" >
-        🔔 Login to view notifications
-    </button>
+
+        <button class="btn position-relative tooltip-container" id="notificationBell" data-url="{{ route('login') }}" >
+            <i class="far fa-bell bell-icon"></i>
+            <span class="tooltip">Login to view notifications</span>
+        </button>
 @endif
+
+<style>
+    .tooltip-button {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip-text {
+    visibility: hidden;
+    width: 160px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 4px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    top: 125%; /* Position below the button */
+    left: 50%;
+    margin-left: -80px; /* Center the tooltip */
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.tooltip-text::after {
+    content: "";
+    position: absolute;
+    bottom: 100%; /* Arrow positioned above the tooltip */
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent #333 transparent; /* Arrow pointing upwards */
+}
+
+.tooltip-button:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
+</style>
 
 
 <!-- JavaScript for Toggle Functionality -->
@@ -53,4 +95,16 @@
             }
         });
     });
+
+    document.addEventListener('DOMContentLoaded', function () {
+    const button = document.getElementById('notificationBell');
+    if (button && button.hasAttribute('data-url')) {
+        button.addEventListener('click', function (event) {
+            // Prevent the dropdown from toggling if the user is not authenticated
+            if (!button.hasAttribute('data-bs-toggle')) {
+                window.location.href = button.getAttribute('data-url');
+            }
+        });
+    }
+});
 </script>

@@ -46,3 +46,12 @@ document.addEventListener('click', function (event) {
         dropdownButton.classList.remove('active');
     }
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+    const button = document.querySelector('.bookmark-button');
+    if (button) {
+        button.addEventListener('click', function () {
+            window.location.href = button.getAttribute('data-url');
+        });
+    }
+});

@@ -96,4 +96,12 @@ Route::prefix('admin/financial')->name('admin.financial.')->middleware('auth')->
     Route::delete('/scholarships/{id}', [AdminFinancialController::class, 'destroy'])->name('scholarships.destroy');
 });
 
+
+use App\Http\Controllers\BookmarkController;
+
+Route::middleware('auth')->group(function () {
+    Route::post('/courses/{course}/bookmark', [BookmarkController::class, 'toggleBookmark'])->name('courses.bookmark');
+    Route::get('/bookmarks', [BookmarkController::class, 'index'])->name('bookmarks.index');
+});
+
 require __DIR__.'/auth.php';

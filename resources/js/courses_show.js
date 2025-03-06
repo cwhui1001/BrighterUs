@@ -8,8 +8,22 @@ function clearCompareBox() {
 // Ensure compare button works
 document.getElementById("clear-btn").addEventListener("click", clearCompareBox);
 
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll('.course-card').forEach(card => {
+        card.addEventListener('click', function (event) {
+            // Prevent the click event from bubbling up to parent elements
+            event.stopPropagation();
 
+            // Get the course URL from the data attribute
+            const courseUrl = this.getAttribute('data-course-url');
 
+            // Redirect to the course details page
+            if (courseUrl) {
+                window.location.href = courseUrl;
+            }
+        });
+    });
+});
 // Define enableDragDrop in the global scope
 function enableDragDrop() {
     document.querySelectorAll('.course-card').forEach(card => {
@@ -28,7 +42,6 @@ function enableDragDrop() {
     });
 }
 
-
 // Define allowDrop and drop functions
 function allowDrop(event) {
     event.preventDefault(); // Allow dropping
@@ -36,8 +49,9 @@ function allowDrop(event) {
 
 function drop(event) {
     event.preventDefault();
-    let data = event.dataTransfer.getData("text");
-    let selectedCourses = document.getElementById("selected-courses");
+    let courseId = event.dataTransfer.getData('courseId');
+    let courseName = event.dataTransfer.getData('courseName');
+    let selectedCoursesContainer = document.getElementById("selected-courses");
 
     // Remove placeholder if it exists
     let placeholder = document.getElementById("placeholder-text");
@@ -45,43 +59,23 @@ function drop(event) {
         placeholder.remove();
     }
 
-    let course = document.createElement("div");
-    course.textContent = data;
-    course.classList.add("course-item"); 
-    selectedCourses.appendChild(course);
+    if (courseId && !selectedCourses.includes(courseId)) {
+        selectedCourses.push(courseId);
+
+        let newElement = document.createElement("div");
+        newElement.innerText = courseName;
+        newElement.classList.add("selected-course");
+
+        selectedCoursesContainer.appendChild(newElement);
+    }
 }
 
-
-
-// drag drop feature
+// Initialize drag-and-drop functionality
 window.onload = function () {
-    
-
     enableDragDrop();
 
     // Compare container setup
     let compareContainer = document.getElementById("compare-container");
-    let selectedCoursesContainer = document.getElementById("selected-courses");
-
-    document.getElementById("compare-container").addEventListener("dragover", function (event) {
-        event.preventDefault();
-    });
-    
-    document.getElementById("compare-container").addEventListener("drop", function (event) {
-        event.preventDefault();
-        let courseId = event.dataTransfer.getData("courseId");
-        let courseName = event.dataTransfer.getData("courseName");
-    
-        if (courseId && !selectedCourses.includes(courseId)) {
-            selectedCourses.push(courseId);
-    
-            let newElement = document.createElement("div");
-            newElement.innerText = courseName;
-            newElement.classList.add("selected-course");
-    
-            selectedCoursesContainer.appendChild(newElement);
-        }
-    });
 
     compareContainer.addEventListener("dragover", allowDrop);
     compareContainer.addEventListener("drop", drop);
@@ -91,6 +85,7 @@ window.onload = function () {
 
     // Compare button functionality
     document.getElementById("compare-btn").addEventListener("click", function () {
+        console.log("Compare button clicked"); // Debugging
         if (selectedCourses && selectedCourses.length > 1) {
             window.location.href = `${compareRoute}?courses=${selectedCourses.join(",")}`;
         } else {
@@ -127,13 +122,17 @@ window.onload = function () {
                 coursesList.innerHTML = ""; // Clear existing content
 
                 data.courses.data.forEach(course => {
-                    let courseCard = document.createElement('a');
-                    courseCard.href = `courses/${course.id}`;
-                    courseCard.classList.add('course-card-link');
-                    courseCard.draggable = true; // Make draggable
-                    courseCard.dataset.courseId = course.id; // Store course ID
+                    let courseCard = document.createElement('div');
+                    courseCard.classList.add('course-card-container');
+                    courseCard.dataset.courseId = course.id;
+
                     courseCard.innerHTML = `
-                        <div class="course-card" data-course-id="${course.id}">
+                        <div class="course-card" draggable="true" data-course-id="${course.id}" data-course-url="{{ route('courses.show', $course->id) }}">
+                        ${data.isAuthenticated ? `
+                            <button class="bookmark-btn" data-course-id="${course.id}" onclick="toggleBookmark(this)">
+                                <i class="${course.isBookmarked ? 'fas' : 'far'} fa-bookmark"></i>
+                            </button>
+                        ` : ''}
                             <h5 class="course-title">${course.name}</h5>
                             <hr>
                             <div class="c2">
@@ -151,33 +150,53 @@ window.onload = function () {
                             </div>
                         </div>
                     `;
-
+                    courseCard.addEventListener('click', function() {
+                        window.location.href = `/BrighterUs/public/courses/${course.id}`;
+                    });
                     coursesList.appendChild(courseCard);
                     
-                    enableDragDrop();
                 });
 
                 // Reapply drag-and-drop after updating courses
                 enableDragDrop();
-            });enableDragDrop();
-        });enableDragDrop();
-    });enableDragDrop();
-    
-    function enableDragDrop() {
-        document.querySelectorAll('.course-card').forEach(card => {
-            card.setAttribute('draggable', 'true'); // Force draggable attribute
-    
-            card.addEventListener('dragstart', function (event) {
-                let courseId = this.getAttribute('data-course-id');
-                let courseName = this.querySelector('.course-title')?.innerText || 'Unknown Course';
-    
-                if (courseId) {
-                    event.dataTransfer.setData('courseId', courseId);
-                    event.dataTransfer.setData('courseName', courseName);
-                    console.log("Dragging Course:", courseName);
-                }
             });
         });
-    }
-};    
+    });
+};
 
+function showLoginPrompt() {
+    alert("Please log in to bookmark courses.");
+    // Optionally, redirect to the login page
+    // window.location.href = "{{ route('login') }}";
+} 
+
+function toggleBookmark(button) {
+    const isLoggedIn = button.getAttribute('data-logged-in') === 'true';
+
+    if (!isLoggedIn) {
+        showLoginPrompt();
+        return;
+    }
+    const courseId = button.getAttribute('data-course-id');
+    const icon = button.querySelector('i');
+
+    fetch(`courses/${courseId}/bookmark`, {
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'added') {
+            icon.classList.remove('far'); // Remove outline icon
+            icon.classList.add('fas'); // Add filled icon
+        } else if (data.status === 'removed') {
+            icon.classList.remove('fas'); // Remove filled icon
+            icon.classList.add('far'); // Add outline icon
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}

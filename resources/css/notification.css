@@ -1,18 +1,30 @@
 /* Notification Button Styling */
 #notificationBell {
-    background: rgb(255, 255, 255);
+    background-color: transparent; /* Transparent background */
     border: none;
     cursor: pointer;
-    padding: 6px;
-    font-size: 15px;
+    padding: 10px;
+    font-size: 1.2rem;
     position: relative;
     transition: 0.3s ease-in-out;
     border-radius: 45%;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.bell-icon {
+    color: #555; /* Dark grey color */
+    font-size: 1.2rem; /* Adjust the size */
+    transition: color 0.3s ease, font-weight 0.3s ease; /* Smooth transition */
+}
+
+/* Hover state: Filled icon */
+#notificationBell:hover .bell-icon {
+    font-family: "Font Awesome 5 Free"; /* Switch to solid style */
+    font-weight: 900; /* Required for solid icons */
+    color: #ffb114; /* Change color on hover */
 }
 
 #notificationBell:hover {
-    background: #727272;
+    background: #ffffff; /* Background color on hover */
 }
 
 /* Badge for Unread Notifications */

@@ -20,7 +20,7 @@
 }
 
 /* Active state (on click) for menu items */
-#financialAidDropdownMenu a:active {
+#financialAidDropdownMenu a:active { 
     background-color: #e5e7eb; /* Slightly darker grey */
     color: black; /* Active item text remains black */
 }
@@ -54,4 +54,77 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 }
 
+
+/* Container for the tooltip */
+.tooltip-container {
+    position: relative;
+    display: inline-block;
+}
+
+/* Tooltip text */
+.tooltip {
+    visibility: hidden;
+    width: 160px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 4px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    top: 125%; /* Position below the button */
+    left: 50%;
+    margin-left: -80px; /* Center the tooltip */
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+/* Tooltip arrow */
+.tooltip::after {
+    content: "";
+    position: absolute;
+    bottom: 100%; /* Arrow positioned above the tooltip */
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent #333 transparent;
+}
+
+/* Show the tooltip on hover */
+.tooltip-container:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Bookmark Button Styling */
+.bookmark-button {
+    background-color: transparent; /* Transparent background */
+    border: none; /* Remove default button border */
+    color: #2f2f2f; /* Default icon color */
+    cursor: pointer; /* Pointer cursor on hover */
+    padding: 12px; /* Padding for better click area */
+    border-radius: 45%;
+    transition: all 0.3s ease; /* Smooth transition for hover effects */
+    font-size: 1.2rem;
+    transition: 0.3s ease-in-out;
+}
+
+/* Hover Effect */
+.bookmark-button:hover {
+    background-color: #f8f9fa; /* Light background on hover */
+    color: #ffc02d; /* Darker icon color on hover */
+}
+
+.fa-bookmark {
+    color: #555; /* Dark grey color */
+    transition: color 0.3s ease; /* Smooth transition */
+}
+
+/* Hover state: Filled icon */
+.bookmark-button:hover .fa-bookmark {
+    font-family: "Font Awesome 5 Free"; /* Switch to solid style */
+    font-weight: 900; /* Required for solid icons */
+    color: #ecbb08; /* Change color on hover */
+}
 

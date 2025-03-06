@@ -41,4 +41,14 @@ class Course extends Model
     {
         return $this->belongsTo(CourseCategory::class);
     }
+
+    public function bookmarks()
+    {
+        return $this->hasMany(Bookmark::class);
+    }
+
+    public function savedByUsers()
+    {
+        return $this->belongsToMany(User::class, 'bookmarks', 'course_id', 'user_id')->withTimestamps();
+    }
 }

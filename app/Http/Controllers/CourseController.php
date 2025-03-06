@@ -12,6 +12,7 @@ use App\Models\Ranking;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Exception;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 
 class CourseController extends Controller
 {
@@ -24,6 +25,11 @@ class CourseController extends Controller
             $locations = Location::all();
             $categories = CourseCategory::all();
             $rankings = Ranking::all();
+
+            $user = Auth::user();
+            $courses->each(function ($course) use ($user) {
+                $course->isBookmarked = $user ? $user->savedCourses()->where('course_id', $course->id)->exists() : false;
+            });
 
             return view('courses.index', compact('courses', 'fields', 'universities', 'locations', 'categories', 'rankings'));
         } catch (Exception $e) {
@@ -98,8 +104,17 @@ class CourseController extends Controller
         }
 
         $courses = $query->paginate(100);
-        Log::info('Filter Results: ', $courses->items());
-        return response()->json(['courses' => $courses]);
+        $user = Auth::user();
+        $courses->getCollection()->transform(function ($course) use ($user) {
+            $course->isBookmarked = $user ? $user->savedCourses()->where('course_id', $course->id)->exists() : false;
+            return $course;
+        });
+        return response()->json([
+            'courses' => $courses,
+            'isAuthenticated' => Auth::check(), // Use Auth facade
+        ]);
+
+        
     }
 
 

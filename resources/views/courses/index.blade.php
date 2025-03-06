@@ -1,5 +1,7 @@
 @vite(['resources/css/courses.css', 'resources/js/courses.js', 'resources/js/courses_show.js'])
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
 
 <x-app-layout>
     <x-slot name="header">
@@ -105,33 +107,36 @@
 
 
             <div id="courses-list">
-            @foreach ($courses as $course)
-            
-            <a id="course-{{ $course->id }}" href="{{ route('courses.show', $course->id) }}" 
-                class="course-card-link" draggable="true" 
-                data-course-id="{{ $course->id }}" 
-                ondragstart="event.dataTransfer.setData('text', this.id)">
+                @foreach ($courses as $course)
+                <div class="course-card-container" data-course-id="{{ $course->id }}">
+                    <!-- Bookmark Button -->
+                    @auth
+                        <button class="bookmark-btn"
+                                data-course-id="{{ $course->id }}" onclick="toggleBookmark(this)">
+                            <i class="{{ $course->isBookmarked ? 'fas' : 'far' }} fa-bookmark"></i>
+                        </button>
+                    @endauth
 
-                <div class="course-card" draggable="true" data-course-id="{{ $course->id }}" ondragstart="drag(event)">
-                    <h5 class="course-title">{{ $course->name }}</h5>
-                    <hr>
-                    <div class="c2">
-                        <img src="{{ $course->university->logo }}">
-                        <div>
-                            <p><strong>Category:</strong> {{ $course->category->name }}</p>
-                            <p><strong>Field:</strong> {{ $course->field?->name ?? '-' }}</p>
-                            <p><strong>University:</strong> {{ $course->university->name }}</p>
-                            <p><strong>QS Ranking:</strong> {{ $course->ranking->value }}</p>
+                    <!-- Course Card Content -->
+                    <div class="course-card" draggable="true" data-course-id="{{ $course->id }}" data-course-url="{{ route('courses.show', $course->id) }}">
+                        <h5 class="course-title">{{ $course->name }}</h5>
+                        <hr>
+                        <div class="c2">
+                            <img src="{{ $course->university->logo }}">
+                            <div>
+                                <p><strong>Category:</strong> {{ $course->category->name }}</p>
+                                <p><strong>Field:</strong> {{ $course->field?->name ?? '-' }}</p>
+                                <p><strong>University:</strong> {{ $course->university->name }}</p>
+                                <p><strong>QS Ranking:</strong> {{ $course->ranking->value }}</p>
+                            </div>
+                        </div>
+                        <div class="c3">
+                            <p><strong>Budget:</strong><br> RM {{ number_format($course->budget, 0) }}</p>
+                            <p><strong>Location:</strong><br> {{ is_object($course->location) ? $course->location->name : $course->location }}</p>
                         </div>
                     </div>
-                    <div class="c3">
-                        <p><strong>Budget:</strong><br> RM {{ number_format($course->budget, 0) }}</p>
-                        <p><strong>Location:</strong><br> {{ is_object($course->location) ? $course->location->name : $course->location }}</p>
-                    </div>
                 </div>
-            </a>
-
-            @endforeach
+                @endforeach
             </div>
         </div>
     </div>
@@ -184,13 +189,16 @@
 
             // Loop through the filtered courses and create course cards
             data.courses.data.forEach(course => {
-                let courseCard = document.createElement('a');
-                courseCard.href = `courses/${course.id}`;
-                courseCard.classList.add('course-card-link');
-                courseCard.draggable = true; // Make draggable
+                let courseCard = document.createElement('div');
+                courseCard.classList.add('course-card-container');
                 courseCard.dataset.courseId = course.id; // Store course ID
                 courseCard.innerHTML = `
-                    <div class="course-card">
+                     <div class="course-card" data-course-id="${course.id}" data-course-url="{{ route('courses.show', $course->id) }}">
+                        ${data.isAuthenticated ? `
+                        <button class="bookmark-btn" data-course-id="${course.id}" onclick="toggleBookmark(this)">
+                            <i class="${course.isBookmarked ? 'fas' : 'far'} fa-bookmark"></i>
+                        </button>
+                        ` : ''}
                         <h5 class="course-title">${course.name}</h5>
                         <hr>
                         <div class="c2">
@@ -208,7 +216,9 @@
                         </div>
                     </div>
                 `;
-
+                courseCard.addEventListener('click', function() {
+                    window.location.href = `courses/${course.id}`;
+                });
                 coursesList.appendChild(courseCard);
             });
 
@@ -219,7 +229,44 @@
 });
 
 </script>
+<script>
+    function showLoginPrompt() {
+    alert("Please log in to bookmark courses.");
+    // Optionally, redirect to the login page
+    // window.location.href = "{{ route('login') }}";
+}
+    function toggleBookmark(button) {
+        const isLoggedIn = button.getAttribute('data-logged-in') === 'true';
 
+    if (!isLoggedIn) {
+        showLoginPrompt();
+        return;
+    }
+    console.log('Bookmark button clicked'); // Debugging
+    const courseId = button.getAttribute('data-course-id');
+    const icon = button.querySelector('i');
+
+    fetch(`courses/${courseId}/bookmark`, {
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'added') {
+            icon.classList.remove('far'); // Remove outline icon
+            icon.classList.add('fas'); // Add filled icon
+        } else if (data.status === 'removed') {
+            icon.classList.remove('fas'); // Remove filled icon
+            icon.classList.add('far'); // Add outline icon
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+</script>
 
 </x-app-layout>
 

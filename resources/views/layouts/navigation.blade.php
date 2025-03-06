@@ -1,4 +1,5 @@
 @vite(['resources/css/nav.css', 'resources/js/nav.js','resources/css/notification.css'])
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 <nav x-data="{ open: false }">
     <!-- Primary Navigation Menu -->
@@ -49,14 +50,25 @@
                     <x-nav-link :href="route('career')" :active="request()->routeIs('career')">
                         {{ __('Career Match') }}
                     </x-nav-link>
-                    @include('admin.partials.bell_notification')
+                    
                 </div>
 
-                <div class="flex items-center space-x-4">
             </div>
 
             <!-- Check if user is authenticated -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
+    
+            <!-- Bookmark Button -->
+            <button class="tooltip-container bookmark-button" data-url="{{ route('bookmarks.index') }}">
+                <i class="far fa-bookmark"></i>
+                @if (!Auth::check())
+                    <span class="tooltip">Login to view bookmarks</span>
+                @endif
+            </button>
+
+            
+                @include('admin.partials.bell_notification')
+            
                 @if (Auth::check())
                     <!-- Logged-in User Dropdown -->
                     <x-dropdown align="right" width="48">
