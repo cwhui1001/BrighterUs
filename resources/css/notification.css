@@ -123,10 +123,10 @@
 
 
  #notificationBell, .dropdown {
-    margin-bottom: 6 !important;
+    margin-bottom: 10 !important;
     vertical-align: middle !important;
-}
 
+}
 
    .tooltip-button {
     position: relative;
@@ -165,3 +165,4 @@
     visibility: visible;
     opacity: 1;
 }
+

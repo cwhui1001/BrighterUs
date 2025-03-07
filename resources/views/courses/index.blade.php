@@ -1,7 +1,7 @@
 @vite(['resources/css/courses.css', 'resources/js/courses.js', 'resources/js/courses_show.js'])
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
+<meta name="csrf-token" content="{{ csrf_token() }}">
 
 <x-app-layout>
     <x-slot name="header">
@@ -87,7 +87,7 @@
                 </form>
             </div>
        
-        <!-- Results Section -->
+        <!-- Results Section --> 
         <div class="results">
             <br><h1 class="results-title">Results</h1>
             <br>
@@ -112,8 +112,17 @@
                     <!-- Bookmark Button -->
                     @auth
                         <button class="bookmark-btn"
-                                data-course-id="{{ $course->id }}" onclick="toggleBookmark(this)">
+                                data-course-id="{{ $course->id }}"
+                                data-logged-in="true"
+                                onclick="toggleBookmark(this)">
                             <i class="{{ $course->isBookmarked ? 'fas' : 'far' }} fa-bookmark"></i>
+                        </button>
+                    @else
+                        <button class="bookmark-btn"
+                                data-course-id="{{ $course->id }}"
+                                data-logged-in="false"
+                                onclick="toggleBookmark(this)">
+                            <i class="far fa-bookmark"></i>
                         </button>
                     @endauth
 
@@ -141,132 +150,7 @@
         </div>
     </div>
 
-    <script>
-        document.querySelectorAll('.filter-checkbox, #filterSearch').forEach(input => {
-    input.addEventListener('input', function () {
-        let form = document.getElementById('filter-form');
-        let formData = new FormData();
-
-        // Track selected universities
-        let selectedUniversities = [];
-
-        // Add all checked checkboxes to the form data
-        form.querySelectorAll('input[type="checkbox"]:checked').forEach((checkbox) => {
-            if (checkbox.name === "university[]") {
-                selectedUniversities.push(checkbox.value); // Track selected universities
-            }
-            formData.append(checkbox.name + "[]", checkbox.value);
-        });
-
-        // Check if "Other" is selected
-        let isOtherSelected = selectedUniversities.includes("other");
-
-        // If "Other" is selected, ensure the backend knows to filter by is_listed = 0
-        if (isOtherSelected) {
-            formData.append('is_other', 'true'); // Add a flag for "Other"
-        }
-
-        // Add the search query to the form data
-        let searchQuery = document.getElementById('filterSearch').value;
-        if (searchQuery.trim() !== '') {
-            formData.append('search', searchQuery);
-        }
-
-        // Convert form data to a query string
-        let query = new URLSearchParams(formData).toString();
-
-        // Send the filter request to the backend
-        fetch("{{ route('courses.filter') }}?" + query, {
-            method: "GET",
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest'
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            let coursesList = document.getElementById('courses-list');
-            coursesList.innerHTML = ""; // Clear existing content
-
-            // Loop through the filtered courses and create course cards
-            data.courses.data.forEach(course => {
-                let courseCard = document.createElement('div');
-                courseCard.classList.add('course-card-container');
-                courseCard.dataset.courseId = course.id; // Store course ID
-                courseCard.innerHTML = `
-                     <div class="course-card" data-course-id="${course.id}" data-course-url="{{ route('courses.show', $course->id) }}">
-                        ${data.isAuthenticated ? `
-                        <button class="bookmark-btn" data-course-id="${course.id}" onclick="toggleBookmark(this)">
-                            <i class="${course.isBookmarked ? 'fas' : 'far'} fa-bookmark"></i>
-                        </button>
-                        ` : ''}
-                        <h5 class="course-title">${course.name}</h5>
-                        <hr>
-                        <div class="c2">
-                            <img src="${course.university ? course.university.logo : 'N/A'}">
-                            <div>
-                                <p><strong>Category:</strong> ${course.category ? course.category.name : 'N/A'}</p>
-                                <p><strong>Field:</strong> ${course.field ? course.field.name : 'N/A'}</p>
-                                <p><strong>University:</strong> ${course.university ? course.university.name : 'N/A'}</p>
-                                <p><strong>QS Ranking:</strong> ${course.ranking ? course.ranking.value : 'N/A'}</p>
-                            </div>
-                        </div>
-                        <div class="c3">
-                            <p><strong>Budget:</strong><br> RM ${course.budget.toLocaleString()}</p>
-                            <p><strong>Location:</strong><br> ${course.location ? course.location.name : 'N/A'}</p>
-                        </div>
-                    </div>
-                `;
-                courseCard.addEventListener('click', function() {
-                    window.location.href = `courses/${course.id}`;
-                });
-                coursesList.appendChild(courseCard);
-            });
-
-            // Reapply drag-and-drop after updating courses
-            enableDragDrop();
-        });
-    });
-});
-
-</script>
-<script>
-    function showLoginPrompt() {
-    alert("Please log in to bookmark courses.");
-    // Optionally, redirect to the login page
-    // window.location.href = "{{ route('login') }}";
-}
-    function toggleBookmark(button) {
-        const isLoggedIn = button.getAttribute('data-logged-in') === 'true';
-
-    if (!isLoggedIn) {
-        showLoginPrompt();
-        return;
-    }
-    console.log('Bookmark button clicked'); // Debugging
-    const courseId = button.getAttribute('data-course-id');
-    const icon = button.querySelector('i');
-
-    fetch(`courses/${courseId}/bookmark`, {
-        method: 'POST',
-        headers: {
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        }
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.status === 'added') {
-            icon.classList.remove('far'); // Remove outline icon
-            icon.classList.add('fas'); // Add filled icon
-        } else if (data.status === 'removed') {
-            icon.classList.remove('fas'); // Remove filled icon
-            icon.classList.add('far'); // Add outline icon
-        }
-    })
-    .catch(error => console.error('Error:', error));
-}
-</script>
+    
 
 </x-app-layout>
 

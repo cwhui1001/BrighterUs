@@ -30,4 +30,22 @@ class BookmarkController extends Controller
         $bookmarks = $user->savedCourses()->with('university', 'category', 'field', 'location', 'ranking')->get();
         return view('bookmarks.index', compact('bookmarks'));
     }
+
+    public function unbookmark(Course $course)
+    {
+        $user = Auth::user();
+
+        if (!$user) {
+            return response()->json(['status' => 'error', 'message' => 'User not authenticated'], 401);
+        }
+
+        // Check if the course is bookmarked
+        if ($user->savedCourses()->where('course_id', $course->id)->exists()) {
+            // Remove bookmark
+            $user->savedCourses()->detach($course->id);
+            return response()->json(['status' => 'removed']);
+        } else {
+            return response()->json(['status' => 'error', 'message' => 'Course not bookmarked'], 400);
+        }
+    }
 }
