@@ -13,15 +13,22 @@
         <!-- Notification Dropdown -->
         <ul class="dropdown-menu dropdown-menu-end" id="notificationDropdown">
         @foreach(auth()->user()->unreadNotifications->sortByDesc('created_at') as $notification)
+        <li class="p-3 border-bottom">
             <a href="{{ route('events') }}" class="event-link">
-            <li class="p-3 border-bottom">
-                    <strong>New Event Updated!</strong>
+                <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                    <div class="d-flex align-items-center">
+                        <img src="{{ asset('images/notification-logo.png') }}" alt="Event Logo" class="me-2" style="width: 20px; height: 20px;">
+                        <strong class="mb-0">New Event Updated!</strong>
+                    </div>
                         <p class="mb-1 fw-bold">{{ $notification->data['title'] }}</p>
-                    </a>
-                    <small class="text-muted d-block">{{ \Carbon\Carbon::parse($notification->data['start_time'])->format('Y-m-d H:i A') }}</small>
-                    <button class="mark-as-read btn btn-sm btn-primary mt-2" data-id="{{ $notification->id }}">✔ Mark as Read</button>
-                </li>
-            @endforeach
+                    </div>
+                    <small class="notification-time text-muted">{{ \Carbon\Carbon::parse($notification->data['start_time'])->format('Y-m-d H:i A') }}</small>
+                </div>
+            </a>
+            <button class="mark-as-read btn btn-sm btn-primary mt-2" data-id="{{ $notification->id }}">✔ Mark as Read</button>
+        </li>
+    @endforeach
 
             @if(auth()->user()->unreadNotifications->isEmpty())
                 <li class="text-center text-muted p-3">No new notifications</li>
