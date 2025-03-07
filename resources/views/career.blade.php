@@ -265,17 +265,28 @@
 
                 <!-- Result section -->
                 <div id="result" class="hidden mt-6">
-                    <h2 class="font-semibold mt-4">Your Personality Type: <span id="personality-type"></span></h2>
-                    <p id="personality-description" class="mt-2"></p>
-                    <h2 class="font-semibold mt-4">Recommended Career Paths:</h2>
-                    <ul id="career-list" class="list-disc ml-4"></ul>
-                    
-                    <canvas id="mbti-chart" width="30" height="10"></canvas>
-                    <p>&nbsp;</p>
-                    <button onclick="downloadPDF(userMBTI)" class="btn-download">Download PDF</button>
-                    <button id="restart-btn" class="btn-restart">Restart Quiz</button>
+                <h2 class="font-semibold mt-4">Your Personality Type: <span id="personality-type"></span></h2>
 
-                </div>
+                <h3 class="font-semibold mt-4">Overview</h3>
+                <ul id="overview" class="list-disc ml-4"></ul>
+
+                <h3 class="font-semibold mt-4">General Characteristics</h3>
+                <ul id="general-characteristics" class="list-disc ml-4"></ul>
+
+                <h3 class="font-semibold mt-4">Strengths</h3>
+                <ul id="strengths" class="list-disc ml-4"></ul>
+
+                <h3 class="font-semibold mt-4">Potential Weaknesses</h3>
+                <ul id="weaknesses" class="list-disc ml-4"></ul>
+
+                <h2 class="font-semibold mt-4">Recommended Career Paths:</h2>
+                <ul id="career-list" class="list-disc ml-4"></ul>
+
+                <canvas id="mbti-chart" width="30" height="10"></canvas>
+                <p>&nbsp;</p>
+                <button id="downloadPDF(userMBTI)" class="btn-download">Download PDF</button>
+                <button id="restart-btn" class="btn-restart">Restart Quiz</button>
+            </div>
             </div>
         </div>
     </div>

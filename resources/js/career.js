@@ -120,23 +120,19 @@ import { mbtiDetails } from './mbtiData.js';
                 return;
             }
 
+            // I CHANEG HERE !!!!!!!!!!!!!!!!
             document.getElementById('personality-type').textContent = mbtiType;
-            // Add sections dynamically
-                const descriptionContainer = document.getElementById("personality-description");
-                descriptionContainer.innerHTML = `
-                    <h3>Overview</h3>
-                    <ul>${details.overview.map(item => `<li>${item}</li>`).join('')}</ul>
-                    <h3>General Characteristics</h3>
-                    <ul>${details.generalCharacteristics.map(item => `<li>${item}</li>`).join('')}</ul>
-                    <h3>Strengths</h3>
-                    <ul>${details.strengths.map(item => `<li>${item}</li>`).join('')}</ul>
-                    <h3>Potential Weaknesses</h3>
-                    <ul>${details.weaknesses.map(item => `<li>${item}</li>`).join('')}</ul>
-                `;
 
-                // Add career suggestions
-                const careerList = document.getElementById("career-list");
-                careerList.innerHTML = details.careerSuggestions.map(career => `<li>${career}</li>`).join('');
+            // Add sections dynamically
+            document.getElementById("overview").innerHTML = details.overview.map(item => `<li>${item}</li>`).join('');
+            document.getElementById("general-characteristics").innerHTML = details.generalCharacteristics.map(item => `<li>${item}</li>`).join('');
+            document.getElementById("strengths").innerHTML = details.strengths.map(item => `<li>${item}</li>`).join('');
+            document.getElementById("weaknesses").innerHTML = details.weaknesses.map(item => `<li>${item}</li>`).join('');
+            
+            // Add career suggestions
+            document.getElementById("career-list").innerHTML = details.careerSuggestions.map(career => `<li>${career}</li>`).join('');
+
+            // I CHANEG HERE !!!!!!!!!!!!!!!!
 
                 document.getElementById("quiz").classList.add("hidden");
                 document.getElementById("result").classList.remove("hidden");
@@ -177,76 +173,89 @@ import { mbtiDetails } from './mbtiData.js';
             });
         
         }
-        async function downloadPDF() {
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
-        
-            // Extract content
-            const personalityType = document.getElementById("personality-type").textContent;
-            const description = Array.from(document.getElementById("personality-description").children).map(item => item.textContent).join("\n");
-            const careerList = Array.from(document.getElementById("career-list").children).map(item => item.textContent);
-        
-            let y = 20; // Initial Y position
-        
-            // Title
-            doc.setFont("Helvetica", "bold");
-            doc.setFontSize(18);
-            doc.text("MBTI Personality Report", 70, y);
-            y += 12;
-        
-            // Personality Type
-            doc.setFontSize(14);
-            doc.text("Your Personality Type:", 10, y);
-            doc.setFont("Helvetica", "normal");
-            doc.text(personalityType, 70, y,);
-            y += 10;
-        
-            // Description
-            doc.setFont("Helvetica", "bold");
-            doc.text("Description:", 10, y);
+ async function downloadPDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    // Extract content
+    const personalityType = document.getElementById("personality-type").textContent;
+    
+    // Extract each section separately
+    const overview = Array.from(document.getElementById("overview").children).map(item => item.textContent).join("\n");
+    const generalCharacteristics = Array.from(document.getElementById("general-characteristics").children).map(item => item.textContent).join("\n");
+    const strengths = Array.from(document.getElementById("strengths").children).map(item => item.textContent).join("\n");
+    const weaknesses = Array.from(document.getElementById("weaknesses").children).map(item => item.textContent).join("\n");
+    const careerList = Array.from(document.getElementById("career-list").children).map(item => item.textContent);
+
+    let y = 20; // Initial Y position
+
+    // Title
+    doc.setFont("Helvetica", "bold");
+    doc.setFontSize(18);
+    doc.text("MBTI Personality Report", 70, y);
+    y += 12;
+
+    // Personality Type
+    doc.setFontSize(14);
+    doc.text("Your Personality Type:", 10, y);
+    doc.setFont("Helvetica", "normal");
+    doc.text(personalityType, 70, y);
+    y += 10;
+
+    // Function to add sections dynamically
+    function addSection(title, content) {
+        doc.setFont("Helvetica", "bold");
+        doc.text(title, 10, y);
+        y += 7;
+        doc.setFont("Helvetica", "normal");
+
+        const contentLines = doc.splitTextToSize(content, 180);
+        contentLines.forEach(line => {
+            doc.text(line, 10, y);
             y += 7;
-            doc.setFont("Helvetica", "normal");
-        
-            const descLines = doc.splitTextToSize(description, 180);
-            descLines.forEach(line => {
-                doc.text(line, 10, y);
-                y += 7;
-                if (y > 270) { doc.addPage(); y = 20; }
-            });
-        
-            // Add spacing before career path
-            y += 10;
-        
-            // Career Paths
-            doc.setFont("Helvetica", "bold");
-            doc.text("Recommended Career Paths:", 10, y);
-            y += 7;
-            doc.setFont("Helvetica", "normal");
-        
-            careerList.forEach((career, index) => {
-                doc.text(`${index + 1}. ${career}`, 10, y);
-                y += 7;
-                if (y > 270) { doc.addPage(); y = 20; }
-            });
-        
-            // Add spacing before chart
-            y += 10;
-        
-            // Chart (if exists)
-            const chartCanvas = document.getElementById("mbti-chart");
-            if (chartCanvas) {
-                const chartImage = chartCanvas.toDataURL("image/png");
-        
-                doc.setFont("Helvetica", "bold");
-                doc.text("Trait Scores:", 10, y);
-                y += 10;
-        
-                doc.addImage(chartImage, "PNG", 10, y, 120, 60);
-            }
-        
-            // Save the PDF
-            doc.save("MBTI_Report.pdf");
-        }
+            if (y > 270) { doc.addPage(); y = 20; }
+        });
+
+        y += 5; // Space before next section
+    }
+
+    // Add sections
+    addSection("Overview:", overview);
+    addSection("General Characteristics:", generalCharacteristics);
+    addSection("Strengths:", strengths);
+    addSection("Potential Weaknesses:", weaknesses);
+
+    // Career Paths
+    doc.setFont("Helvetica", "bold");
+    doc.text("Recommended Career Paths:", 10, y);
+    y += 7;
+    doc.setFont("Helvetica", "normal");
+
+    careerList.forEach((career, index) => {
+        doc.text(`${index + 1}. ${career}`, 10, y);
+        y += 7;
+        if (y > 270) { doc.addPage(); y = 20; }
+    });
+
+    // Add spacing before chart
+    y += 10;
+
+    // Chart (if exists)
+    const chartCanvas = document.getElementById("mbti-chart");
+    if (chartCanvas) {
+        const chartImage = chartCanvas.toDataURL("image/png");
+
+        doc.setFont("Helvetica", "bold");
+        doc.text("Trait Scores:", 10, y);
+        y += 10;
+
+        doc.addImage(chartImage, "PNG", 10, y, 120, 60);
+    }
+
+    // Save the PDF
+    doc.save("MBTI_Report.pdf");
+}
+
         
         function restartQuiz() {
     // Reset the form
@@ -307,12 +316,15 @@ import { mbtiDetails } from './mbtiData.js';
                 navigateQuestion("prev");
             });
             document.getElementById("submit-btn").addEventListener("click", calculateResult);
+            
+            
             const downloadBtn = document.querySelector(".btn-download");
             if (downloadBtn) {
-                downloadBtn.addEventListener("click", downloadPDF);
+                downloadBtn.removeEventListener("click", downloadPDF); // Remove existing listener
+                downloadBtn.addEventListener("click", downloadPDF); // Add new listener
             }
-            const restartBtn = document.getElementById('restart-btn');
             
+            const restartBtn = document.getElementById('restart-btn');
             if (restartBtn) {
                 restartBtn.addEventListener("click", restartQuiz);
                 console.log("Restart button event listener added");
