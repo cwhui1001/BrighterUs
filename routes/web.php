@@ -102,6 +102,7 @@ use App\Http\Controllers\BookmarkController;
 Route::middleware('auth')->group(function () {
     Route::post('/courses/{course}/bookmark', [BookmarkController::class, 'toggleBookmark'])->name('courses.bookmark');
     Route::get('/bookmarks', [BookmarkController::class, 'index'])->name('bookmarks.index');
+    Route::post('/courses/{course}/unbookmark', [BookmarkController::class, 'unbookmark'])->name('courses.unbookmark');
 });
 
 require __DIR__.'/auth.php';

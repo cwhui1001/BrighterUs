@@ -8,22 +8,7 @@ function clearCompareBox() {
 // Ensure compare button works
 document.getElementById("clear-btn").addEventListener("click", clearCompareBox);
 
-document.addEventListener("DOMContentLoaded", function () {
-    document.querySelectorAll('.course-card').forEach(card => {
-        card.addEventListener('click', function (event) {
-            // Prevent the click event from bubbling up to parent elements
-            event.stopPropagation();
 
-            // Get the course URL from the data attribute
-            const courseUrl = this.getAttribute('data-course-url');
-
-            // Redirect to the course details page
-            if (courseUrl) {
-                window.location.href = courseUrl;
-            }
-        });
-    });
-});
 // Define enableDragDrop in the global scope
 function enableDragDrop() {
     document.querySelectorAll('.course-card').forEach(card => {
@@ -98,18 +83,18 @@ window.onload = function () {
         input.addEventListener('input', function () {
             let form = document.getElementById('filter-form');
             let formData = new FormData();
-
+    
             form.querySelectorAll('input[type="checkbox"]:checked').forEach((checkbox) => {
                 formData.append(checkbox.name + "[]", checkbox.value);
             });
-
+    
             let searchQuery = document.getElementById('filterSearch').value;
             if (searchQuery.trim() !== '') {
                 formData.append('search', searchQuery);
             }
-
+    
             let query = new URLSearchParams(formData).toString();
-
+    
             fetch("/BrighterUs/public/courses/filter?" + query, {
                 method: "GET",
                 headers: {
@@ -120,16 +105,16 @@ window.onload = function () {
             .then(data => {
                 let coursesList = document.getElementById('courses-list');
                 coursesList.innerHTML = ""; // Clear existing content
-
+    
                 data.courses.data.forEach(course => {
                     let courseCard = document.createElement('div');
                     courseCard.classList.add('course-card-container');
                     courseCard.dataset.courseId = course.id;
-
+    
                     courseCard.innerHTML = `
                         <div class="course-card" draggable="true" data-course-id="${course.id}" data-course-url="{{ route('courses.show', $course->id) }}">
                         ${data.isAuthenticated ? `
-                            <button class="bookmark-btn" data-course-id="${course.id}" onclick="toggleBookmark(this)">
+                            <button class="bookmark-btn" data-course-id="${course.id}" data-logged-in="${data.isAuthenticated}">
                                 <i class="${course.isBookmarked ? 'fas' : 'far'} fa-bookmark"></i>
                             </button>
                         ` : ''}
@@ -154,33 +139,49 @@ window.onload = function () {
                         window.location.href = `/BrighterUs/public/courses/${course.id}`;
                     });
                     coursesList.appendChild(courseCard);
-                    
                 });
-
+    
                 // Reapply drag-and-drop after updating courses
                 enableDragDrop();
+    
+                // Reattach bookmark event listeners
+                attachBookmarkListeners();
             });
         });
     });
 };
 
-function showLoginPrompt() {
-    alert("Please log in to bookmark courses.");
-    // Optionally, redirect to the login page
-    // window.location.href = "{{ route('login') }}";
-} 
+function attachBookmarkListeners() {
+    document.querySelectorAll('.bookmark-btn').forEach(button => {
+        button.addEventListener('click', function (event) {
+            event.stopPropagation(); // Stop event propagation
+            toggleBookmark(this);
+        });
+    });
+}
+document.addEventListener('DOMContentLoaded', function () {
+    attachBookmarkListeners();
+});
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.bookmark-btn').forEach(button => {
+        button.addEventListener('click', function () {
+            toggleBookmark(this);
+        });
+    });
+});
 
 function toggleBookmark(button) {
     const isLoggedIn = button.getAttribute('data-logged-in') === 'true';
 
     if (!isLoggedIn) {
-        showLoginPrompt();
+        alert('Please log in to bookmark courses.');
         return;
     }
+
     const courseId = button.getAttribute('data-course-id');
     const icon = button.querySelector('i');
 
-    fetch(`courses/${courseId}/bookmark`, {
+    fetch(`/BrighterUs/public/courses/${courseId}/bookmark`, {
         method: 'POST',
         headers: {
             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
