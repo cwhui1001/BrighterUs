@@ -316,14 +316,12 @@ import { mbtiDetails } from './mbtiData.js';
                 navigateQuestion("prev");
             });
             document.getElementById("submit-btn").addEventListener("click", calculateResult);
-            
-            
             const downloadBtn = document.querySelector(".btn-download");
             if (downloadBtn) {
                 downloadBtn.removeEventListener("click", downloadPDF); // Remove existing listener
-                downloadBtn.addEventListener("click", downloadPDF); // Add new listener
+                downloadBtn.addEventListener("click", downloadPDF);
             }
-            
+
             const restartBtn = document.getElementById('restart-btn');
             if (restartBtn) {
                 restartBtn.addEventListener("click", restartQuiz);

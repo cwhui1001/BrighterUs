@@ -1,4 +1,4 @@
-@vite(['resources/css/career.css', 'resources/js/career.js', 'resources/js/mbtiData.js'])
+@vite(['resources/css/career.css', 'resources/js/career.js'])
 <x-app-layout>
     <x-slot name="header">
         <h2 class="custom-header">
@@ -284,7 +284,7 @@
 
                 <canvas id="mbti-chart" width="30" height="10"></canvas>
                 <p>&nbsp;</p>
-                <button id="downloadPDF(userMBTI)" class="btn-download">Download PDF</button>
+                <button id="download-pdf-btn" class="btn-download">Download PDF</button>
                 <button id="restart-btn" class="btn-restart">Restart Quiz</button>
             </div>
             </div>
