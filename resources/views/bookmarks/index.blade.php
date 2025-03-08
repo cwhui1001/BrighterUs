@@ -24,7 +24,7 @@
             <button id="toggle-compare-btn" class="toggle-btn">-</button>
 
              <!-- Bookmarked Courses -->
-            @foreach ($bookmarks as $course)
+            @forelse ($bookmarks as $course)
             <div class="course-card-container">
                 <!-- "x" Button to Unbookmark -->
                 <button class="unbookmark-btn" data-course-id="{{ $course->id }}" onclick="unbookmarkCourse(this)">
@@ -50,7 +50,12 @@
                     </div>
                 </div>
             </div>
-            @endforeach
+            @empty
+                <!-- Display this message if there are no bookmarked courses -->
+                <div class="no-bookmarks-message">
+                    <p>No bookmarked courses.</p>
+                </div>
+            @endforelse
         </div>
     </div>
 </x-app-layout>
