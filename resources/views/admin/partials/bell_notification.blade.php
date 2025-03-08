@@ -12,7 +12,7 @@
 
         <!-- Notification Dropdown -->
         <ul class="dropdown-menu dropdown-menu-end" id="notificationDropdown">
-            @foreach(auth()->user()->unreadNotifications as $notification)
+        @foreach(auth()->user()->unreadNotifications->sortByDesc('created_at') as $notification)
             <a href="{{ route('events') }}" class="event-link">
             <li class="p-3 border-bottom">
                     <strong>New Event Updated!</strong>
@@ -35,47 +35,6 @@
             <span class="tooltip">Login to view notifications</span>
         </button>
 @endif
-
-<style>
-    .tooltip-button {
-    position: relative;
-    display: inline-block;
-}
-
-.tooltip-text {
-    visibility: hidden;
-    width: 160px;
-    background-color: #333;
-    color: #fff;
-    text-align: center;
-    border-radius: 4px;
-    padding: 5px;
-    position: absolute;
-    z-index: 1;
-    top: 125%; /* Position below the button */
-    left: 50%;
-    margin-left: -80px; /* Center the tooltip */
-    opacity: 0;
-    transition: opacity 0.3s;
-}
-
-.tooltip-text::after {
-    content: "";
-    position: absolute;
-    bottom: 100%; /* Arrow positioned above the tooltip */
-    left: 50%;
-    margin-left: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: transparent transparent #333 transparent; /* Arrow pointing upwards */
-}
-
-.tooltip-button:hover .tooltip-text {
-    visibility: visible;
-    opacity: 1;
-}
-</style>
-
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
