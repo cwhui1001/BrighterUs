@@ -36,6 +36,9 @@ function drop(event) {
     event.preventDefault();
     let courseId = event.dataTransfer.getData('courseId');
     let courseName = event.dataTransfer.getData('courseName');
+    console.log("Dropped Course ID:", courseId); // Debugging
+    console.log("Dropped Course Name:", courseName); // Debugging
+
     let selectedCoursesContainer = document.getElementById("selected-courses");
 
     // Remove placeholder if it exists
