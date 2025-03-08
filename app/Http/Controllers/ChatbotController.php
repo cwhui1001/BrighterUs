@@ -41,12 +41,12 @@ class ChatbotController extends Controller
                                 - Provide clear and structured responses in bullet points or numbered lists.
                                 - If additional information is available on **BrighterUs**, summarize it briefly and encourage users to visit the specific section.
                                 - Only recommend external websites if **BrighterUs** does not have the necessary information.
-                                - If the query is unclear, ask for clarification.
                                 - Keep responses short and free from unnecessary jargon.
                                 - If the query is sensitive or personal, offer general guidance.
                                 - If the query is inappropriate or harmful, promote responsible behavior.
                                 - If the query is urgent or critical, provide immediate assistance or relevant contacts.
                                 - Do suggest the user to drop an email to cwenhui10@gmail.com for further assistance.
+                                 
 
                                 **Example Queries & Responses:**
                                 1. *What are the top universities for computer science in Malaysia?*  
@@ -74,6 +74,8 @@ class ChatbotController extends Controller
                                 - visit the **Universities** section on **BrighterUs** for more information: [Universities](" . url('/courses') . ").
                                 - visit the **Courses** section on **BrighterUs** for more information: [Courses](" . url('/courses') . ").
                                 - visit the **External-Sponsorship** section on **BrighterUs** for more information: [External Sponsorship](" . url('/financial/external-sponsorship') . ").
+                                - Do not simply provide link that not mentioned above.
+                                
                                 Now, answer the following query in a clear and structured manner:"],
                             
                             ['text' => $userQuery],
