@@ -93,8 +93,6 @@
 
 <style>
     .dropdown {
-        position: relative;
-        display: inline-block;
         margin: 0 !important;
     }
 
