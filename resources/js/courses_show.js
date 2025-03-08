@@ -3,6 +3,7 @@ let selectedCourses = [];
 function clearCompareBox() {
     let selectedCourses = document.getElementById("selected-courses");
     selectedCourses.innerHTML = '<p id="placeholder-text">Drag and drop courses here to compare</p>'; // Restore placeholder
+    selectedCourses = [];
 }
 
 // Ensure compare button works
@@ -52,7 +53,7 @@ function drop(event) {
         alert("You can compare a maximum of 6 courses.");
         return; // Exit the function if the limit is reached
     }
-    
+
     if (courseId && !selectedCourses.includes(courseId)) {
         selectedCourses.push(courseId);
 
@@ -229,3 +230,23 @@ function toggleBookmark(button) {
     })
     .catch(error => console.error('Error:', error));
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Add click event listeners to all course cards
+    document.querySelectorAll('.course-card').forEach(card => {
+        card.addEventListener('click', function (event) {
+            // Prevent navigation if the click is on a child element that should not trigger navigation
+            if (event.target.closest('.unbookmark-btn')) {
+                return; // Do nothing if the click is on the unbookmark button
+            }
+
+            // Get the course URL from the data attribute
+            const courseUrl = this.getAttribute('data-course-url');
+
+            // Redirect to the course details page
+            if (courseUrl) {
+                window.location.href = courseUrl;
+            }
+        });
+    });
+});

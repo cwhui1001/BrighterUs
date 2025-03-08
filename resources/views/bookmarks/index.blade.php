@@ -9,6 +9,21 @@
 
     <div class="py-12 courses-list">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <!-- Compare Box -->
+            <div id="compare-container" class="compare-box">
+                <h2>Compare Courses</h2>
+                <div id="selected-courses">
+                    <p id="placeholder-text">Drag and drop courses here to compare</p>
+                </div>
+                <div class="button-group">
+                    <button id="compare-btn" data-route="{{ route('courses.compare') }}">Compare</button>
+                    <button id="clear-btn">Clear</button>
+                </div>
+            </div>
+            <!-- Toggle Button (Always Visible) -->
+            <button id="toggle-compare-btn" class="toggle-btn">-</button>
+
+             <!-- Bookmarked Courses -->
             @foreach ($bookmarks as $course)
             <div class="course-card-container">
                 <!-- "x" Button to Unbookmark -->
@@ -17,25 +32,23 @@
                 </button>
 
                 <!-- Course Card -->
-                <a href="{{ route('courses.show', $course->id) }}" class="course-card-link">
-                    <div class="course-card">
-                        <h5 class="course-title">{{ $course->name }}</h5>
-                        <hr>
-                        <div class="c2">
-                            <img src="{{ $course->university->logo }}">
-                            <div>
-                                <p><strong>Category:</strong> {{ $course->category->name }}</p>
-                                <p><strong>Field:</strong> {{ $course->field?->name ?? '-' }}</p>
-                                <p><strong>University:</strong> {{ $course->university->name }}</p>
-                                <p><strong>QS Ranking:</strong> {{ $course->ranking->value }}</p>
-                            </div>
-                        </div>
-                        <div class="c3">
-                            <p><strong>Budget:</strong><br> RM {{ number_format($course->budget, 0) }}</p>
-                            <p><strong>Location:</strong><br> {{ is_object($course->location) ? $course->location->name : $course->location }}</p>
+                <div class="course-card" draggable="true" data-course-id="{{ $course->id }}" data-course-url="{{ route('courses.show', $course->id) }}">
+                    <h5 class="course-title">{{ $course->name }}</h5>
+                    <hr>
+                    <div class="c2">
+                        <img src="{{ $course->university->logo }}">
+                        <div>
+                            <p><strong>Category:</strong> {{ $course->category->name }}</p>
+                            <p><strong>Field:</strong> {{ $course->field?->name ?? '-' }}</p>
+                            <p><strong>University:</strong> {{ $course->university->name }}</p>
+                            <p><strong>QS Ranking:</strong> {{ $course->ranking->value }}</p>
                         </div>
                     </div>
-                </a>
+                    <div class="c3">
+                        <p><strong>Budget:</strong><br> RM {{ number_format($course->budget, 0) }}</p>
+                        <p><strong>Location:</strong><br> {{ is_object($course->location) ? $course->location->name : $course->location }}</p>
+                    </div>
+                </div>
             </div>
             @endforeach
         </div>

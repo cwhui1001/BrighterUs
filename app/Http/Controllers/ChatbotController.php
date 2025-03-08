@@ -47,7 +47,15 @@ class ChatbotController extends Controller
                                 - If the query is urgent or critical, provide immediate assistance or relevant contacts.
                                 - Do suggest the user to drop an email to cwenhui10@gmail.com for further assistance.
                                  
-
+                                **Features on BrighterUs:**
+                                - **Courses:** Explore various courses and universities in Malaysia by using the search bar, filter panel. User can also bookmark courses and view it in bookmark page. Do compare courses and universities using the compare box.
+                                - **Universities:** Discover detailed information about universities and their programs.
+                                - **Scholarships:** Find available scholarships for Malaysian students.
+                                - **Financial Aid:** Learn about study loans, grants, and financial assistance.
+                                - **Career Match:** Match your interests and skills with suitable career options. User can take a mbti test and view the results and also download the results in pdf format.
+                                - **Events:** Stay updated on upcoming education events and webinars. Login user will receive notification on upcoming events.
+                                
+                                
                                 **Example Queries & Responses:**
                                 1. *What are the top universities for computer science in Malaysia?*  
                                 - Some of the top universities for Computer Science include:  
