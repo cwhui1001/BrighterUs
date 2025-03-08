@@ -47,6 +47,12 @@ function drop(event) {
         placeholder.remove();
     }
 
+    // Check if the maximum limit (6 courses) has been reached
+    if (selectedCourses.length >= 6) {
+        alert("You can compare a maximum of 6 courses.");
+        return; // Exit the function if the limit is reached
+    }
+    
     if (courseId && !selectedCourses.includes(courseId)) {
         selectedCourses.push(courseId);
 
@@ -109,6 +115,13 @@ window.onload = function () {
                 let coursesList = document.getElementById('courses-list');
                 coursesList.innerHTML = ""; // Clear existing content
     
+                if (data.courses.data.length === 0) {
+                    // Display "No results found" message
+                    let noResultsMessage = document.createElement('div');
+                    noResultsMessage.classList.add('no-results-message');
+                    noResultsMessage.innerText = 'No results found.';
+                    coursesList.appendChild(noResultsMessage);
+                } else {
                 data.courses.data.forEach(course => {
                     let courseCard = document.createElement('div');
                     courseCard.classList.add('course-card-container');
@@ -149,7 +162,8 @@ window.onload = function () {
     
                 // Reattach bookmark event listeners
                 attachBookmarkListeners();
-            });
+            }
+            }).catch(error => console.error('Error:', error));
         });
     });
 };
@@ -175,9 +189,7 @@ function handleBookmarkClick(event) {
 document.addEventListener('DOMContentLoaded', function () {
     attachBookmarkListeners();
 });
-document.addEventListener('DOMContentLoaded', function () {
-    attachBookmarkListeners();
-});
+
 document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('.bookmark-btn').forEach(button => {
         button.addEventListener('click', function () {
