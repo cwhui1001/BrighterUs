@@ -90,3 +90,15 @@
         });
 });
 </script>
+
+<style>
+    .dropdown {
+        position: relative;
+        display: inline-block;
+        margin: 0 !important;
+    }
+
+    #notificationBell{
+        margin-bottom: 0;
+    }
+</style>

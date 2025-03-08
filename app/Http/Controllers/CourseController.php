@@ -79,13 +79,16 @@ class CourseController extends Controller
             $query->whereIn('field_id', $request->field);
         }
 
-        if ($request->has('other')) {
-            $query->orWhere(function ($q) {
-                $q->where('is_listed', 0);
-            });
+        if ($request->has('university')) {
+            if ($request->has('is_other')) {
+                // Fetch courses from universities where is_listed = 0
+                $query->whereHas('university', function ($q) {
+                    $q->where('is_listed', 0);
+                });
+            } else {
+                $query->whereIn('university_id', $request->university);
+            }
         }
-    
-        Log::info('Filter Query:', ['query' => $query->toSql(), 'bindings' => $query->getBindings()]);
     
 
         if ($request->has('location')) { 

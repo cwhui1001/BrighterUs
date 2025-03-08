@@ -132,3 +132,10 @@
     border-bottom: 2px solid black; /* Adjust thickness */
     padding-bottom: 2px; /* Add padding to balance height */
 }
+
+.balala{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+

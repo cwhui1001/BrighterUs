@@ -155,13 +155,26 @@ window.onload = function () {
 };
 
 function attachBookmarkListeners() {
+    // Remove existing listeners to avoid duplication
     document.querySelectorAll('.bookmark-btn').forEach(button => {
-        button.addEventListener('click', function (event) {
-            event.stopPropagation(); // Stop event propagation
-            toggleBookmark(this);
-        });
+        button.removeEventListener('click', handleBookmarkClick);
+    });
+
+    // Add new listeners
+    document.querySelectorAll('.bookmark-btn').forEach(button => {
+        button.addEventListener('click', handleBookmarkClick);
     });
 }
+
+function handleBookmarkClick(event) {
+    event.stopPropagation(); // Stop event propagation
+    toggleBookmark(this); // Call the toggleBookmark function
+}
+
+// Attach listeners on page load
+document.addEventListener('DOMContentLoaded', function () {
+    attachBookmarkListeners();
+});
 document.addEventListener('DOMContentLoaded', function () {
     attachBookmarkListeners();
 });
