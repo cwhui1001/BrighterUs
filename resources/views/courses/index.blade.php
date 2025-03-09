@@ -59,30 +59,34 @@
 
                     <h4>Budget</h4>
                     <div class="form-check">
-                        <input class="form-check-input filter-checkbox" type="checkbox" name="budget[]" value="5000" id="budget5000">
-                        <label class="form-check-label" for="budget5000">Below RM 5000</label>
+                        <input class="form-check-input filter-checkbox" type="checkbox" name="budget[]" value="30000" id="budget30000">
+                        <label class="form-check-label" for="budget30000">Below RM 30000</label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input filter-checkbox" type="checkbox" name="budget[]" value="10000" id="budget10000">
-                        <label class="form-check-label" for="budget10000">Below RM 10000</label>
+                        <input class="form-check-input filter-checkbox" type="checkbox" name="budget[]" value="50000" id="budget50000">
+                        <label class="form-check-label" for="budget50000">Below RM 50000</label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input filter-checkbox" type="checkbox" name="budget[]" value="20000" id="budget20000">
-                        <label class="form-check-label" for="budget20000">Below RM 20000</label>
+                        <input class="form-check-input filter-checkbox" type="checkbox" name="budget[]" value="100000" id="budget100000">
+                        <label class="form-check-label" for="budget100000">Below RM 100000</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input filter-checkbox" type="checkbox" name="budget[]" value="200000" id="budget200000">
+                        <label class="form-check-label" for="budget200000">Below RM 200000</label>
                     </div>
 
                     <h4>Ranking</h4>
                     <div class="form-check">
-                        <input class="form-check-input filter-checkbox" type="checkbox" name="ranking[]" value="10" id="ranking10">
-                        <label class="form-check-label" for="ranking10">Top 10</label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input filter-checkbox" type="checkbox" name="ranking[]" value="50" id="ranking50">
-                        <label class="form-check-label" for="ranking50">Top 50</label>
-                    </div>
-                    <div class="form-check">
                         <input class="form-check-input filter-checkbox" type="checkbox" name="ranking[]" value="100" id="ranking100">
                         <label class="form-check-label" for="ranking100">Top 100</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input filter-checkbox" type="checkbox" name="ranking[]" value="500" id="ranking500">
+                        <label class="form-check-label" for="ranking500">Top 500</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input filter-checkbox" type="checkbox" name="ranking[]" value="1200" id="ranking1200">
+                        <label class="form-check-label" for="ranking1200">Top 1200</label>
                     </div>
                 </form>
             </div>

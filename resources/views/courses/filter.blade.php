@@ -46,17 +46,27 @@
 
     <!-- Budget Filter -->
     <div>
-        <label for="budget">Budget:</label>
-        <input type="number" name="budget_min" placeholder="Min Budget">
-        <input type="number" name="budget_max" placeholder="Max Budget">
+        <h4>Budget</h4>
+        <label for="budget-min">Min Budget:</label>
+        <input type="range" id="budget-min" name="budget_min" min="0" max="20000" step="1000" value="0">
+        <span id="budget-min-value">RM 0</span>
+
+        <label for="budget-max">Max Budget:</label>
+        <input type="range" id="budget-max" name="budget_max" min="0" max="20000" step="1000" value="20000">
+        <span id="budget-max-value">RM 20000</span>
     </div>
 
     <!-- Ranking Filter -->
     <div>
-        <label for="ranking">Ranking:</label>
-        <input type="number" name="ranking_min" placeholder="Min Ranking">
-        <input type="number" name="ranking_max" placeholder="Max Ranking">
+        <h4>Ranking</h4>
+        <label for="ranking-min">Min Ranking:</label>
+        <input type="range" id="ranking-min" name="ranking_min" min="0" max="100" step="1" value="0">
+        <span id="ranking-min-value">0</span>
+
+        <label for="ranking-max">Max Ranking:</label>
+        <input type="range" id="ranking-max" name="ranking_max" min="0" max="100" step="1" value="100">
+        <span id="ranking-max-value">100</span>
     </div>
 
     <button type="submit">Filter</button>
-</form>
+</form> 

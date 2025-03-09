@@ -243,9 +243,7 @@
                         </ul>
 
                         <div class="dashboard-actions mt-4">
-                            <a href="{{ route('admin.users') }}" class="btn btn-outline-primary me-2">
-                                Manage Users
-                            </a>
+                            
                             <a href="{{ route('logout') }}"
                             onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
                             class="btn btn-outline-danger">

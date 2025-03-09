@@ -101,13 +101,22 @@ class CourseController extends Controller
         }
 
         if ($request->has('budget')) {
-            $query->where('budget', '<=', max($request->budget));
+            $budgets = $request->input('budget');
+            $query->where(function ($q) use ($budgets) {
+                foreach ($budgets as $budget) {
+                    $q->orWhere('budget', '<=', $budget);
+                }
+            });
         }
+        
 
         if ($request->has('ranking')) {
-            $query->where('ranking_id', $request->ranking);
+            $maxRanking = max($request->ranking); // Get the highest selected ranking value
+            $query->whereHas('ranking', function ($q) use ($maxRanking) {
+                $q->where('value', '<=', $maxRanking); // Filter based on the ranking value
+            });
         }
-        Log::info('Filter Query:', ['query' => $query->toSql(), 'bindings' => $query->getBindings()]);
+        
 
         $courses = $query->paginate(100);
         $user = Auth::user();
