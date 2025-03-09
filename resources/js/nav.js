@@ -50,8 +50,17 @@ document.addEventListener('click', function (event) {
 document.addEventListener('DOMContentLoaded', function () {
     const button = document.querySelector('.bookmark-button');
     if (button) {
-        button.addEventListener('click', function () {
-            window.location.href = button.getAttribute('data-url');
+        button.addEventListener('click', function (event) {
+            if (!button.hasAttribute('data-bs-toggle')) {
+                window.location.href = button.getAttribute('data-url');
+                return; // Stop further execution
+            }
+
+            event.preventDefault(); // Prevent default behavior (e.g., page reload)
+            button.classList.toggle('active'); // Toggle active state
+
+            
         });
+        
     }
-});
+}); 

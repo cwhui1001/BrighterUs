@@ -3,6 +3,7 @@
         <!-- Notification Button -->
         <button class="btn position-relative" id="notificationBell" data-bs-toggle="dropdown" aria-expanded="false">
             <i class="far fa-bell bell-icon"></i>
+            <i class="fas fa-bell bell-icon"></i>
             @if(auth()->user()->unreadNotifications->count() > 0)
                 <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                     {{ auth()->user()->unreadNotifications->count() }}
@@ -39,6 +40,7 @@
 
         <button class="btn position-relative tooltip-container" id="notificationBell" data-url="{{ route('login') }}" >
             <i class="far fa-bell bell-icon"></i>
+            <i class="fas fa-bell bell-icon"></i>
             <span class="tooltip">Login to view notifications</span>
         </button>
 @endif
@@ -51,12 +53,14 @@
         bellButton.addEventListener("click", function (event) {
             event.stopPropagation(); // Prevent closing when clicking inside
             dropdownMenu.style.display = dropdownMenu.style.display === "none" ? "block" : "none";
+            bellButton.classList.toggle("active");
         });
 
         // Close the dropdown when clicking outside
         document.addEventListener("click", function (event) {
             if (!bellButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
                 dropdownMenu.style.display = "none";
+                bellButton.classList.remove("active");
             }
         });
     });

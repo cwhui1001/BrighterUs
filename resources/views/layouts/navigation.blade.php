@@ -60,8 +60,9 @@
 
     
             <!-- Bookmark Button -->
-            <button class="tooltip-container bookmark-button" data-url="{{ route('bookmarks.index') }}">
+            <button class="tooltip-container bookmark-button {{ request()->routeIs('bookmarks.index') ? 'active' : '' }}" data-url="{{ route('bookmarks.index') }}">
                 <i class="far fa-bookmark"></i>
+                <i class="fas fa-bookmark"></i>
                 @if (!Auth::check())
                     <span class="tooltip">Login to view bookmarks</span>
                 @endif

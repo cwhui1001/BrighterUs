@@ -54,7 +54,6 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 }
 
-
 /* Container for the tooltip */
 .tooltip-container {
     position: relative;
@@ -74,7 +73,7 @@
     z-index: 1;
     top: 125%; /* Position below the button */
     left: 50%;
-    margin-left: -80px; /* Center the tooltip */
+    transform: translateX(-50%); /* Center the tooltip */
     opacity: 0;
     transition: opacity 0.3s;
 }
@@ -116,16 +115,35 @@
     color: #ffc02d; /* Darker icon color on hover */
 }
 
+/* Active State (same as hover) */
+.bookmark-button.active {
+    background-color: #f8f9fa; /* Light background when active */
+    color: #ffc02d; /* Darker icon color when active */
+}
+
 .fa-bookmark {
     color: #555; /* Dark grey color */
     transition: color 0.3s ease; /* Smooth transition */
 }
 
-/* Hover state: Filled icon */
-.bookmark-button:hover .fa-bookmark {
+/* Hide the solid bookmark icon by default */
+.bookmark-button .fas.fa-bookmark {
+    display: none;
+}
+
+/* Show the solid bookmark icon on hover or when active */
+.bookmark-button:hover .fas.fa-bookmark,
+.bookmark-button.active .fas.fa-bookmark {
+    display: inline-block;
     font-family: "Font Awesome 5 Free"; /* Switch to solid style */
     font-weight: 900; /* Required for solid icons */
-    color: #ecbb08; /* Change color on hover */
+    color: #ecbb08; /* Change color on hover or when active */
+}
+
+/* Hide the regular bookmark icon on hover or when active */
+.bookmark-button:hover .far.fa-bookmark,
+.bookmark-button.active .far.fa-bookmark {
+    display: none;
 }
 
 .x-nav-link[aria-current="page"] {

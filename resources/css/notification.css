@@ -9,6 +9,7 @@
     transition: 0.3s ease-in-out;
     border-radius: 50%;
     outline: none;
+    margin-top: 0;
 }
 
 .bell-icon {
@@ -19,12 +20,46 @@
 
 /* Hover state: Filled icon */
 #notificationBell:hover .bell-icon {
-    color: #ffb114; /* Soft red color */
-    transform: scale(1.1); /* Slightly enlarge the icon */
+    color: #ffb114 !important; /* Yellow color */
 }
 
 #notificationBell:hover {
-    background: #ffffff; /* Light red background on hover */
+    background: #ffffff; 
+}
+
+/* Hide the solid bell icon by default */
+#notificationBell .fas.fa-bell {
+    display: none;
+}
+
+/* Show the solid bell icon on hover */
+#notificationBell:hover .fas.fa-bell {
+    display: inline-block;
+}
+
+/* Hide the regular bell icon on hover */
+#notificationBell:hover .far.fa-bell {
+    display: none;
+}
+
+/* Active state (applied on click) */
+#notificationBell.active .bell-icon {
+    color: #ffb114 !important; /* Yellow color */
+    transform: scale(1.1); /* Slightly enlarge the icon */
+}
+
+#notificationBell.active {
+    background: #ffffff; 
+}
+
+/* Show the solid bell icon when active */
+#notificationBell.active .fas.fa-bell {
+    display: inline-block;
+}
+
+/* Hide the regular bell icon when active */
+#notificationBell.active .far.fa-bell {
+    display: none;
 }
 
 /* Badge for Unread Notifications */
