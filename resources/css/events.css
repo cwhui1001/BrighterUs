@@ -88,11 +88,10 @@
         align-items: flex-start; 
         justify-content: center;  
         vertical-align: middle;
-        height: 280px; 
         gap: 25px;
     }
     .column2a img {
-        width: auto;
+        max-width: 250px;
         height: 200px;
         margin-right: 20px;
         margin-top: 20px;
@@ -215,7 +214,7 @@
         background-color: #ffe6e6;
         padding: 10px;
         border-radius: 5px;
-        margin-left: 80px;
+        margin-left: 40px;
         display: inline-block;
     }
     
