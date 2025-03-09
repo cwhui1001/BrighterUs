@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('scholarships', function (Blueprint $table) {
             $table->id();
             $table->string('type');
+            $table->string('name');
             $table->text('participating_programmes');
             $table->text('eligibility_criteria');
             $table->string('scholarship_value');

@@ -9,6 +9,7 @@ class Scholarship extends Model
     protected $table = 'scholarships'; // Ensure this matches your database table name
     protected $fillable = [
         'type',
+        'name',
         'participating_programmes',
         'eligibility_criteria',
         'scholarship_value',

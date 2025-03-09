@@ -94,7 +94,7 @@
                             </form>
                         </td>
                         <td>{{ $scholarship->type }}</td>
-                        <td>{{ $scholarship->name }}</td>
+                        <td>{!! $scholarship->name !!}</td>
                         <td>{!! $scholarship->participating_programmes !!}</td>
                         <td>{!! $scholarship->eligibility_criteria !!}</td>
                         <td>{!! $scholarship->scholarship_value !!}</td>
