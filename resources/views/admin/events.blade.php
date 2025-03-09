@@ -53,7 +53,6 @@
     <table class="table table-bordered">
         <thead>
             <tr>
-                <th>ID</th>
                 <th>Title</th>
                 <th>Description</th>
                 <th>Location</th>
@@ -68,7 +67,7 @@
         <tbody>
             @foreach($events as $event)
             <tr>
-                <td>{{ $event->id }}</td>
+
                 <td>{{ $event->title }}</td>
                 <td>{{ strip_tags($event->description) }}</td>
                 <td>{{ $event->location }}</td>
