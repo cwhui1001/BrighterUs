@@ -15,15 +15,16 @@ class AdminFinancialController extends Controller
             $query->where('type', $request->type);
         }
 
+        // Filter by name
+        if ($request->has('name') && $request->name != '') {
+            $query->where('name', 'LIKE', '%' . $request->name . '%');
+        }
+
         // Filter by application deadline
         if ($request->has('deadline') && $request->deadline != '') {
             $query->where('application_deadline', $request->deadline);
         }
 
-        // Filter by scholarship value
-        if ($request->has('value') && $request->value != '') {
-            $query->where('scholarship_value', 'like', '%' . $request->value . '%');
-        }
 
         $scholarships = $query->get();
         $types = Scholarship::distinct()->pluck('type'); // Get unique types for the filter dropdown
@@ -40,6 +41,7 @@ class AdminFinancialController extends Controller
     {
         $request->validate([
             'type' => 'required|string',
+            'name' => 'required|string',
             'participating_programmes' => 'required|string',
             'eligibility_criteria' => 'required|string',
             'scholarship_value' => 'required|string',
@@ -67,6 +69,7 @@ class AdminFinancialController extends Controller
 
         $request->validate([
             'type' => 'required|string',
+            'name' => 'required|string',
             'participating_programmes' => 'required|string',
             'eligibility_criteria' => 'required|string',
             'scholarship_value' => 'required|string',

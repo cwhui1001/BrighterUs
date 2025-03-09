@@ -42,17 +42,18 @@
                         </select>
                     </div>
 
+                    <!-- Filter by Scholarship Name -->
+                    <div class="col-md-3">
+                        <label for="value" class="form-label">Scholarship Name</label>
+                        <input type="text" name="name" id="name" class="form-control" value="{{ request('name') }}">
+                    </div>
                     <!-- Filter by Application Deadline -->
                     <div class="col-md-3">
                         <label for="deadline" class="form-label">Application Deadline</label>
                         <input type="date" name="deadline" id="deadline" class="form-control" value="{{ request('deadline') }}">
                     </div>
 
-                    <!-- Filter by Scholarship Value -->
-                    <div class="col-md-3">
-                        <label for="value" class="form-label">Scholarship Value</label>
-                        <input type="text" name="value" id="value" class="form-control" placeholder="Enter value" value="{{ request('value') }}">
-                    </div>
+                    
 
                     <!-- Submit Button -->
                     <div class="col-md-3 d-flex align-items-end">

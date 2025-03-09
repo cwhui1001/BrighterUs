@@ -9,6 +9,9 @@
         <label>Type:</label>
         <input type="text" name="type" class="form-control" required><br>
 
+        <label>Name:</label>
+        <input type="text" name="name" class="form-control" required><br>
+
         <label>Participating Programmes:</label>
         <input type="text" name="participating_programmes" class="form-control" required><br>
 

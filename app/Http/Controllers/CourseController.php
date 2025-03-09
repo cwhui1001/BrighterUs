@@ -79,14 +79,19 @@ class CourseController extends Controller
             $query->whereIn('field_id', $request->field);
         }
 
+        // Filter by university (including "Other" option)
         if ($request->has('university')) {
-            if ($request->has('is_other')) {
-                // Fetch courses from universities where is_listed = 0
+            $universities = $request->input('university');
+
+            // Check if "Other" is selected
+            if (in_array('other', $universities)) {
+                // Include courses from universities where is_listed = 0
                 $query->whereHas('university', function ($q) {
                     $q->where('is_listed', 0);
                 });
             } else {
-                $query->whereIn('university_id', $request->university);
+                // Filter by selected universities
+                $query->whereIn('university_id', $universities);
             }
         }
     
@@ -102,6 +107,7 @@ class CourseController extends Controller
         if ($request->has('ranking')) {
             $query->where('ranking_id', $request->ranking);
         }
+        Log::info('Filter Query:', ['query' => $query->toSql(), 'bindings' => $query->getBindings()]);
 
         $courses = $query->paginate(100);
         $user = Auth::user();

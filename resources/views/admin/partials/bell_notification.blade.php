@@ -97,3 +97,13 @@
         });
 });
 </script>
+
+<style>
+    .dropdown {
+        margin: 0 !important;
+    }
+
+    #notificationBell{
+        margin-bottom: 0;
+    }
+</style>

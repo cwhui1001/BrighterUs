@@ -56,7 +56,8 @@
             </div>
 
             <!-- Check if user is authenticated -->
-            <div class="hidden sm:flex sm:items-center sm:ms-6">
+            <div class="flex items-center justify-center sm:ms-6">
+
     
             <!-- Bookmark Button -->
             <button class="tooltip-container bookmark-button" data-url="{{ route('bookmarks.index') }}">

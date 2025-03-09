@@ -3,6 +3,7 @@ let selectedCourses = [];
 function clearCompareBox() {
     let selectedCourses = document.getElementById("selected-courses");
     selectedCourses.innerHTML = '<p id="placeholder-text">Drag and drop courses here to compare</p>'; // Restore placeholder
+    selectedCourses = [];
 }
 
 // Ensure compare button works
@@ -36,12 +37,21 @@ function drop(event) {
     event.preventDefault();
     let courseId = event.dataTransfer.getData('courseId');
     let courseName = event.dataTransfer.getData('courseName');
+    console.log("Dropped Course ID:", courseId); // Debugging
+    console.log("Dropped Course Name:", courseName); // Debugging
+
     let selectedCoursesContainer = document.getElementById("selected-courses");
 
     // Remove placeholder if it exists
     let placeholder = document.getElementById("placeholder-text");
     if (placeholder) {
         placeholder.remove();
+    }
+
+    // Check if the maximum limit (6 courses) has been reached
+    if (selectedCourses.length >= 6) {
+        alert("You can compare a maximum of 6 courses.");
+        return; // Exit the function if the limit is reached
     }
 
     if (courseId && !selectedCourses.includes(courseId)) {
@@ -106,6 +116,13 @@ window.onload = function () {
                 let coursesList = document.getElementById('courses-list');
                 coursesList.innerHTML = ""; // Clear existing content
     
+                if (data.courses.data.length === 0) {
+                    // Display "No results found" message
+                    let noResultsMessage = document.createElement('div');
+                    noResultsMessage.classList.add('no-results-message');
+                    noResultsMessage.innerText = 'No results found.';
+                    coursesList.appendChild(noResultsMessage);
+                } else {
                 data.courses.data.forEach(course => {
                     let courseCard = document.createElement('div');
                     courseCard.classList.add('course-card-container');
@@ -146,22 +163,34 @@ window.onload = function () {
     
                 // Reattach bookmark event listeners
                 attachBookmarkListeners();
-            });
+            }
+            }).catch(error => console.error('Error:', error));
         });
     });
 };
 
 function attachBookmarkListeners() {
+    // Remove existing listeners to avoid duplication
     document.querySelectorAll('.bookmark-btn').forEach(button => {
-        button.addEventListener('click', function (event) {
-            event.stopPropagation(); // Stop event propagation
-            toggleBookmark(this);
-        });
+        button.removeEventListener('click', handleBookmarkClick);
+    });
+
+    // Add new listeners
+    document.querySelectorAll('.bookmark-btn').forEach(button => {
+        button.addEventListener('click', handleBookmarkClick);
     });
 }
+
+function handleBookmarkClick(event) {
+    event.stopPropagation(); // Stop event propagation
+    toggleBookmark(this); // Call the toggleBookmark function
+}
+
+// Attach listeners on page load
 document.addEventListener('DOMContentLoaded', function () {
     attachBookmarkListeners();
 });
+
 document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('.bookmark-btn').forEach(button => {
         button.addEventListener('click', function () {
@@ -201,3 +230,23 @@ function toggleBookmark(button) {
     })
     .catch(error => console.error('Error:', error));
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Add click event listeners to all course cards
+    document.querySelectorAll('.course-card').forEach(card => {
+        card.addEventListener('click', function (event) {
+            // Prevent navigation if the click is on a child element that should not trigger navigation
+            if (event.target.closest('.unbookmark-btn')) {
+                return; // Do nothing if the click is on the unbookmark button
+            }
+
+            // Get the course URL from the data attribute
+            const courseUrl = this.getAttribute('data-course-url');
+
+            // Redirect to the course details page
+            if (courseUrl) {
+                window.location.href = courseUrl;
+            }
+        });
+    });
+});

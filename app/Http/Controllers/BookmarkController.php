@@ -27,7 +27,14 @@ class BookmarkController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $bookmarks = $user->savedCourses()->with('university', 'category', 'field', 'location', 'ranking')->get();
+        if (!$user) {
+            return redirect()->route('login')->with('error', 'Please log in to view your bookmarks.');
+        }
+        // Fetch bookmarked courses with relationships
+        $bookmarks = $user->savedCourses()
+        ->with(['university', 'category', 'field', 'location', 'ranking'])
+        ->get()
+        ->unique('id'); // Ensure unique courses
         return view('bookmarks.index', compact('bookmarks'));
     }
 

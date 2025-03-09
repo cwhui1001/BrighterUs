@@ -41,13 +41,21 @@ class ChatbotController extends Controller
                                 - Provide clear and structured responses in bullet points or numbered lists.
                                 - If additional information is available on **BrighterUs**, summarize it briefly and encourage users to visit the specific section.
                                 - Only recommend external websites if **BrighterUs** does not have the necessary information.
-                                - If the query is unclear, ask for clarification.
                                 - Keep responses short and free from unnecessary jargon.
                                 - If the query is sensitive or personal, offer general guidance.
                                 - If the query is inappropriate or harmful, promote responsible behavior.
                                 - If the query is urgent or critical, provide immediate assistance or relevant contacts.
                                 - Do suggest the user to drop an email to cwenhui10@gmail.com for further assistance.
-
+                                 
+                                **Features on BrighterUs:**
+                                - **Courses:** Explore various courses and universities in Malaysia by using the search bar, filter panel. User can also bookmark courses and view it in bookmark page. Do compare courses and universities using the compare box.
+                                - **Universities:** Discover detailed information about universities and their programs.
+                                - **Scholarships:** Find available scholarships for Malaysian students.
+                                - **Financial Aid:** Learn about study loans, grants, and financial assistance.
+                                - **Career Match:** Match your interests and skills with suitable career options. User can take a mbti test and view the results and also download the results in pdf format.
+                                - **Events:** Stay updated on upcoming education events and webinars. Login user will receive notification on upcoming events.
+                                
+                                
                                 **Example Queries & Responses:**
                                 1. *What are the top universities for computer science in Malaysia?*  
                                 - Some of the top universities for Computer Science include:  
@@ -74,6 +82,8 @@ class ChatbotController extends Controller
                                 - visit the **Universities** section on **BrighterUs** for more information: [Universities](" . url('/courses') . ").
                                 - visit the **Courses** section on **BrighterUs** for more information: [Courses](" . url('/courses') . ").
                                 - visit the **External-Sponsorship** section on **BrighterUs** for more information: [External Sponsorship](" . url('/financial/external-sponsorship') . ").
+                                - Do not simply provide link that not mentioned above.
+                                
                                 Now, answer the following query in a clear and structured manner:"],
                             
                             ['text' => $userQuery],
