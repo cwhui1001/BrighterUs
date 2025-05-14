@@ -280,7 +280,7 @@ nav {
     position: fixed;
     bottom: 80px;
     right: 20px;
-    width: 380px;
+    width: 450px;
     height: 550px;
     background-color: white;
     border-radius: 10px;
@@ -332,7 +332,7 @@ nav {
     color: #333; /* Dark text color for contrast */
     font-family: 'Arial', sans-serif; /* Clean, modern font */
     font-size: 16px; /* Easy-to-read font size */
-    max-width: 320px; /* Limit the width for a neat look */
+    max-width: 380px; /* Limit the width for a neat look */
     margin: 20px auto; /* Centered horizontally with margin */
 }
 .user{

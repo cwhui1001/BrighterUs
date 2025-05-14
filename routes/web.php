@@ -11,6 +11,7 @@ Route::get('/', function () {
 })-> name('dashboard');
 
 Route::post('chatbot-query', [ChatbotController::class, 'handleQuery']);
+Route::get('/download-pdfs', [ChatbotController::class, 'downloadSAPDocs']);
 
 
 
